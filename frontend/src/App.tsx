@@ -1,5 +1,12 @@
+import GlobalStyles from './styles/GlobalStyles';
+
 const App = () => {
-  return <div>Hello World!</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <div>Hello World!</div>
+    </>
+  );
 };
 
 export default App;
