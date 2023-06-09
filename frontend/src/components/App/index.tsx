@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
+import axios from 'axios';
 
 import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
