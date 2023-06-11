@@ -6,6 +6,7 @@ import axios from 'axios';
 import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
 import StatusBar from '../statusBar';
+import Dropdown from '../dropdown';
 
 interface IData {
   id: number;
@@ -68,6 +69,7 @@ const App = () => {
         <button onClick={() => addUser(value)}>추가</button>
       </ThemeProvider>
       <StatusBar color="black" />
+      <Dropdown options={['역삼1동', '역삼2동']} />
     </>
   );
 };
