@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
+import StatusBar from '../statusBar';
 
 interface IData {
   id: number;
@@ -52,19 +53,22 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <ul>
-        {data.map((user) => (
-          <div key={user.id}>
-            <li>{user.name}</li>
-            <button onClick={() => deleteUser(user.id)}>삭제</button>
-          </div>
-        ))}
-      </ul>
-      <input value={value} onChange={(e) => setValue(e.target.value)} />
-      <button onClick={() => addUser(value)}>추가</button>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <ul>
+          {data.map((user) => (
+            <div key={user.id}>
+              <li>{user.name}</li>
+              <button onClick={() => deleteUser(user.id)}>삭제</button>
+            </div>
+          ))}
+        </ul>
+        <input value={value} onChange={(e) => setValue(e.target.value)} />
+        <button onClick={() => addUser(value)}>추가</button>
+      </ThemeProvider>
+      <StatusBar color="black" />
+    </>
   );
 };
 
