@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import NavBarTitle from '../NavBarTitle';
+import NavBarTitle from '../../components/NavBarTitle';
 import * as S from './styles';
 
 const CatalogPage = () => {

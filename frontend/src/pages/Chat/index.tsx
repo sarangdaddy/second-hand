@@ -1,4 +1,4 @@
-import NavBarHome from '../NavBarHome';
+import NavBarHome from '../../components/NavBarHome';
 
 const ChatPage = () => {
   return (

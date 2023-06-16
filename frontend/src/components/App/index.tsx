@@ -4,13 +4,13 @@ import { ThemeProvider } from 'styled-components';
 
 import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
-import HomePage from '../HomePage';
+import HomePage from '../../pages/Home';
 import SalesPage from '../SalesPage';
-import HeartPage from '../HeartPage';
-import ChatPage from '../ChatPage';
-import ErrorPage from '../ErrorPage';
+import HeartPage from '../../pages/Heart';
+import ChatPage from '../../pages/Chat';
+import ErrorPage from '../../pages/Error';
 import Login from '../../pages/Login';
-import CatalogPage from '../CatalogPage';
+import CatalogPage from '../../pages/Catalog';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
 import {
