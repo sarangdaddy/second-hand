@@ -4,10 +4,9 @@ interface NavBarContainerProps {
   type: string;
 }
 
-export const navBarContainer = styled.div<NavBarContainerProps>`
-  display: flex;
-  align-items: flex-end;
-  height: 100px;
+export const NavBarContainer = styled.div<NavBarContainerProps>`
+  position: sticky;
+  top: 0px;
   background-color: ${(props) => {
     if (props.type === 'low') {
       return 'rgba(249, 249, 249, 0)';
@@ -17,12 +16,16 @@ export const navBarContainer = styled.div<NavBarContainerProps>`
       return 'rgba(249, 249, 249, 1)';
     }
   }};
-  border: solid 1px #b3b3b3;
+  border-bottom: solid 1px #b3b3b3;
 `;
 
-export const navBarBody = styled.div`
+export const NavBarBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 0 11px 11px 16px;
+  padding: 16px 11px 11px 16px;
+`;
+
+export const ClinkElement = styled.div`
+  cursor: pointer;
 `;

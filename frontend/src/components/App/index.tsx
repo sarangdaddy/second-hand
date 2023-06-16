@@ -10,11 +10,13 @@ import HeartPage from '../HeartPage';
 import ChatPage from '../ChatPage';
 import ErrorPage from '../ErrorPage';
 import Login from '../../pages/Login';
+import CatalogPage from '../CatalogPage';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
 import {
   ACCOUNT,
   CALL_BACK,
+  CATALOG,
   CHAT,
   HEART,
   HOME,
@@ -34,33 +36,33 @@ const router = createBrowserRouter([
       {
         path: HOME,
         element: (
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <HomePage />
+          // </ProtectedRoute>
         ),
       },
       {
         path: SALES,
         element: (
-          <ProtectedRoute>
-            <SalesPage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <SalesPage />
+          // </ProtectedRoute>
         ),
       },
       {
         path: HEART,
         element: (
-          <ProtectedRoute>
-            <HeartPage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <HeartPage />
+          // </ProtectedRoute>
         ),
       },
       {
         path: CHAT,
         element: (
-          <ProtectedRoute>
-            <ChatPage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <ChatPage />
+          // </ProtectedRoute>
         ),
       },
       {
@@ -71,6 +73,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      { path: CATALOG, element: <CatalogPage /> },
       { path: LOGIN, element: <Login /> },
       { path: CALL_BACK, element: <Callback /> },
     ],
