@@ -73,7 +73,6 @@
 				4F37096F2A3BF9C200918DF5 /* Constant */,
 				4F37096C2A3BF33700918DF5 /* ViewController */,
 				2A4F26322A380C0700A55FF5 /* View */,
-				2A6295252A3801E000B3AC7E /* SignUpViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -186,6 +185,7 @@
 		4F37096C2A3BF33700918DF5 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2A6295252A3801E000B3AC7E /* SignUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
