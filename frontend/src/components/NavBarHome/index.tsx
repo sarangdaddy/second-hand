@@ -4,16 +4,21 @@ import * as S from './styles';
 
 interface NavBarHomeProps {
   type: string;
+  iconOnClick?: () => void;
 }
 
-const NavBarHome = ({ type }: NavBarHomeProps) => {
+const NavBarHome = ({ type, iconOnClick }: NavBarHomeProps) => {
   return (
-    <S.navBarContainer type={type}>
-      <S.navBarBody>
-        <Dropdown options={['역삼1동', '역삼2동']} />
-        <Icon name={'label'} />
-      </S.navBarBody>
-    </S.navBarContainer>
+    <S.NavBarContainer type={type}>
+      <S.NavBarBody>
+        <S.ClinkElement>
+          <Dropdown options={['역삼1동', '역삼2동']} />
+        </S.ClinkElement>
+        <S.ClinkElement>
+          <Icon onClick={iconOnClick} name={'label'} />
+        </S.ClinkElement>
+      </S.NavBarBody>
+    </S.NavBarContainer>
   );
 };
 

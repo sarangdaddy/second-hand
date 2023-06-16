@@ -10,6 +10,7 @@ import HeartPage from '../HeartPage';
 import ChatPage from '../ChatPage';
 import ErrorPage from '../ErrorPage';
 import Login from '../../pages/Login';
+import CatalogPage from '../CatalogPage';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
 import {
@@ -73,6 +74,7 @@ const router = createBrowserRouter([
       },
       { path: LOGIN, element: <Login /> },
       { path: CALL_BACK, element: <Callback /> },
+      { path: '/catalog', element: <CatalogPage /> },
     ],
   },
 ]);
