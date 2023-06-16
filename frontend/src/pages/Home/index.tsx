@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-import NavBarHome from '../NavBarHome';
-import SecondHandItem from '../SecondHandItem';
+import NavBarHome from '../../components/NavBarHome';
+import SecondHandItem from '../../components/SecondHandItem';
 import { itemList } from '../../mocks/data';
-import ErrorPage from '../ErrorPage';
+import ErrorPage from '../Error';
 
 // TODO(sarang_daddy) : API에서 가져오기
 const sampleItems = itemList;
