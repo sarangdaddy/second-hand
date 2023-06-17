@@ -5,3 +5,4 @@ export const CHAT = '/chat';
 export const ACCOUNT = '/account';
 export const LOGIN = '/login';
 export const CALL_BACK = '/oauth/github';
+export const CATALOG = `/catalog`;

@@ -14,7 +14,7 @@ const CatalogPage = () => {
     <>
       <NavBarTitle
         prevTitle="닫기"
-        type="low"
+        type="high"
         backIcon
         preTitleClick={handleBackClick}
         centerTitle="카탈로그"

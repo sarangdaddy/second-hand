@@ -21,6 +21,7 @@ import {
   HOME,
   LOGIN,
   SALES,
+  CATALOG,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
@@ -35,9 +36,9 @@ const router = createBrowserRouter([
       {
         path: HOME,
         element: (
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <HomePage />
+          // </ProtectedRoute>
         ),
       },
       {
@@ -74,7 +75,7 @@ const router = createBrowserRouter([
       },
       { path: LOGIN, element: <Login /> },
       { path: CALL_BACK, element: <Callback /> },
-      { path: '/catalog', element: <CatalogPage /> },
+      { path: CATALOG, element: <CatalogPage /> },
     ],
   },
 ]);

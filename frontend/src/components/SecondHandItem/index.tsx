@@ -3,6 +3,7 @@ import elapsedTime from '../../utils/elapsedTime';
 import formatNumber from '../../utils/formatNumber';
 import * as S from './styles';
 
+// type Status = '판매중' | '예약중' | '판매완료';
 interface SecondHandItemProps {
   title: string;
   createdAt: string;
