@@ -5,17 +5,19 @@ interface NavBarContainerProps {
 }
 
 export const NavBarContainer = styled.div<NavBarContainerProps>`
-  position: sticky;
+  position: fixed;
+  width: 100%;
+  height: 50px;
   top: 0px;
-  background-color: ${(props) => {
-    if (props.type === 'low') {
-      return 'rgba(249, 249, 249, 0)';
-    } else if (props.type === 'medium') {
-      return 'rgba(249, 249, 249, 0.8)';
-    } else {
-      return 'rgba(249, 249, 249, 1)';
-    }
+  background-color: ${({ type }) => {
+    const opacityList: Record<string, string> = {
+      low: 'rgba(249, 249, 249, 0)',
+      medium: 'rgba(249, 249, 249, 0.8)',
+      high: 'rgba(249, 249, 249, 1)',
+    };
+    return opacityList[type] || opacityList['high'];
   }};
+
   border-bottom: solid 1px #b3b3b3;
 `;
 

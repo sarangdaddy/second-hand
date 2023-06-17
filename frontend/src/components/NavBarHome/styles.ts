@@ -5,8 +5,14 @@ interface NavBarContainerProps {
 }
 
 export const NavBarContainer = styled.div<NavBarContainerProps>`
-  position: sticky;
+  position: fixed;
   top: 0px;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  border-bottom: solid 1px #b3b3b3;
+  padding: 16px;
   background-color: ${(props) => {
     if (props.type === 'low') {
       return 'rgba(249, 249, 249, 0)';
@@ -16,16 +22,16 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
       return 'rgba(249, 249, 249, 1)';
     }
   }};
-  border-bottom: solid 1px #b3b3b3;
 `;
 
 export const NavBarBody = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 16px 11px 11px 16px;
 `;
 
 export const ClinkElement = styled.div`
   cursor: pointer;
+  align-items: center;
+  display: flex;
 `;
