@@ -1,5 +1,4 @@
 import iconfiles from '../../assets/icons/index';
-// import * as S from './styles';
 
 type IconName = keyof typeof iconfiles;
 

@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
 import HomePage from '../../pages/Home';
-import SalesPage from '../SalesPage';
+import SalesPage from '../../pages/Sales';
 import HeartPage from '../../pages/Heart';
 import ChatPage from '../../pages/Chat';
 import ErrorPage from '../../pages/Error';
