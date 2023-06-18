@@ -3,15 +3,13 @@ name: Java CI with Gradle & Deploy to EC2
 # main 브런치에 push가 되면 아래의 flow가 실행됩니다.
 on:
   push:
-    branches: [ "BE-release" ]
+    branches: ["BE-release"]
 
 # flow에서 사용할 변수 같은 느낌입니다.
 env:
-  working-directory: ./backend
-
-permissions:
-  contents: read
-
+  working-directory: ./frontend
+  docker-container-name: second-hand-fe
+  docker-image-name: ${{ secrets.DOCKERHUB_USERNAME }}/second-hand-fe
 
 jobs:
   deploy:
@@ -29,8 +27,8 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'temurin'
+          java-version: "11"
+          distribution: "temurin"
 
       # 3) gradlew 권한 설정
       - name: Grant execute permission for gradlew
@@ -45,7 +43,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build -x test
         working-directory: ${{ env.working-directory }}
-      
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -61,8 +59,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/back-end
-
+          tags: ${{ env.docker-image-name }}
 
       - name: Pull and restart Docker Container
         uses: appleboy/ssh-action@master
@@ -71,6 +68,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/back-end
-            sudo docker stop jmdb-be
-            sudo docker run -d --rm --name jmdb-be -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/back-end
+            sudo docker stop ${{ env.docker-container-name }}
+            sudo docker rmi ${{ env.docker-image-name }}
+            sudo docker pull ${{ env.docker-image-name }}
+            sudo docker run -d --rm --name ${{ env.docker-container-name }} -p 80:80 ${{ env.docker-image-name }}
