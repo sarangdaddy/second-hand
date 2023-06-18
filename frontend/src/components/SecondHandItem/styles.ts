@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import Button, { ButtonProps } from '../Button';
 
 interface SecondHandItemProps {
@@ -87,23 +88,6 @@ export const ItemIssue = styled.div`
   justify-content: flex-end;
 `;
 
-export const Message = styled.div`
-  display: flex;
-  ${({ theme }) => theme.typo.footnote}
-  align-items: center;
-
-  span {
-    margin-left: 3px;
-  }
-`;
-
-export const heart = styled.div`
-  display: flex;
-  ${({ theme }) => theme.typo.footnote}
-  align-items: center;
+export const HeartIconWithCount = styled.div`
   margin-left: 5px;
-
-  span {
-    margin-left: 3px;
-  }
 `;

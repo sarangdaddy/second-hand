@@ -2,12 +2,12 @@ import Icon from '../Icon';
 import elapsedTime from '../../utils/elapsedTime';
 import formatNumber from '../../utils/formatNumber';
 import * as S from './styles';
+import IconWithCount from './IconWithCount';
 
-// type Status = '판매중' | '예약중' | '판매완료';
 interface SecondHandItemProps {
   title: string;
   createdAt: string;
-  status: string;
+  status: '판매중' | '예약중' | '판매완료';
   price: number | null;
   location: string;
   chatCount: number;
@@ -51,18 +51,10 @@ const SecondHandItem = ({
           </div>
         </S.ItemContents>
         <S.ItemIssue>
-          {chatCount > 0 && (
-            <S.Message>
-              <Icon name={'message'} width={'24'} height={'20'} />
-              <span>{chatCount}</span>
-            </S.Message>
-          )}
-          {interestCount > 0 && (
-            <S.heart>
-              <Icon name={'heart'} width={'24'} height={'20'} />
-              <span>{interestCount}</span>
-            </S.heart>
-          )}
+          <IconWithCount name={'message'} count={chatCount} />
+          <S.HeartIconWithCount>
+            <IconWithCount name={'heart'} count={interestCount} />
+          </S.HeartIconWithCount>
         </S.ItemIssue>
       </S.ItemInfo>
     </S.ItemContainer>
