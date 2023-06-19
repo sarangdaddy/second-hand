@@ -9,6 +9,7 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   width: 100%;
   height: 50px;
   top: 0px;
+  left: 0;
   background-color: ${({ type }) => {
     const opacityList: Record<string, string> = {
       low: 'rgba(249, 249, 249, 0)',

@@ -4,6 +4,7 @@ import {
   GITHUB_REDIRECT_URI,
 } from '../../constants/login';
 import Button from '../../components/Button';
+import NavBarHome from '../../components/NavBarHome';
 
 const Login = () => {
   const onLoginButtonClick = () => {
@@ -13,9 +14,12 @@ const Login = () => {
   };
 
   return (
-    <Button fullWidth active onClick={onLoginButtonClick}>
-      로그인
-    </Button>
+    <>
+      <NavBarHome type="medium" />
+      <Button fullWidth active onClick={onLoginButtonClick}>
+        로그인
+      </Button>
+    </>
   );
 };
 
