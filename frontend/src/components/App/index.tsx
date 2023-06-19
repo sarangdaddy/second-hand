@@ -13,6 +13,7 @@ import Login from '../../pages/Login';
 import CatalogPage from '../../pages/Catalog';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
+import SalesItemPage from '../../pages/SalesItem';
 import {
   ACCOUNT,
   CALL_BACK,
@@ -22,6 +23,7 @@ import {
   LOGIN,
   SALES,
   CATALOG,
+  SALESITEM,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
@@ -75,8 +77,15 @@ const router = createBrowserRouter([
       },
       { path: LOGIN, element: <Login /> },
       { path: CALL_BACK, element: <Callback /> },
-      { path: CATALOG, element: <CatalogPage /> },
     ],
+  },
+  {
+    path: CATALOG,
+    element: <CatalogPage />,
+  },
+  {
+    path: SALESITEM,
+    element: <SalesItemPage />,
   },
 ]);
 
