@@ -23,6 +23,7 @@ export const ItemImage = styled.div<SecondHandItemProps>`
   background-size: contain;
   margin-right: 16px;
   margin-bottom: 16px;
+  margin-top: 16px;
 `;
 
 export const ItemInfo = styled.div`
@@ -40,6 +41,7 @@ export const Content = styled.div`
   display: block;
   width: 220px;
   height: 100px;
+  margin-top: 16px;
 `;
 
 export const ColumnTop = styled.div`
