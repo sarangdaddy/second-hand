@@ -11,6 +11,10 @@ export const UploadPhotoContainer = styled.div`
   padding-bottom: 10px;
 `;
 
+export const UploadInput = styled.input`
+  display: none;
+`;
+
 export const UploadIcon = styled.div`
   display: flex;
   align-items: center;
