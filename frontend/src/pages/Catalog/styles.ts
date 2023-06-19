@@ -5,6 +5,8 @@ export const Catalog = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   grid-gap: 36px;
   justify-items: center;
+  padding-top: 16px;
+  margin-top: 50px;
 `;
 
 export const Item = styled.div`
