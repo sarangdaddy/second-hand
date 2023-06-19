@@ -19,11 +19,12 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   }};
 
   border-bottom: solid 1px #b3b3b3;
+  display: flex;
+  align-items: center;
 `;
 
 export const NavBarBody = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   padding: 16px 11px 16px 11px;
@@ -55,10 +56,12 @@ export const RightTitle = styled.div`
 
 export const PrevTitleContents = styled.div`
   display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 
 export const RightTitleContents = styled.div`
   display: flex;
+  align-items: center;
   cursor: pointer;
 `;
