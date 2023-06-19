@@ -6,9 +6,9 @@ import * as S from './styles';
 const Layout = () => {
   return (
     <>
-      <S.OutletStyle>
+      <S.Main>
         <Outlet />
-      </S.OutletStyle>
+      </S.Main>
       <TabBar />
     </>
   );

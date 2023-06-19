@@ -4,7 +4,7 @@ import NavBarHome from '../../components/NavBarHome';
 import SecondHandItem from '../../components/SecondHandItem';
 import { itemList } from '../../mocks/data';
 import ErrorPage from '../Error';
-import * as S from './styles';
+
 import { CATALOG } from '../../constants/routeUrl';
 
 // TODO(sarang_daddy) : API에서 가져오기
@@ -23,7 +23,7 @@ const HomePage = () => {
     <>
       <NavBarHome type="medium" iconOnClick={handleIconClick} />
       {!isReusltEmpty ? (
-        <S.CurrentList>
+        <div>
           {sampleItems.map((item) => {
             return (
               <li key={item.id}>
@@ -41,7 +41,7 @@ const HomePage = () => {
               </li>
             );
           })}
-        </S.CurrentList>
+        </div>
       ) : (
         <ErrorPage />
       )}

@@ -12,7 +12,6 @@ interface StatusLabelProps extends ButtonProps {
 }
 
 export const ItemContainer = styled.div`
-  margin: 16px;
   display: flex;
   border-bottom: 1px solid rgba(179, 179, 179, 0.39);
 `;

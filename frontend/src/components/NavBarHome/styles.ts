@@ -8,11 +8,12 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   position: fixed;
   top: 0px;
   height: 50px;
+  left: 0;
   width: 100%;
+  padding: 16px;
   align-items: center;
   display: flex;
   border-bottom: solid 1px #b3b3b3;
-  padding: 16px;
   background-color: ${(props) => {
     if (props.type === 'low') {
       return 'rgba(249, 249, 249, 0)';
