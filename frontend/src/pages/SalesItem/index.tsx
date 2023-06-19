@@ -1,9 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+
 import NavBarTitle from '../../components/NavBarTitle';
+import UploadPhoto from '../../components/UploadPhoto';
 
 const SalesItemPage = () => {
-  //TODO(sarang_daddy) : onClick 테스트를 위한 코드 추후 삭제
-  const checkTheBackClick = () => {
-    console.log('뒤로가기 버튼을 클릭했습니다.');
+  const navigation = useNavigate();
+
+  const handleBackIconClick = () => {
+    navigation(-1);
   };
   const checkTheMoreClick = () => {
     console.log('완료 버튼을 클릭했습니다.');
@@ -14,13 +18,12 @@ const SalesItemPage = () => {
       <NavBarTitle
         prevTitle="닫기"
         type="low"
-        backIcon
-        preTitleClick={checkTheBackClick}
+        preTitleClick={handleBackIconClick}
         rightTitleClick={checkTheMoreClick}
-        centerTitle="카탈로그"
+        centerTitle="내 물건 팔기"
         rightTitle="완료"
       />
-      <h1>판매내역 이당</h1>
+      <UploadPhoto />
     </>
   );
 };
