@@ -28,7 +28,7 @@ const CategoryPage = () => {
         type="high"
         backIcon
         preTitleClick={handleBackClick}
-        centerTitle="카탈로그"
+        centerTitle="카테고리"
       />
       <S.Categories>
         {categoryList?.map((category: Category) => {
