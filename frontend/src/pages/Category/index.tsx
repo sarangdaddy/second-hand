@@ -11,7 +11,7 @@ interface Category {
   categoryImgUrl: string;
 }
 
-const CatalogPage = () => {
+const CategoryPage = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -44,4 +44,4 @@ const CatalogPage = () => {
   );
 };
 
-export default CatalogPage;
+export default CategoryPage;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBarHome from '../../components/NavBarHome';
 import SecondHandItem from '../../components/SecondHandItem';
 import ErrorPage from '../Error';
-import { CATALOG, SALESITEM } from '../../constants/routeUrl';
+import { CATEGORY, SALESITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import * as S from './styles';
 import Icon from '../../components/Icon';
@@ -32,7 +32,7 @@ const HomePage = () => {
   const isReusltEmpty: boolean = itemList?.length === 0;
 
   const handleIconClick = () => {
-    navigate(CATALOG);
+    navigate(CATEGORY);
   };
 
   const handleFABClick = () => {
