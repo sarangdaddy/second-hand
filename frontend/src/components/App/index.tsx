@@ -10,7 +10,7 @@ import HeartPage from '../../pages/Heart';
 import ChatPage from '../../pages/Chat';
 import ErrorPage from '../../pages/Error';
 import Login from '../../pages/Login';
-import CatalogPage from '../../pages/Catalog';
+import CategoryPage from '../../pages/Category';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
 import SalesItemPage from '../../pages/SalesItem';
@@ -22,7 +22,7 @@ import {
   HOME,
   LOGIN,
   SALES,
-  CATALOG,
+  CATEGORY,
   SALESITEM,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
@@ -80,8 +80,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: CATALOG,
-    element: <CatalogPage />,
+    path: CATEGORY,
+    element: <CategoryPage />,
   },
   {
     path: SALESITEM,
