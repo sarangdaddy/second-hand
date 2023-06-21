@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class SignUpViewController: UIViewController {
     private let idInputView = IDInputView()
     private let profileImageView = ProfileImageView(frame: .zero)
     private let locationAddButton = LocationAddButton()
     private let navigationBar = UINavigationBar()
-    
+    private var itemProviders: [NSItemProvider] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addSubViews()
@@ -20,10 +22,29 @@ final class SignUpViewController: UIViewController {
         self.setupViewConstraint()
         self.setupNavigationBar()
         self.setupSheet()
+        self.enableUserInteraction()
+        self.setupProfileImageViewTapGesture()
+    }
+}
+
+extension SignUpViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        self.itemProviders = results.map {
+            $0.itemProvider
+        }
+        
+        if !itemProviders.isEmpty {
+            self.fetchImage()
+        }
     }
 }
 
 extension SignUpViewController {
+    private func setupSignUpAppearance() {
+        self.view.backgroundColor = ColorPalette.white
+    }
+    
     private func addSubViews() {
         self.view.addSubview(self.idInputView)
         self.view.addSubview(self.profileImageView)
@@ -38,13 +59,98 @@ extension SignUpViewController {
         self.setupNavigationBarLayoutConstraint()
     }
     
-    private func setupSignUpAppearance() {
-        self.view.backgroundColor = ColorPalette.white
-    }
-    
     private func setupNavigationBar() {
         self.setupNavigationBarButtonItem()
         self.setupNavigationBarItemAppearance()
+    }
+    
+    private func enableUserInteraction() {
+        self.profileImageView.isUserInteractionEnabled = true
+    }
+    
+    private func setupProfileImageViewTapGesture() {
+        let imageViewTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(didTapImageView(tapGestureReconizer: ))
+        )
+        profileImageView.addGestureRecognizer(imageViewTapGesture)
+    }
+    
+    private func setupSheet() {
+        guard let sheet = sheetPresentationController else {
+            return
+        }
+        
+        sheet.detents = [ .large(), .medium() ]
+        sheet.selectedDetentIdentifier = .large
+        sheet.largestUndimmedDetentIdentifier = .large
+    }
+    
+    private func setupNavigationBarButtonItem() {
+        let closeButton = self.makeBarButtonItem(
+            title: Constant.StringLiteral.NavigationItem.closeButton,
+            action: #selector(self.tappedCloseButton)
+        )
+        let completionButton = self.makeBarButtonItem(title: Constant.StringLiteral.NavigationItem.completionButton)
+        
+        self.navigationItem.leftBarButtonItem = closeButton
+        self.navigationItem.rightBarButtonItem = completionButton
+    }
+    
+    private func setupNavigationBarItemAppearance() {
+        self.navigationItem.rightBarButtonItem?.tintColor = ColorPalette.gray800
+        self.navigationItem.leftBarButtonItem?.tintColor = ColorPalette.gray900
+        self.navigationItem.title = Constant.StringLiteral.NavigationItem.title
+        self.navigationBar.setItems([self.navigationItem], animated: false)
+    }
+    
+    private func makeBarButtonItem(
+        title: String,
+        style: UIBarButtonItem.Style = .plain,
+        action: Selector? = nil
+    ) -> UIBarButtonItem {
+        
+        return UIBarButtonItem(
+            title: title,
+            style: style,
+            target: self,
+            action: action
+        )
+    }
+    
+    private func presentPicker() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 1
+        let imagePicker = PHPickerViewController(configuration: config)
+        imagePicker.delegate = self
+        self.present(imagePicker, animated: true)
+    }
+    
+    private func fetchImage() {
+        guard let itemProvider = itemProviders.first else { return }
+        
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { loadedImage, error in
+                guard let image = loadedImage as? UIImage else { return }
+                
+                DispatchQueue.main.async {
+                    self.profileImageView.image = image
+                }
+                
+                if let error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    @objc private func didTapImageView(tapGestureReconizer: UITapGestureRecognizer) {
+        self.presentPicker()
+    }
+    
+    @objc private func tappedCloseButton() {
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     private func setupProfileImageViewLayoutConstraint() {
@@ -64,7 +170,7 @@ extension SignUpViewController {
     // swiftlint:disable:next function_body_length
     private func setupIDInputViewLayoutConstraint() {
         self.idInputView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate(
             [
                 self.idInputView.topAnchor.constraint(
@@ -108,52 +214,6 @@ extension SignUpViewController {
                     constant: Constant.Layout.LocationAddButton.locationAddButtonTrailingPadding
                 )
             ]
-        )
-    }
-    
-    private func setupSheet() {
-        guard let sheet = sheetPresentationController else {
-            return
-        }
-        
-        sheet.detents = [ .large(), .medium() ]
-        sheet.selectedDetentIdentifier = .large
-        sheet.largestUndimmedDetentIdentifier = .large
-    }
-    
-    private func setupNavigationBarButtonItem() {
-        let closeButton = self.makeBarButtonItem(
-            title: Constant.StringLiteral.NavigationItem.closeButton,
-            action: #selector(self.tappedCloseButton)
-        )
-        let completionButton = self.makeBarButtonItem(title: Constant.StringLiteral.NavigationItem.completionButton)
-        
-        self.navigationItem.leftBarButtonItem = closeButton
-        self.navigationItem.rightBarButtonItem = completionButton
-    }
-    
-    private func setupNavigationBarItemAppearance() {
-        self.navigationItem.rightBarButtonItem?.tintColor = ColorPalette.gray800
-        self.navigationItem.leftBarButtonItem?.tintColor = ColorPalette.gray900
-        self.navigationItem.title = Constant.StringLiteral.NavigationItem.title
-        self.navigationBar.setItems([self.navigationItem], animated: false)
-    }
-    
-    @objc func tappedCloseButton() {
-        self.dismiss(animated: true)
-    }
-    
-    private func makeBarButtonItem(
-        title: String,
-        style: UIBarButtonItem.Style = .plain,
-        action: Selector? = nil
-    ) -> UIBarButtonItem {
-        
-        return UIBarButtonItem(
-            title: title,
-            style: style,
-            target: self,
-            action: action
         )
     }
 }
