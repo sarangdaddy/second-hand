@@ -32,7 +32,7 @@ extension SignUpViewController {
     }
     
     private func setupViewConstraint() {
-        self.setupImageSelectButtonLayoutConstraint()
+        self.setupProfileImageViewLayoutConstraint()
         self.setupIDInputViewLayoutConstraint()
         self.setupLoactionAddButtonLayoutConstraint()
         self.setupNavigationBarLayoutConstraint()
@@ -47,8 +47,8 @@ extension SignUpViewController {
         self.setupNavigationBarItemAppearance()
     }
     
-    private func setupImageSelectButtonLayoutConstraint() {
-        self.idInputView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupProfileImageViewLayoutConstraint() {
+        self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate(
             [
@@ -63,8 +63,8 @@ extension SignUpViewController {
     
     // swiftlint:disable:next function_body_length
     private func setupIDInputViewLayoutConstraint() {
-        self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        self.idInputView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate(
             [
                 self.idInputView.topAnchor.constraint(
