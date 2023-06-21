@@ -13,17 +13,26 @@ interface UploadedImageType {
 }
 
 const UploadPhoto = () => {
+  const maxImageCount = 10;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { postObject, setPostObject } = useContext(postSalesItemContext);
   const [uploadedCount, setUploadedCount] = useState<number>(0);
   const [uploadedImages, setUploadedImages] = useState<UploadedImageType[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const maxImageCount = 10;
-  const { postObject, setPostObject } = useContext(postSalesItemContext);
 
   const handleDeleteBtnClick = (id: string) => {
     setUploadedImages((prevImages) =>
       prevImages.filter((image) => image.id !== id),
     );
     setUploadedCount((prevCount) => prevCount - 1);
+
+    const deletedImageUrls = uploadedImages
+      .filter((image) => image.id !== id)
+      .map((image) => image.imageUrl);
+
+    setPostObject((prevPostObject: PostObjectType) => ({
+      ...prevPostObject,
+      productImageUrls: deletedImageUrls,
+    }));
   };
 
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,16 +46,14 @@ const UploadPhoto = () => {
       setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
       setUploadedCount((prevCount) => prevCount + 1);
 
-      // TODO(sarang_daddy) : 부모 SalesItem에게 업로드된 이미지 url 전달하기
-      setPostObject((prevPostObject: PostObjectType) => {
-        return {
-          ...prevPostObject,
-          productImageUrls: [
-            ...(prevPostObject?.productImageUrls || []),
-            imageUrl,
-          ],
-        };
-      });
+      const uploadedImageUrls = [
+        ...(postObject?.productImageUrls || []),
+        imageUrl,
+      ];
+      setPostObject((prevPostObject: PostObjectType) => ({
+        ...prevPostObject,
+        productImageUrls: uploadedImageUrls,
+      }));
     }
   };
 
