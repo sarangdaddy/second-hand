@@ -5,10 +5,11 @@ import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
+import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
 import UploadPhoto from '../../components/UploadPhoto';
-import * as S from './styles';
 import UploadTitle from '../../components/UploadTitle';
+import UploadPrice from '../../components/UploadPrice';
 
 const SalesItemPage = () => {
   const navigation = useNavigate();
@@ -48,6 +49,7 @@ const SalesItemPage = () => {
         />
         <UploadPhoto />
         <UploadTitle />
+        <UploadPrice />
       </postSalesItemContext.Provider>
     </S.Main>
   );
