@@ -53,7 +53,7 @@ extension SignUpViewController {
     }
     
     private func setupViewConstraint() {
-        self.setupImageSelectButtonLayoutConstraint()
+        self.setupProfileImageViewLayoutConstraint()
         self.setupIDInputViewLayoutConstraint()
         self.setupLoactionAddButtonLayoutConstraint()
         self.setupNavigationBarLayoutConstraint()
@@ -153,7 +153,7 @@ extension SignUpViewController {
         self.presentingViewController?.dismiss(animated: true)
     }
     
-    private func setupImageSelectButtonLayoutConstraint() {
+    private func setupProfileImageViewLayoutConstraint() {
         self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate(
