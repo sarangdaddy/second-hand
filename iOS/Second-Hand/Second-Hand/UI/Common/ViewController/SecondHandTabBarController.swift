@@ -9,7 +9,7 @@ import UIKit
 
 final class SecondHandTabBarController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
-        present(SignUpViewController(), animated: true)
+        self.present(SignUpViewController(), animated: true)
     }
     
     override func viewDidLoad() {

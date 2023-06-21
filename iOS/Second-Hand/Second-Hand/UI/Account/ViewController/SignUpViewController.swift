@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import PhotosUI
 
 final class SignUpViewController: UIViewController {
@@ -31,15 +30,17 @@ final class SignUpViewController: UIViewController {
 extension SignUpViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-        itemProviders = results.map {
+        self.itemProviders = results.map {
             $0.itemProvider
         }
         
         if !itemProviders.isEmpty {
-            fetchImage()
+            self.fetchImage()
         }
     }
-    
+}
+
+extension SignUpViewController {
     private func setupSignUpAppearance() {
         self.view.backgroundColor = ColorPalette.white
     }
@@ -126,7 +127,6 @@ extension SignUpViewController: PHPickerViewControllerDelegate {
         self.present(imagePicker, animated: true)
     }
     
-    // swiftlint:disable:next function_body_length
     private func fetchImage() {
         guard let itemProvider = itemProviders.first else { return }
         
@@ -145,11 +145,11 @@ extension SignUpViewController: PHPickerViewControllerDelegate {
         }
     }
     
-    @objc func didTapImageView(tapGestureReconizer: UITapGestureRecognizer) {
+    @objc private func didTapImageView(tapGestureReconizer: UITapGestureRecognizer) {
         self.presentPicker()
     }
     
-    @objc func tappedCloseButton() {
+    @objc private func tappedCloseButton() {
         self.presentingViewController?.dismiss(animated: true)
     }
     
