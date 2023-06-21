@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const Main = styled.main`
-  margin-top: 50px;
-  margin-bottom: 80px;
-  padding: 0 16px;
-  min-height: calc(100vh - 130px);
-  height: 0;
-`;
-
 export const UploadTitle = styled.div`
   padding: 15px 0;
   border-bottom: 1px solid rgba(179, 179, 179, 0.39);
