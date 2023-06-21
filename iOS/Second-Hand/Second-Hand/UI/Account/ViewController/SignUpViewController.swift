@@ -38,6 +38,37 @@ extension SignUpViewController: PHPickerViewControllerDelegate {
             self.fetchImage()
         }
     }
+    
+    private func presentPicker() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 1
+        let imagePicker = PHPickerViewController(configuration: config)
+        imagePicker.delegate = self
+        self.present(imagePicker, animated: true)
+    }
+    
+    private func fetchImage() {
+        guard let itemProvider = itemProviders.first else { return }
+        
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { loadedImage, error in
+                guard let image = loadedImage as? UIImage else { return }
+                
+                DispatchQueue.main.async {
+                    self.profileImageView.image = image
+                }
+                
+                if let error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    @objc private func didTapImageView(tapGestureReconizer: UITapGestureRecognizer) {
+        self.presentPicker()
+    }
 }
 
 extension SignUpViewController {
@@ -116,37 +147,6 @@ extension SignUpViewController {
             target: self,
             action: action
         )
-    }
-    
-    private func presentPicker() {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selectionLimit = 1
-        let imagePicker = PHPickerViewController(configuration: config)
-        imagePicker.delegate = self
-        self.present(imagePicker, animated: true)
-    }
-    
-    private func fetchImage() {
-        guard let itemProvider = itemProviders.first else { return }
-        
-        if itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { loadedImage, error in
-                guard let image = loadedImage as? UIImage else { return }
-                
-                DispatchQueue.main.async {
-                    self.profileImageView.image = image
-                }
-                
-                if let error {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    @objc private func didTapImageView(tapGestureReconizer: UITapGestureRecognizer) {
-        self.presentPicker()
     }
     
     @objc private func tappedCloseButton() {
