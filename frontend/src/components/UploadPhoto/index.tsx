@@ -62,7 +62,7 @@ const UploadPhoto = () => {
   };
 
   return (
-    <S.Main>
+    <>
       <S.UploadPhotoContainer>
         <S.UploadIcon onClick={handleUploadIconClick}>
           <Icon name="camera" />
@@ -87,7 +87,7 @@ const UploadPhoto = () => {
           ))}
         </S.Photos>
       </S.UploadPhotoContainer>
-    </S.Main>
+    </>
   );
 };
 

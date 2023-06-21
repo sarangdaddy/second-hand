@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
-export const Main = styled.div`
-  padding: 16px;
-`;
-
 export const UploadPhotoContainer = styled.div`
-  margin-top: 50px;
+  margin-top: 66px;
   display: flex;
   border-bottom: solid 1px rgba(179, 179, 179, 0.39);
-  padding-bottom: 10px;
+  padding-bottom: 16px;
 `;
 
 export const UploadInput = styled.input`

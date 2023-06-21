@@ -7,6 +7,8 @@ import {
 } from '../../context/SalesItem/useContext';
 import NavBarTitle from '../../components/NavBarTitle';
 import UploadPhoto from '../../components/UploadPhoto';
+import * as S from './styles';
+import UploadTitle from '../../components/UploadTitle';
 
 const SalesItemPage = () => {
   const navigation = useNavigate();
@@ -34,7 +36,7 @@ const SalesItemPage = () => {
   };
 
   return (
-    <>
+    <S.Main>
       <postSalesItemContext.Provider value={{ postObject, setPostObject }}>
         <NavBarTitle
           prevTitle="닫기"
@@ -45,8 +47,9 @@ const SalesItemPage = () => {
           rightTitle="완료"
         />
         <UploadPhoto />
+        <UploadTitle />
       </postSalesItemContext.Provider>
-    </>
+    </S.Main>
   );
 };
 
