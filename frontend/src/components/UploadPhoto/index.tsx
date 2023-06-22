@@ -15,7 +15,7 @@ interface UploadedImageType {
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { postObject, setPostObject } = useContext(postSalesItemContext);
+  const { setPostObject } = useContext(postSalesItemContext);
   const [uploadedCount, setUploadedCount] = useState<number>(0);
   const [uploadedImages, setUploadedImages] = useState<UploadedImageType[]>([]);
 
