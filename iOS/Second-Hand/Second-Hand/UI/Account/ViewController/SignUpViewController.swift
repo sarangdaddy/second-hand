@@ -5,7 +5,6 @@
 //  Created by PJB on 2023/06/13.
 //
 
-import UIKit
 import PhotosUI
 
 final class SignUpViewController: UIViewController {
@@ -48,6 +47,7 @@ extension SignUpViewController: PHPickerViewControllerDelegate {
         self.present(imagePicker, animated: true)
     }
     
+    // swiftlint:disable:next function_body_length
     private func fetchImage() {
         guard let itemProvider = itemProviders.first else { return }
         
