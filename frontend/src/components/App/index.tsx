@@ -24,10 +24,12 @@ import {
   SALES,
   CATEGORY,
   SALESITEM,
+  REGISTER,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
 import Callback from '../Callback/';
+import Register from '../../pages/Register';
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,7 @@ const router = createBrowserRouter([
       { path: CALL_BACK, element: <Callback /> },
     ],
   },
+
   {
     path: CATEGORY,
     element: <CategoryPage />,
@@ -87,6 +90,7 @@ const router = createBrowserRouter([
     path: SALESITEM,
     element: <SalesItemPage />,
   },
+  { path: REGISTER, element: <Register /> },
 ]);
 
 const App = () => {
