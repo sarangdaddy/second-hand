@@ -10,5 +10,9 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <App />,
+<<<<<<< HEAD
   // </React.StrictMode>,
+=======
+  //  </React.StrictMode>, }
+>>>>>>> 2fd961b (FEAT: Login 페이지 구현 (#57))
 );
