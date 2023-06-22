@@ -25,40 +25,39 @@ const UploadPhoto = () => {
     );
     setUploadedCount((prevCount) => prevCount - 1);
 
-    const deletedImageUrls = uploadedImages
-      .filter((image) => image.id !== id)
-      .map((image) => image.imageUrl);
+    setPostObject((prevPostObject: PostObjectType) => {
+      const updatedFiles = prevPostObject.files
+        ? prevPostObject.files.filter(
+            (_, index) =>
+              index !== uploadedImages.findIndex((image) => image.id === id),
+          )
+        : null;
 
-    setPostObject((prevPostObject: PostObjectType) => ({
-      ...prevPostObject,
-      productImageUrls: deletedImageUrls,
-    }));
+      return {
+        ...prevPostObject,
+        files: updatedFiles,
+      };
+    });
   };
 
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const formData = new FormData();
       const imageUrl = URL.createObjectURL(file);
       const newUploadedImage: UploadedImageType = {
         id: Date.now().toString(),
         imageUrl,
       };
 
-      console.log(imageUrl);
       setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
       setUploadedCount((prevCount) => prevCount + 1);
 
-      formData.append('image', file);
+      const formData = new FormData();
+      formData.append('productImageUrls', file);
 
-      const uploadedImageUrls = [
-        ...(postObject?.productImageUrls || []),
-        imageUrl,
-      ];
       setPostObject((prevPostObject: PostObjectType) => ({
         ...prevPostObject,
-        formData: formData,
-        productImageUrls: uploadedImageUrls,
+        files: [...(prevPostObject.files || []), formData],
       }));
     }
   };

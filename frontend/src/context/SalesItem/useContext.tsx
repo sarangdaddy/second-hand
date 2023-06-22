@@ -7,8 +7,7 @@ export interface PostObjectType {
   categoryId?: number | null;
   locationId?: number | null;
   memberId?: number | null;
-  productImageUrls?: string[] | null;
-  formData?: FormData | null;
+  files?: FormData[] | null;
 }
 
 export interface UploadPhotoType {
