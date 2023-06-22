@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import axios from 'axios';
 
@@ -23,11 +23,10 @@ const SalesItemPage = () => {
   const initialPostObject: PostObjectType = {
     title: null,
     price: null,
-    content: '',
+    content: '', //TODO(sarang_daddy) : content 컴포넌트 필요
     categoryId: null,
-    locationId: 18,
-    productImageUrls: [],
-    formData: null,
+    locationId: 18, //TODO(시저) : 로그인 및 동네설정 필요
+    files: null,
   };
   const [postObject, setPostObject] = useState(initialPostObject);
 
@@ -40,12 +39,15 @@ const SalesItemPage = () => {
     formData.append('categoryId', String(postObject.categoryId) ?? '');
     formData.append('locationId', String(postObject.locationId) ?? '');
 
-    postObject.formData?.forEach((file) => {
-      formData.append('productImageUrls', file);
-    });
+    if (postObject.files) {
+      postObject.files.forEach((file) => {
+        file.forEach((value, name) => {
+          formData.append(name, value);
+        });
+      });
+    }
 
-    console.log(Array.from(formData.entries()));
-
+    //TODO(sarang_daddy) : 커스텀훅으로 수정해야함
     try {
       const token =
         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg3MTAyMjc1LCJleHAiOjE2ODg5MDIyNzV9.AhaCUeK_M_Ph3dVTf4VCceB-Wk2AWp1ukYdP5G4VpCU';
