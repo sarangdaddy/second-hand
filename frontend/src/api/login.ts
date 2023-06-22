@@ -3,8 +3,11 @@ import { axiosInstanceWithoutBearer } from './axios';
 export const postLogin = async (code: string | null) => {
   if (!code) throw new Error("Code couldn't be null");
 
-  // TODO (시저) : api 나오면 상수로 빼고 body 넣기
-  const res = await axiosInstanceWithoutBearer.post('/api/oauth2/login', {});
+  const res = await axios.post(`${BASE_URL}/api/oauth2/login`, {
+    code: code,
+    // TODO (시저) : github 상수로 빼기
+    platform: 'github',
+  });
 
   return res;
 };
