@@ -38,13 +38,18 @@ const UploadPhoto = () => {
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      const formData = new FormData();
       const imageUrl = URL.createObjectURL(file);
       const newUploadedImage: UploadedImageType = {
         id: Date.now().toString(),
         imageUrl,
       };
+
+      console.log(imageUrl);
       setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
       setUploadedCount((prevCount) => prevCount + 1);
+
+      formData.append('image', file);
 
       const uploadedImageUrls = [
         ...(postObject?.productImageUrls || []),
@@ -52,6 +57,7 @@ const UploadPhoto = () => {
       ];
       setPostObject((prevPostObject: PostObjectType) => ({
         ...prevPostObject,
+        formData: formData,
         productImageUrls: uploadedImageUrls,
       }));
     }

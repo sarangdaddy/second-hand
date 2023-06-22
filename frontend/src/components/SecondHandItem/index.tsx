@@ -53,7 +53,7 @@ const SecondHandItem = ({
         <S.ItemIssue>
           <IconWithCount name={'message'} count={chatRoomCount} />
           <S.HeartIconWithCount>
-            <IconWithCount name={'heart'} count={watchListMemberIds.length} />
+            {/* <IconWithCount name={'heart'} count={watchListMemberIds.length} /> */}
           </S.HeartIconWithCount>
         </S.ItemIssue>
       </S.ItemInfo>
