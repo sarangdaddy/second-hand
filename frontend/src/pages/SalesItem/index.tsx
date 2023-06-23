@@ -71,6 +71,8 @@ const SalesItemPage = () => {
     } catch (error) {
       console.log('POST 요청 중 오류가 발생하였습니다.', error);
     }
+
+    navigation(-1);
   };
 
   return (
