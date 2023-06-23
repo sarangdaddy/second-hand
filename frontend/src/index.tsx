@@ -7,12 +7,4 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-root.render(
-  // <React.StrictMode>
-  <App />,
-<<<<<<< HEAD
-  // </React.StrictMode>,
-=======
-  //  </React.StrictMode>, }
->>>>>>> 2fd961b (FEAT: Login 페이지 구현 (#57))
-);
+root.render(<App />);

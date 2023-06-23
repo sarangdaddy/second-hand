@@ -12,6 +12,7 @@ import NavBarTitle from '../../components/NavBarTitle';
 import UploadPhoto from '../../components/UploadPhoto';
 import UploadTitle from '../../components/UploadTitle';
 import UploadPrice from '../../components/UploadPrice';
+import { BASE_URL } from '../../constants/api';
 
 const SalesItemPage = () => {
   const navigation = useNavigate();
@@ -52,16 +53,12 @@ const SalesItemPage = () => {
       const token =
         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg3MTAyMjc1LCJleHAiOjE2ODg5MDIyNzV9.AhaCUeK_M_Ph3dVTf4VCceB-Wk2AWp1ukYdP5G4VpCU';
 
-      const response = await axios.post(
-        'http://52.79.159.39:8080/api/products',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
+      const response = await axios.post(`${BASE_URL}/api/products`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
-      );
+      });
 
       if (response.status === 200) {
         console.log('POST 요청이 성공적으로 완료되었습니다.');

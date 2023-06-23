@@ -1,4 +1,4 @@
-import { axiosInstanceWithoutBearer } from './axios';
+import axios from 'axios';
 
 export const postLogin = async (code: string | null) => {
   if (!code) throw new Error("Code couldn't be null");
@@ -13,5 +13,3 @@ export const postLogin = async (code: string | null) => {
 
   return res;
 };
-
-// http://52.79.159.39:8080
