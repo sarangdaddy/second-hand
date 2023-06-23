@@ -3,10 +3,10 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import Icon from '../../components/Icon';
 import NavBarTitle from '../../components/NavBarTitle';
 import * as S from './styles';
-import { postJoin } from '../../api/member';
 import { useNavigate } from 'react-router-dom';
 import { HOME, LOGIN } from '../../constants/routeUrl';
 import { useAuthContext } from '../../context/Auth';
+import { postJoin } from '../../api/member';
 
 const Register = () => {
   const searchParams = new URLSearchParams(window.location.search);
