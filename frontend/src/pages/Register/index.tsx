@@ -4,6 +4,9 @@ import Icon from '../../components/Icon';
 import NavBarTitle from '../../components/NavBarTitle';
 import * as S from './styles';
 import { postJoin } from '../../api/member';
+import { useNavigate } from 'react-router-dom';
+import { HOME, LOGIN } from '../../constants/routeUrl';
+import { useAuthContext } from '../../context/Auth';
 
 const Register = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -13,7 +16,9 @@ const Register = () => {
 
   const [nicknameInputValue, setNicknameValue] = useState<string>(nickname);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const { handleLogin } = useAuthContext();
   const profileImageInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const onProfileImageClick = () => {
     if (!profileImageInputRef.current)
@@ -31,8 +36,20 @@ const Register = () => {
     setNicknameValue(e.currentTarget.value);
   };
 
-  const onSubmit = () => {
-    postJoin(nicknameInputValue, profileImageFile as File, oauthId);
+  const onSubmit = async () => {
+    const res = await postJoin(
+      nicknameInputValue,
+      profileImageFile as File,
+      oauthId,
+    );
+
+    if (res.data.success) {
+      const { jwt } = res.data.data;
+      handleLogin(jwt);
+      navigate(HOME);
+    } else {
+      navigate(LOGIN);
+    }
   };
 
   useEffect(() => {
