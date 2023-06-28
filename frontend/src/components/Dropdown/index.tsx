@@ -4,14 +4,21 @@ import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
 import * as S from './styles';
 
+interface LocationData {
+  locationDetails: string;
+  locationShortening: string;
+}
+
 interface DropdownProps {
-  options: string[];
+  options: LocationData[];
   useSetting: boolean;
   isReverse: boolean;
 }
 
 const Dropdown = ({ options, useSetting, isReverse }: DropdownProps) => {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState<string>(
+    options[0]?.locationShortening,
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick = (option: string) => {
@@ -41,7 +48,7 @@ const Dropdown = ({ options, useSetting, isReverse }: DropdownProps) => {
           {options.map((option, index) => (
             <DropdownPanel
               key={index}
-              option={option}
+              option={option.locationShortening}
               onClick={handleOptionClick}
             />
           ))}
