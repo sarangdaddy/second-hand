@@ -9,8 +9,9 @@ interface DetailItemProps {
   chatRoomCount: number;
   watchlistCount: number;
   isWatchlistChecked: boolean;
-  productMainImgUrl: string;
-  option?: boolean;
+  imageList: string;
+  categoryTitle: string;
+  contents: string;
 }
 
 // Todo : 물품상세에서는 카테고리 id 필요
@@ -25,17 +26,18 @@ const DetailItem = ({
   chatRoomCount,
   watchlistCount,
   isWatchlistChecked,
-  productMainImgUrl,
-  option = false,
+  imageList,
+  categoryTitle,
+  contents,
 }: DetailItemProps) => {
   return (
     <>
       <div className="DetailItemContainer">
         <div className="title">{title}</div>
         <div className="subTitle">
-          카테고리 정보 필요 - {elapsedTime(updatedAt)}
+          {categoryTitle} - {elapsedTime(updatedAt)}
         </div>
-        <div className="content">컨텐츠 정보 필요</div>
+        <div className="content">{contents}</div>
         <div className="count">
           채팅 수 : {chatRoomCount} 관심 수 : {watchlistCount} 조회수 필요
         </div>

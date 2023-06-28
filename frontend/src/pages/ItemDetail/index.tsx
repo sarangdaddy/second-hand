@@ -5,11 +5,15 @@ import DetailSliderPhotos from '../../components/DetailSliderPhotos';
 import DetailItem from '../../components/DetailItem';
 import DetailTapBar from '../../components/DetailTapBar';
 import * as S from './styles';
+import useAsync from '../../hooks/useAsync';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { getProductDetail } from '../../api/product';
 
 interface Item {
   productId: number;
   createAt: string;
   title: string;
+  contents: string;
   salesStatus: '판매중' | '예약중' | '판매완료';
   updatedAt: string;
   price: number | null;
@@ -17,12 +21,16 @@ interface Item {
   chatRoomCount: number;
   watchlistCount: number;
   isWatchlistChecked: boolean;
-  productMainImgUrl: string;
-  option?: boolean;
+  imageList: string[];
+  categoryTitle: string;
 }
 
 const ItemDetail = () => {
   const { productsId } = useParams();
+
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { data } = useAsync(() => getProductDetail(productsId, accessToken));
+  console.log(data);
 
   const navigation = useNavigate();
 
@@ -32,19 +40,24 @@ const ItemDetail = () => {
 
   // Todo : 컴포넌트 제작을 위한 샘플 아이템 (추후 삭제)
   const sampleItem: Item = {
-    productId: 100,
-    title: '춘식이 키링 팝니다! (급처)',
+    productId: 1,
+    title:
+      '호눅스가 사용하던 게임기 팝니다. 두줄이 넘어가면 ... 으로 타이틀을 감추고 있어요',
     salesStatus: '판매중',
-    createAt: '2023-06-22T08:35:03',
-    updatedAt: '2023-06-22T08:35:03',
-    price: 9900,
-    location: '역삼1동',
-    chatRoomCount: 2,
-    watchlistCount: 3,
+    contents: '빈 내용',
+    createAt: '2023-06-13T00:02:07',
+    updatedAt: '2023-06-13T00:02:07',
+    price: 398000,
+    categoryTitle: '디지털기기',
+    location: '개포2동',
+    chatRoomCount: 0,
+    watchlistCount: 0,
     isWatchlistChecked: false,
-    productMainImgUrl:
-      'https://second-hand-s3.s3.ap-northeast-2.amazonaws.com/product_images/product_100-1',
+    imageList: ['https://t1.daumcdn.net/cfile/tistory/1859421F4B9B66A92A'],
   };
+
+  // Todo : 이미지 전체 파일 넘겨주기 해야함.
+
   return (
     <>
       <NavBarTitle
@@ -62,8 +75,7 @@ const ItemDetail = () => {
         chatRoomCount={sampleItem.chatRoomCount}
         watchlistCount={sampleItem.watchlistCount}
         isWatchlistChecked={sampleItem.isWatchlistChecked}
-        productMainImgUrl={sampleItem.productMainImgUrl}
-        option={false}
+        imageList={sampleItem.imageList[0]}
       />
       <S.Main>
         <div>현재 제품은 {productsId} 번 입니다.</div>
@@ -77,7 +89,9 @@ const ItemDetail = () => {
           chatRoomCount={sampleItem.chatRoomCount}
           watchlistCount={sampleItem.watchlistCount}
           isWatchlistChecked={sampleItem.isWatchlistChecked}
-          productMainImgUrl={sampleItem.productMainImgUrl}
+          imageList={sampleItem.imageList[0]}
+          categoryTitle={sampleItem.categoryTitle}
+          contents={sampleItem.contents}
         />
       </S.Main>
       <DetailTapBar price={sampleItem.price} />
