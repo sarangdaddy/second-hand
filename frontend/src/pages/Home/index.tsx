@@ -9,6 +9,8 @@ import * as S from './styles';
 import Icon from '../../components/Icon';
 import useAsync from '../../hooks/useAsync';
 import { getProducts } from '../../api/product';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { getMembers } from '../../api/product';
 
 interface Item {
   productId: number;
@@ -25,12 +27,23 @@ interface Item {
   option?: boolean;
 }
 
+const defaultLocation = [
+  {
+    locationDetails: '서울특별시 강남구 역삼1동',
+    locationShortening: '역삼1동',
+  },
+];
+
 const HomePage = () => {
   const navigate = useNavigate();
 
   const { data } = useAsync(() => getProducts());
   const itemList = data?.data;
   const isReusltEmpty: boolean = itemList?.length === 0;
+
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { data: userData } = useAsync(() => getMembers(accessToken));
+  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
   const handleIconClick = () => {
     navigate(CATEGORY);
@@ -46,7 +59,11 @@ const HomePage = () => {
 
   return (
     <>
-      <NavBarHome type="medium" iconOnClick={handleIconClick} />
+      <NavBarHome
+        type="medium"
+        iconOnClick={handleIconClick}
+        userLocationDatas={userLocationDatas}
+      />
       {!isReusltEmpty ? (
         <div>
           {itemList?.map((item: Item) => {
