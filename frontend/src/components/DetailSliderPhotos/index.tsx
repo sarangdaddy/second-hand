@@ -9,8 +9,7 @@ interface SecondHandItemProps {
   chatRoomCount: number;
   watchlistCount: number;
   isWatchlistChecked: boolean;
-  productMainImgUrl: string;
-  option?: boolean;
+  imageList: string;
 }
 
 const DetailSliderPhotos = ({
@@ -22,13 +21,12 @@ const DetailSliderPhotos = ({
   chatRoomCount,
   watchlistCount,
   isWatchlistChecked,
-  productMainImgUrl,
-  option = false,
+  imageList,
 }: SecondHandItemProps) => {
   return (
     <>
       <S.SliderContainer>
-        <S.SliderImage src={productMainImgUrl} />
+        <S.SliderImage src={imageList} />
       </S.SliderContainer>
     </>
   );

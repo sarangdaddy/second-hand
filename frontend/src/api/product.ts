@@ -24,3 +24,19 @@ export const getMembers = async (token: string | null) => {
   });
   return res;
 };
+
+export const getProductDetail = async (
+  productsId: string | undefined,
+  token: string | null,
+) => {
+  if (!productsId) {
+    throw new Error('productsId is undefined');
+  }
+
+  const res = await axiosInstanceWithBearer.get(`/api/products/${productsId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};
