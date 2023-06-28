@@ -5,11 +5,18 @@ import * as S from './styles';
 import useAsync from '../../hooks/useAsync';
 import { getMembers } from '../../api/product';
 
+const defaultLocation = [
+  {
+    locationDetails: '서울특별시 강남구 역삼1동',
+    locationShortening: '역삼1동',
+  },
+];
+
 const UploadLocation = () => {
   // 사용자 정보 가져오기
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const { data } = useAsync(() => getMembers(accessToken));
-  console.log(data);
+  const { data: userData } = useAsync(() => getMembers(accessToken));
+  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
   return (
     <>
@@ -18,7 +25,7 @@ const UploadLocation = () => {
           <S.Left>
             <Icon name="slider" width="20" height="18" />
             <Dropdown
-              options={['역삼1동', '역삼2동']}
+              options={userLocationDatas}
               useSetting={false}
               isReverse={true}
             />
