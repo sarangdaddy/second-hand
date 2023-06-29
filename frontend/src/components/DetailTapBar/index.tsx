@@ -15,11 +15,54 @@ interface DetailTapBarProps {
   curProductsId: string | undefined;
 }
 
+interface Room {
+  roomId: string;
+  productId: string;
+  sellerId: number;
+  buyerId: number;
+}
+
 const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
   const navigate = useNavigate();
-  const handleChatClick = () => {
+
+  const handleChatClick = async () => {
     if (curProductsId) {
       const accessToken = localStorage.getItem(ACCESS_TOKEN);
+
+      // 방 생성 전에 있는 방 확인하기
+      const checkChatRoom = async () => {
+        try {
+          const response = await axios.get(
+            `http://52.79.159.39:8080/chat/rooms`,
+            {
+              headers: {
+                Authorization: 'Bearer ' + accessToken,
+                'Content-Type': 'application/json',
+              },
+            },
+          );
+          const roomsInfo = response.data.data;
+          console.log(curProductsId);
+          console.log(roomsInfo[0].productId);
+
+          // 현재 제품 ID와 일치하는 방이 있는지 확인
+          const matchedRoom = roomsInfo.find(
+            (room: Room) => String(room.productId) === curProductsId,
+          );
+
+          console.log(matchedRoom);
+
+          if (matchedRoom) {
+            // 일치하는 방으로 이동
+            enterChatRoom(matchedRoom.roomId);
+          } else {
+            // 일치하는 방이 없으면 새로운 방 생성
+            createChatRoom();
+          }
+        } catch (error) {
+          console.error('방 생성 에러:', error);
+        }
+      };
 
       // 1. productsId와 accessToken으로 방 생성
       const createChatRoom = async () => {
@@ -42,24 +85,21 @@ const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
           console.log('방 생성 완료 - roomId:', roomId);
           console.log('제품번호 - roomId:', curProductsId);
 
-          // 2. 해당 방으로 이동
+          // 해당 방으로 이동
           enterChatRoom(roomId);
         } catch (error) {
           console.error('방 생성 에러:', error);
         }
       };
 
-      // 3. 들어간 방으로 이동
+      // 방으로 이동
       const enterChatRoom = (roomId: string) => {
         navigate(`${CHATROOM}/${roomId}`);
       };
 
-      createChatRoom();
+      await checkChatRoom();
     }
 
-    // 채팅하기 버튼을 클릭했을 때 실행되는 함수
-    // productId를 사용하여 채팅방 생성하는 로직을 구현합니다.
-    // 여기서는 예시로 console.log로 productId를 출력하는 것으로 대체합니다.
     console.log('채팅방 생성 - productId:', curProductsId);
   };
 
