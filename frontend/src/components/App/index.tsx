@@ -76,9 +76,9 @@ const router = createBrowserRouter([
       {
         path: ACCOUNT,
         element: (
-          // <ProtectedRoute>
-          <Account />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
         ),
       },
       { path: LOGIN, element: <Login /> },
@@ -96,7 +96,7 @@ const router = createBrowserRouter([
   },
   { path: REGISTER, element: <Register /> },
   { path: `${ITEMDETAIL}/:productsId`, element: <ItemDetail /> },
-  { path: CHATROOM, element: <ChatRoom /> },
+  { path: `${CHATROOM}/:rommId`, element: <ChatRoom /> },
 ]);
 
 const App = () => {
