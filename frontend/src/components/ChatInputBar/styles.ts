@@ -38,7 +38,7 @@ export const ChatInput = styled.input`
   border: 1px solid #b3b3b3;
 `;
 
-export const Right = styled.div`
+export const Right = styled.button`
   width: 28px;
   height: 28px;
   border-radius: 50%;
