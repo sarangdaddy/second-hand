@@ -33,6 +33,8 @@ const ItemDetail = () => {
 
   const selectedItem: Item = data?.data;
 
+  console.log(selectedItem);
+
   const navigation = useNavigate();
 
   const handleBackIconClick = () => {
