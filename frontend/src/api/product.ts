@@ -40,3 +40,15 @@ export const getProductDetail = async (
   });
   return res;
 };
+
+export const getSeller = async (
+  token: string | null,
+  curRoomId: string | undefined,
+) => {
+  const res = await axiosInstanceWithBearer.get(`chat/room/${curRoomId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};

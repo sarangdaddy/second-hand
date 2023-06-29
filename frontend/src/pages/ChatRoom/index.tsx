@@ -10,14 +10,32 @@ import ChatRoomItem from '../../components/ChatRoomItem';
 import ChatInputBar from '../../components/ChatInputBar';
 import NavBarTitle from '../../components/NavBarTitle';
 import { ACCESS_TOKEN } from '../../constants/login';
+import useAsync from '../../hooks/useAsync';
+import { getSeller } from '../../api/product';
+
+interface ChatHistoryProps {
+  type: string;
+  sender: string;
+  message: string;
+}
 
 const ChatRoom = () => {
   const navigate = useNavigate();
-  const client = useRef<CompatClient>();
+  const client = useRef<CompatClient | null>(null);
   const curRoomId = sessionStorage.getItem('curRoomId') || undefined;
+  const curProductsId = sessionStorage.getItem('curProductsId') || undefined;
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
+  // TODO : 판매자 번호 (추후 닉네임으로 받기)
+  const sellerData = useAsync(() => getSeller(accessToken, curRoomId));
+  const sellerId = sellerData?.data?.data.sellerId;
+
+  const [chatHistoty, setChatHistory] = useState<ChatHistoryProps[] | null>(
+    null,
+  );
+
+  // 과거 대화 내역 가죠오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +49,7 @@ const ChatRoom = () => {
           },
         );
         // 여기서 데이터 처리 로직을 추가하거나 상태를 업데이트할 수 있습니다.
-        console.log(response.data); // 예시: 데이터 출력
+        setChatHistory(response.data.data.messageHistory);
       } catch (error) {
         console.error('Error fetching data:', error);
         // 에러 처리 로직을 추가할 수 있습니다.
@@ -44,9 +62,10 @@ const ChatRoom = () => {
   // Todo : 채팅 내역 마운트와 동시에 대화 내용 엘리먼트 생성하기
 
   // 소켓 통신
+  const [chatMessage, setChatMessage] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
-  const [chatMessage, setChatMessage] = useState('안녕');
-
+  // 첫 소켓 연결
   const connectHandler = () => {
     const socket = new SockJS('http://52.79.159.39:8080/ws-stomp');
 
@@ -61,7 +80,12 @@ const ChatRoom = () => {
         client.current?.subscribe(
           `/sub/chat/room/${curRoomId}`,
           (message) => {
-            setChatMessage(JSON.parse(message.body));
+            setChatHistory((prevHistory) => {
+              // 기존 대화 내역에 새로운 메시지 추가
+              return prevHistory
+                ? [...prevHistory, JSON.parse(message.body)]
+                : null;
+            });
             console.log(message.body);
           },
           {
@@ -77,24 +101,31 @@ const ChatRoom = () => {
     connectHandler();
   }, [accessToken, curRoomId]);
 
-  const sendHandler = () => {
-    client.current?.send(
-      '/pub/chat/message',
-      {
-        Authorization: 'Bearer ' + accessToken,
-        'Content-Type': 'application/json',
-      },
-      JSON.stringify({
-        type: 'TALK',
-        roomId: curRoomId,
-        message: chatMessage,
-      }),
-    );
+  // 메시지 보내기
+  const sendHandler = (inputValue: string) => {
+    if (client.current && client.current.connected) {
+      client.current.send(
+        '/pub/chat/message',
+        {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json',
+        },
+        JSON.stringify({
+          type: 'TALK',
+          roomId: curRoomId,
+          message: inputValue,
+        }),
+      );
+    }
   };
 
   const handleBackIconClick = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    sendHandler(inputValue);
+  }, [inputValue]);
 
   return (
     <>
@@ -102,13 +133,13 @@ const ChatRoom = () => {
         type="high"
         backIcon
         prevTitle="뒤로"
-        centerTitle="판매자"
+        centerTitle={sellerId}
         moreIcon
         preTitleClick={handleBackIconClick}
       />
-      <ChatRoomItem productsId={curRoomId} />
-      <ChatRoomContents />
-      <ChatInputBar onClick={sendHandler} />
+      <ChatRoomItem curProductsId={curProductsId} />
+      <ChatRoomContents chatHistory={chatHistoty} />
+      <ChatInputBar onChange={setInputValue} />
     </>
   );
 };

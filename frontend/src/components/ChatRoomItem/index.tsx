@@ -7,7 +7,7 @@ import { ACCESS_TOKEN } from '../../constants/login';
 import { getProductDetail } from '../../api/product';
 
 interface ChatRoomItemProps {
-  productsId: string | undefined;
+  curProductsId: string | undefined;
 }
 interface Item {
   productId: number;
@@ -25,15 +25,11 @@ interface Item {
   categoryTitle: string;
 }
 
-const ChatRoomItem = ({ productsId }: ChatRoomItemProps) => {
+const ChatRoomItem = ({ curProductsId }: ChatRoomItemProps) => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const { data } = useAsync(() => getProductDetail(productsId, accessToken));
+  const { data } = useAsync(() => getProductDetail(curProductsId, accessToken));
 
   const selectedItem: Item = data?.data;
-
-  console.log(productsId);
-  console.log(data);
-  console.log(selectedItem);
 
   return (
     <>

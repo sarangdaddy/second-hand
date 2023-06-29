@@ -27,13 +27,12 @@ interface Item {
 
 const ItemDetail = () => {
   const { productsId } = useParams();
+  const curProductsId: string | undefined = productsId;
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const { data } = useAsync(() => getProductDetail(productsId, accessToken));
 
   const selectedItem: Item = data?.data;
-
-  console.log(selectedItem);
 
   const navigation = useNavigate();
 
@@ -83,7 +82,10 @@ const ItemDetail = () => {
       </S.Main>
 
       {selectedItem && (
-        <DetailTapBar productsId={productsId} price={selectedItem.price} />
+        <DetailTapBar
+          curProductsId={curProductsId}
+          price={selectedItem.price}
+        />
       )}
     </>
   );
