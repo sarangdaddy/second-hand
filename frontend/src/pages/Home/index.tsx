@@ -45,6 +45,8 @@ const HomePage = () => {
   const { data: userData } = useAsync(() => getMembers(accessToken));
   const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
+  console.log(userData);
+
   const handleIconClick = () => {
     navigate(CATEGORY);
   };
