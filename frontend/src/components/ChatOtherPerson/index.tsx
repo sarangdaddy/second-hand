@@ -1,12 +1,14 @@
 import * as S from './styles';
 
-const sampleMassage = '안녕하세요. 시저 사고 싶어요. 네고 가능하세요?';
+interface Message {
+  message: string;
+}
 
-const ChatOtherPerson = () => {
+const ChatOtherPerson = ({ message }: Message) => {
   return (
     <>
       <S.ChatContainer>
-        <S.Message>{sampleMassage}</S.Message>
+        <S.Message>{message}</S.Message>
       </S.ChatContainer>
     </>
   );

@@ -12,13 +12,13 @@ import useAsync from '../../hooks/useAsync';
 import { getMembers } from '../../api/product';
 interface DetailTapBarProps {
   price: number | null;
-  productsId: string | undefined;
+  curProductsId: string | undefined;
 }
 
-const DetailTapBar = ({ price, productsId }: DetailTapBarProps) => {
+const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
   const navigate = useNavigate();
   const handleChatClick = () => {
-    if (productsId) {
+    if (curProductsId) {
       const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
       // 1. productsId와 accessToken으로 방 생성
@@ -27,7 +27,7 @@ const DetailTapBar = ({ price, productsId }: DetailTapBarProps) => {
           const response = await axios.post(
             `http://52.79.159.39:8080/chat/room/create`,
             {
-              productId: productsId,
+              productId: curProductsId,
             },
             {
               headers: {
@@ -38,7 +38,9 @@ const DetailTapBar = ({ price, productsId }: DetailTapBarProps) => {
           );
           const roomId = response.data.data.roomId;
           sessionStorage.setItem('curRoomId', roomId);
+          sessionStorage.setItem('curProductsId', curProductsId);
           console.log('방 생성 완료 - roomId:', roomId);
+          console.log('제품번호 - roomId:', curProductsId);
 
           // 2. 해당 방으로 이동
           enterChatRoom(roomId);
@@ -58,7 +60,7 @@ const DetailTapBar = ({ price, productsId }: DetailTapBarProps) => {
     // 채팅하기 버튼을 클릭했을 때 실행되는 함수
     // productId를 사용하여 채팅방 생성하는 로직을 구현합니다.
     // 여기서는 예시로 console.log로 productId를 출력하는 것으로 대체합니다.
-    console.log('채팅방 생성 - productId:', productsId);
+    console.log('채팅방 생성 - productId:', curProductsId);
   };
 
   return (
