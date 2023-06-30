@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import SockJS from 'sockjs-client';
@@ -120,6 +121,7 @@ const ChatRoom = () => {
   };
 
   const handleBackIconClick = () => {
+    sessionStorage.clear();
     navigate(-1);
   };
 
