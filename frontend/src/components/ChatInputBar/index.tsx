@@ -41,10 +41,8 @@ const ChatInputBar = ({ onChange }: ChatInputBarProps) => {
               onKeyDown={handleInputKeyPress}
             />
           </S.Left>
-          <S.Right>
-            <button onClick={handleButtonClick}>
-              <Icon name="arrowUp" fill="white" width="17" height="17" />
-            </button>
+          <S.Right onClick={handleButtonClick}>
+            <Icon name="arrowUp" fill="white" width="17" height="17" />
           </S.Right>
         </S.Menu>
       </S.ChatInputContainer>
