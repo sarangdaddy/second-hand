@@ -13,7 +13,7 @@ import ChatInputBar from '../../components/ChatInputBar';
 import NavBarTitle from '../../components/NavBarTitle';
 import { ACCESS_TOKEN } from '../../constants/login';
 import useAsync from '../../hooks/useAsync';
-import { getSeller } from '../../api/product';
+import { getSeller } from '../../api/member';
 
 interface Room {
   roomId: string;

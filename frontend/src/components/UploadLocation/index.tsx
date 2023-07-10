@@ -3,7 +3,7 @@ import Icon from '../Icon';
 import * as S from './styles';
 import { ACCESS_TOKEN } from '../../constants/login';
 import useAsync from '../../hooks/useAsync';
-import { getMembers } from '../../api/product';
+import { getMembers } from '../../api/member';
 
 const defaultLocation = [
   {

@@ -9,7 +9,7 @@ import Icon from '../Icon';
 import * as S from './styles';
 
 import useAsync from '../../hooks/useAsync';
-import { getMembers } from '../../api/product';
+import { getMembers } from '../../api/member';
 interface DetailTapBarProps {
   price: number | null;
   curProductsId: string | undefined;
