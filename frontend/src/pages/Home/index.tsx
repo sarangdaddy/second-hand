@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBarHome from '../../components/NavBarHome';
 import SecondHandItem from '../../components/SecondHandItem';
 import ErrorPage from '../Error';
-import { CATEGORY, ITEMDETAIL, SALESITEM } from '../../constants/routeUrl';
+import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import * as S from './styles';
 import Icon from '../../components/Icon';
@@ -39,7 +39,11 @@ const HomePage = () => {
 
   const { data } = useAsync(() => getProducts());
   const itemList = data?.data;
-  const isReusltEmpty: boolean = itemList?.length === 0;
+  const isResultEmpty: boolean = itemList?.length === 0;
+
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { data: userData } = useAsync(() => getMembers(accessToken));
+  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const { data: userData } = useAsync(() => getMembers(accessToken));
@@ -52,7 +56,11 @@ const HomePage = () => {
   };
 
   const handleFABClick = () => {
-    navigate(SALESITEM);
+    navigate(SALES_ITEM);
+  };
+
+  const handleItemClick = (productId: number) => {
+    navigate(`${ITEM_DETAIL}/${productId}`);
   };
 
   const handleItemClick = (productId: number) => {
@@ -66,7 +74,7 @@ const HomePage = () => {
         iconOnClick={handleIconClick}
         userLocationDatas={userLocationDatas}
       />
-      {!isReusltEmpty ? (
+      {!isResultEmpty ? (
         <div>
           {itemList?.map((item: Item) => {
             return (

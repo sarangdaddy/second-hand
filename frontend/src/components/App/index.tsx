@@ -24,9 +24,9 @@ import {
   LOGIN,
   SALES,
   CATEGORY,
-  SALESITEM,
+  SALES_ITEM,
   REGISTER,
-  ITEMDETAIL,
+  ITEM_DETAIL,
   CHATROOM,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
@@ -43,11 +43,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: HOME,
-        element: (
-          // <ProtectedRoute>
-          <HomePage />
-          // </ProtectedRoute>
-        ),
+        element: <HomePage />,
       },
       {
         path: SALES,
@@ -91,11 +87,18 @@ const router = createBrowserRouter([
     element: <CategoryPage />,
   },
   {
-    path: SALESITEM,
+    path: SALES_ITEM,
     element: <SalesItemPage />,
   },
   { path: REGISTER, element: <Register /> },
-  { path: `${ITEMDETAIL}/:productsId`, element: <ItemDetail /> },
+  {
+    path: `${ITEM_DETAIL}/:productsId`,
+    element: (
+      <ProtectedRoute>
+        <ItemDetail />
+      </ProtectedRoute>
+    ),
+  },
   { path: `${CHATROOM}/:rommId`, element: <ChatRoom /> },
 ]);
 

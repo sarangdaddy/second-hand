@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import SockJS from 'sockjs-client';
@@ -32,7 +31,7 @@ const ChatRoom = () => {
   const sellerData = useAsync(() => getSeller(accessToken, curRoomId));
   const sellerId = sellerData?.data?.data.sellerId;
 
-  const [chatHistoty, setChatHistory] = useState<ChatHistoryProps[] | null>(
+  const [chatHistory, setChatHistory] = useState<ChatHistoryProps[] | null>(
     null,
   );
 
@@ -63,7 +62,6 @@ const ChatRoom = () => {
   // Todo : 채팅 내역 마운트와 동시에 대화 내용 엘리먼트 생성하기
 
   // 소켓 통신
-  const [chatMessage, setChatMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
 
   // 첫 소켓 연결
@@ -140,7 +138,7 @@ const ChatRoom = () => {
         preTitleClick={handleBackIconClick}
       />
       <ChatRoomItem curProductsId={curProductsId} />
-      <ChatRoomContents chatHistory={chatHistoty} />
+      <ChatRoomContents chatHistory={chatHistory} />
       <ChatInputBar onChange={setInputValue} />
     </>
   );

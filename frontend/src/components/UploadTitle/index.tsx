@@ -23,7 +23,7 @@ const UploadTitle = () => {
   const [hasInputValue, setHasInputValue] = useState<boolean>(false);
   const [chooseCategory, setChooseCategory] = useState<number | null>(null);
 
-  const { postObject, setPostObject } = useContext(postSalesItemContext);
+  const { setPostObject } = useContext(postSalesItemContext);
 
   useEffect(() => {
     if (hasInputValue) {
