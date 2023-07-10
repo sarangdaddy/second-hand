@@ -99,7 +99,7 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-  { path: `${CHATROOM}/:rommId`, element: <ChatRoom /> },
+  { path: `${CHATROOM}/:roomId`, element: <ChatRoom /> },
 ]);
 
 const App = () => {

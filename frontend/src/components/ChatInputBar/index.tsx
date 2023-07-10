@@ -1,6 +1,6 @@
-import Icon from '../Icon';
 import * as S from './styles';
 
+import Icon from '../Icon';
 interface ChatInputBarProps {
   onChange: (value: string) => void;
 }
@@ -10,7 +10,7 @@ const ChatInputBar = ({ onChange }: ChatInputBarProps) => {
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      const inputElement = event.target as HTMLInputElement;
+      const inputElement = event.currentTarget;
       const inputValue = inputElement.value;
       if (inputValue) {
         onChange(inputValue);
