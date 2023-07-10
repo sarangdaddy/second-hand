@@ -10,7 +10,7 @@ import Icon from '../../components/Icon';
 import useAsync from '../../hooks/useAsync';
 import { getProducts } from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
-import { getMembers } from '../../api/product';
+import { getMembers } from '../../api/member';
 
 interface Item {
   productId: number;
@@ -45,12 +45,6 @@ const HomePage = () => {
   const { data: userData } = useAsync(() => getMembers(accessToken));
   const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const { data: userData } = useAsync(() => getMembers(accessToken));
-  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
-
-  console.log(userData);
-
   const handleIconClick = () => {
     navigate(CATEGORY);
   };
@@ -61,10 +55,6 @@ const HomePage = () => {
 
   const handleItemClick = (productId: number) => {
     navigate(`${ITEM_DETAIL}/${productId}`);
-  };
-
-  const handleItemClick = (productId: number) => {
-    navigate(`${ITEMDETAIL}/${productId}`);
   };
 
   return (

@@ -7,7 +7,7 @@ import {
 } from 'react';
 
 import { ACCESS_TOKEN } from '../constants/login';
-import { getMember } from '../api/member';
+import { getMembers } from '../api/member';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -63,7 +63,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     const fetchUserInfo = async () => {
-      const res = await getMember();
+      const accessToken = localStorage.getItem(ACCESS_TOKEN);
+      const res = await getMembers(accessToken);
       const { data } = res;
 
       setUserInfo({
