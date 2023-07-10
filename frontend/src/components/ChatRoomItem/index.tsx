@@ -1,6 +1,5 @@
-import { useParams, useNavigate } from 'react-router-dom';
-
 import * as S from './styles';
+
 import formatNumber from '../../utils/formatNumber';
 import useAsync from '../../hooks/useAsync';
 import { ACCESS_TOKEN } from '../../constants/login';
