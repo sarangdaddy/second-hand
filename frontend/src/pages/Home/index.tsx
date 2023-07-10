@@ -45,6 +45,12 @@ const HomePage = () => {
   const { data: userData } = useAsync(() => getMembers(accessToken));
   const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { data: userData } = useAsync(() => getMembers(accessToken));
+  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
+
+  console.log(userData);
+
   const handleIconClick = () => {
     navigate(CATEGORY);
   };
@@ -55,6 +61,10 @@ const HomePage = () => {
 
   const handleItemClick = (productId: number) => {
     navigate(`${ITEM_DETAIL}/${productId}`);
+  };
+
+  const handleItemClick = (productId: number) => {
+    navigate(`${ITEMDETAIL}/${productId}`);
   };
 
   return (
