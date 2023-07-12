@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+import * as S from './styles';
+
 import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
-import * as S from './styles';
 
 interface LocationData {
   locationDetails: string;
