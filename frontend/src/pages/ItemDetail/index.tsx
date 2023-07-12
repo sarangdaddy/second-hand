@@ -49,17 +49,7 @@ const ItemDetail = () => {
         preTitleClick={handleBackIconClick}
       />
       {selectedItem && (
-        <DetailSliderPhotos
-          title={selectedItem.title}
-          updatedAt={selectedItem.updatedAt}
-          salesStatus={selectedItem.salesStatus}
-          price={selectedItem.price}
-          location={selectedItem.location}
-          chatRoomCount={selectedItem.chatRoomCount}
-          watchlistCount={selectedItem.watchlistCount}
-          isWatchlistChecked={selectedItem.isWatchlistChecked}
-          imageList={selectedItem.imageList[0]}
-        />
+        <DetailSliderPhotos imageList={selectedItem.imageList[0]} />
       )}
       <S.Main>
         <div>현재 제품은 {productsId} 번 입니다.</div>
@@ -69,12 +59,8 @@ const ItemDetail = () => {
             title={selectedItem.title}
             updatedAt={selectedItem.updatedAt}
             salesStatus={selectedItem.salesStatus}
-            price={selectedItem.price}
-            location={selectedItem.location}
             chatRoomCount={selectedItem.chatRoomCount}
             watchlistCount={selectedItem.watchlistCount}
-            isWatchlistChecked={selectedItem.isWatchlistChecked}
-            imageList={selectedItem.imageList[0]}
             categoryTitle={selectedItem.categoryTitle}
             contents={selectedItem.contents}
           />
