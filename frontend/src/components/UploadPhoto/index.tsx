@@ -10,6 +10,7 @@ import Icon from '../Icon';
 interface UploadedImageType {
   id: string;
   imageUrl: string;
+  file: File;
 }
 
 const UploadPhoto = () => {
@@ -42,11 +43,23 @@ const UploadPhoto = () => {
 
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
       const imageUrl = URL.createObjectURL(file);
+      const isDuplicate = uploadedImages.some(
+        (image) =>
+          image.file.name === file.name && image.file.size === file.size,
+      );
+
+      if (isDuplicate) {
+        event.target.value = '';
+        return;
+      }
+
       const newUploadedImage: UploadedImageType = {
         id: Date.now().toString(),
         imageUrl,
+        file,
       };
 
       setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
@@ -60,6 +73,7 @@ const UploadPhoto = () => {
         files: [...(prevPostObject.files || []), formData],
       }));
     }
+    event.target.value = '';
   };
 
   const handleUploadIconClick = () => {
