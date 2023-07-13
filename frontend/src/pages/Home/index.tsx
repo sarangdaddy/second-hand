@@ -24,7 +24,7 @@ interface Item {
   watchlistCount: number;
   isWatchlistChecked: boolean;
   productMainImgUrl: string;
-  option?: boolean;
+  isSetEditOption?: boolean;
 }
 
 const defaultLocation = [
@@ -82,7 +82,7 @@ const HomePage = () => {
                   watchlistCount={item.watchlistCount}
                   isWatchlistChecked={item.isWatchlistChecked}
                   productMainImgUrl={item.productMainImgUrl}
-                  option={false}
+                  isSetEditOption={false}
                 />
               </li>
             );

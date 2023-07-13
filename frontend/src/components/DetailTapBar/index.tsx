@@ -9,6 +9,8 @@ import formatNumber from '../../utils/formatNumber';
 import Button from '../Button';
 import Icon from '../Icon';
 
+// TODO : 함수를 실행하는 부모 컴포넌트 하나가 존재한다면 패치 컴포넌트? 에러 처리가 쉬워진다. (숙제)
+
 interface DetailTapBarProps {
   price: number | null;
   curProductsId: string | undefined;
@@ -72,6 +74,7 @@ const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
 
   // TODO: 방이 있으면 "입장" 업으면 "채팅하기" 버튼 상태 변경 필요
   // TODO: 관심 제품이면 하트 색 주기
+  // TODO: 판매자 확인하고 내 제품이면 채팅시작하기 없어야함
 
   return (
     <>

@@ -12,14 +12,21 @@ interface LocationData {
 
 interface DropdownProps {
   options: LocationData[];
-  useSetting: boolean;
+  isSetLocationOption: boolean;
   isReverse: boolean;
 }
 
-const Dropdown = ({ options, useSetting, isReverse }: DropdownProps) => {
+const Dropdown = ({
+  options,
+  isSetLocationOption,
+  isReverse,
+}: DropdownProps) => {
+  // TODO : 동네설정 state를 홈에서 받아와서 필터 해주기
   const [selectedOption, setSelectedOption] = useState<string>(
     options[0]?.locationShortening,
   );
+
+  // TODO : 다른 곳 클릭하면 드롭다운 닫기 옵션 추가하기
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick = (option: string) => {
@@ -53,7 +60,7 @@ const Dropdown = ({ options, useSetting, isReverse }: DropdownProps) => {
               onClick={handleOptionClick}
             />
           ))}
-          {useSetting && (
+          {isSetLocationOption && (
             <DropdownPanel
               key={2}
               option={'내 동네 변경하기'}
