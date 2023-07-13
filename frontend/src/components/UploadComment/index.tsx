@@ -11,6 +11,9 @@ const COMMENT_PLACEHOLDER =
 
 const COMMENT_MAX_LENGTH = 500;
 
+// TODO : 엔터치면 무한이 늘어나는 텍스트에어리아 높이 제한 주기
+// https://bydawn25.tistory.com/44
+
 const UploadComment = () => {
   const [textareaValue, setTextareaValue] = useState('');
   const [textareaHeight, setTextareaHeight] = useState(110);
@@ -20,6 +23,7 @@ const UploadComment = () => {
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const inputValue = event.target.value;
+    // const rowCount = inputValue.split(/\r\n|\r|\n/).length;
     const newHeight = event.target.scrollHeight;
 
     setTextareaValue(inputValue);
@@ -41,13 +45,15 @@ const UploadComment = () => {
   return (
     <>
       <S.CommentContainer>
-        <S.CommentTextarea
-          placeholder={COMMENT_PLACEHOLDER}
-          value={textareaValue}
-          onChange={handleTextareaChange}
-          maxLength={COMMENT_MAX_LENGTH}
-          height={textareaHeight}
-        />
+        <S.testDiv>
+          <S.CommentTextarea
+            placeholder={COMMENT_PLACEHOLDER}
+            value={textareaValue}
+            onChange={handleTextareaChange}
+            maxLength={COMMENT_MAX_LENGTH}
+            height={textareaHeight}
+          />
+        </S.testDiv>
         <S.CommentLengthNotify>
           {textareaValue.length} / {COMMENT_MAX_LENGTH}
         </S.CommentLengthNotify>
