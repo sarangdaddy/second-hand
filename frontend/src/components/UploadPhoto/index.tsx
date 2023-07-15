@@ -13,6 +13,8 @@ interface UploadedImageType {
   file: File;
 }
 
+// TODO : 최대 업로드 사진 수 제한 주기
+
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -43,6 +45,9 @@ const UploadPhoto = () => {
 
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
+    console.log(event.target.files);
+    console.log(file);
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);

@@ -5,7 +5,7 @@ import * as S from './styles';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { CHATROOM } from '../../constants/routeUrl';
 import { getRoomsList, postNewChatRoom } from '../../api/chat';
-import formatNumber from '../../utils/formatNumber';
+import { formatNumber } from '../../utils/formatNumber';
 import Button from '../Button';
 import Icon from '../Icon';
 

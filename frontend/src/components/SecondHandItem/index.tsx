@@ -2,7 +2,7 @@ import * as S from './styles';
 
 import Icon from '../Icon';
 import elapsedTime from '../../utils/elapsedTime';
-import formatNumber from '../../utils/formatNumber';
+import { formatNumber } from '../../utils/formatNumber';
 import IconWithCount from './IconWithCount';
 
 interface SecondHandItemProps {
