@@ -3,7 +3,7 @@ import * as S from './styles';
 import { formatNumber } from '../../utils/formatNumber';
 import useAsync from '../../hooks/useAsync';
 import { ACCESS_TOKEN } from '../../constants/login';
-import { getProductDetail } from '../../api/product';
+import { getProductsDetail } from '../../api/product';
 
 interface ChatRoomItemProps {
   curProductsId: string | undefined;
@@ -26,7 +26,9 @@ interface Item {
 
 const ChatRoomItem = ({ curProductsId }: ChatRoomItemProps) => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const { data } = useAsync(() => getProductDetail(curProductsId, accessToken));
+  const { data } = useAsync(() =>
+    getProductsDetail(curProductsId, accessToken),
+  );
 
   const selectedItem: Item = data?.data;
 
