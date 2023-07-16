@@ -13,7 +13,7 @@ import Login from '../../pages/Login';
 import CategoryPage from '../../pages/Category';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
-import SalesItemPage from '../../pages/SalesItem';
+import SalesMyItemPage from '../../pages/SalesMyItem';
 import ChatRoom from '../../pages/ChatRoom';
 import {
   ACCOUNT,
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
   },
   {
     path: SALES_ITEM,
-    element: <SalesItemPage />,
+    element: <SalesMyItemPage />,
   },
   { path: REGISTER, element: <Register /> },
   {

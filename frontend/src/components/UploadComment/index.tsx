@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 
+import * as S from './styles';
+
 import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
-import * as S from './styles';
 
 const COMMENT_PLACEHOLDER =
   '역삼1동에 올릴 게시물 내용을 작성해주세요. (판매듬지 물품은 게시가 제한될 수 있어요.)';

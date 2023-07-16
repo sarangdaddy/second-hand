@@ -34,3 +34,22 @@ export const postNewChatRoom = async (
     console.error('방 생성 에러:', error);
   }
 };
+
+export const getChatDetails = async (
+  token: string | null,
+  curRoomId: string | undefined,
+) => {
+  try {
+    const res = await axiosInstanceWithBearer.get(
+      `/chat/room/history/${curRoomId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return res.data.data.messageHistory;
+  } catch (error) {
+    console.error('채팅 내역 조회 에러', error);
+  }
+};
