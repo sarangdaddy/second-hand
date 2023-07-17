@@ -1,6 +1,7 @@
+import * as S from './styles';
+
 import Dropdown from '../Dropdown';
 import Icon from '../Icon';
-import * as S from './styles';
 
 interface LocationData {
   locationDetails: string;
@@ -24,7 +25,7 @@ const NavBarHome = ({
         <S.ClinkElement>
           <Dropdown
             options={userLocationDatas}
-            useSetting={true}
+            isSetLocationOption={true}
             isReverse={false}
           />
         </S.ClinkElement>

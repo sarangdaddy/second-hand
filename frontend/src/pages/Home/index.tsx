@@ -1,16 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 
+import * as S from './styles';
+
 import NavBarHome from '../../components/NavBarHome';
 import SecondHandItem from '../../components/SecondHandItem';
 import ErrorPage from '../Error';
-import { CATEGORY, ITEMDETAIL, SALESITEM } from '../../constants/routeUrl';
+import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
-import * as S from './styles';
 import Icon from '../../components/Icon';
 import useAsync from '../../hooks/useAsync';
 import { getProducts } from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
-import { getMembers } from '../../api/product';
+import { getMembers } from '../../api/member';
 
 interface Item {
   productId: number;
@@ -24,39 +25,40 @@ interface Item {
   watchlistCount: number;
   isWatchlistChecked: boolean;
   productMainImgUrl: string;
-  option?: boolean;
+  isSetEditOption?: boolean;
 }
+
+// TODO : 무한 스크롤 구현하기
 
 const defaultLocation = [
   {
     locationDetails: '서울특별시 강남구 역삼1동',
     locationShortening: '역삼1동',
+    // TODO : 로케이션 ID 추가하기
   },
 ];
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const { data } = useAsync(() => getProducts());
   const itemList = data?.data;
-  const isReusltEmpty: boolean = itemList?.length === 0;
+  const isResultEmpty: boolean = itemList?.length === 0;
 
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const { data: userData } = useAsync(() => getMembers(accessToken));
   const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
-
-  console.log(userData);
 
   const handleIconClick = () => {
     navigate(CATEGORY);
   };
 
   const handleFABClick = () => {
-    navigate(SALESITEM);
+    navigate(SALES_ITEM);
   };
 
   const handleItemClick = (productId: number) => {
-    navigate(`${ITEMDETAIL}/${productId}`);
+    navigate(`${ITEM_DETAIL}/${productId}`);
   };
 
   return (
@@ -66,7 +68,7 @@ const HomePage = () => {
         iconOnClick={handleIconClick}
         userLocationDatas={userLocationDatas}
       />
-      {!isReusltEmpty ? (
+      {!isResultEmpty ? (
         <div>
           {itemList?.map((item: Item) => {
             return (
@@ -84,7 +86,7 @@ const HomePage = () => {
                   watchlistCount={item.watchlistCount}
                   isWatchlistChecked={item.isWatchlistChecked}
                   productMainImgUrl={item.productMainImgUrl}
-                  option={false}
+                  isSetEditOption={false}
                 />
               </li>
             );
