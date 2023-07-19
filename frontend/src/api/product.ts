@@ -1,7 +1,11 @@
 import { axiosInstanceWithoutBearer, axiosInstanceWithBearer } from './axios';
 
-export const getProducts = async () => {
-  const res = await axiosInstanceWithoutBearer.get(`/api/products?`);
+// http://localhost:8080/api/products?locationId=1&categoryId=1&page=20 물품 데이터 요청 예시
+
+export const getProducts = async (locationId: string | undefined) => {
+  const res = await axiosInstanceWithoutBearer.get(
+    `/api/products?locationId=${locationId}`,
+  );
   return res;
 };
 
