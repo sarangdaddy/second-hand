@@ -54,20 +54,22 @@ const ChatRoom = () => {
     checkChatDetails();
   }, [accessToken, curRoomId]);
 
-  // 소켓 통신
+  // 소켓 연결
   const connectHandler = () => {
-    // SockJS와 Stomp 클라이언트 생성
+    // SockJS 클라이언트 객체를 생성하고, 웹 소켓을 연결한다.
+    // ws-stomp는 서버의 Endpoint 경로로, 웹 소켓 통신을 위한 특정 경로를 의미한다.
     const socket = new SockJS(`${BASE_URL}/ws-stomp`);
 
-    // client.current 초기화 및 연결 수행
+    // SockJS 클라이언트 객체 socket를 STOMP 프로토콜로 오버랩하여 client.current에 할당
     client.current = Stomp.over(socket);
+    // 클라이언트 객체를 서버와 연결
     client.current.connect(
       {
         Authorization: 'Bearer ' + accessToken,
         'Content-Type': 'application/json',
       },
       () => {
-        // 연결 성공 시 해당 방을 구독하고 새로운 매시지를 수신
+        // 연결 성공 시 해당 방을 구독하면 서버로부터 새로운 매시지를 수신 한다.
         client.current?.subscribe(
           `/sub/chat/room/${curRoomId}`,
           (message) => {
@@ -77,7 +79,6 @@ const ChatRoom = () => {
                 ? [...prevHistory, JSON.parse(message.body)]
                 : null;
             });
-            // console.log(message.body);
           },
           {
             Authorization: 'Bearer ' + accessToken,
