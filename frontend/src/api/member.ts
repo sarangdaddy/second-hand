@@ -43,3 +43,37 @@ export const getSeller = async (
   });
   return res;
 };
+
+export const patchMembersLocation = async (
+  token: string | null,
+  locations: string[],
+) => {
+  const res = await axiosInstanceWithBearer.patch(
+    `/api/members/locations`,
+    locations,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return res;
+};
+
+export const patchMainLocation = async (
+  token: string | null,
+  index: number,
+) => {
+  const res = await axiosInstanceWithBearer.patch(
+    `/api/members/mainLocation`,
+    index,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return res;
+};

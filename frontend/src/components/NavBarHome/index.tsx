@@ -15,6 +15,7 @@ interface NavBarHomeProps {
   iconOnClick?: () => void;
   userLocationDatas: Location[];
   isUserLogin: boolean;
+  fetchUserData: () => Promise<void> | undefined;
 }
 
 const NavBarHome = ({
@@ -22,6 +23,7 @@ const NavBarHome = ({
   iconOnClick,
   userLocationDatas,
   isUserLogin,
+  fetchUserData,
 }: NavBarHomeProps) => {
   return (
     <S.NavBarContainer type={type}>
@@ -31,6 +33,7 @@ const NavBarHome = ({
             options={userLocationDatas}
             isSetLocationOption={isUserLogin}
             isReverse={false}
+            fetchUserData={fetchUserData}
           />
         </S.ClinkElement>
         <S.ClinkElement>
