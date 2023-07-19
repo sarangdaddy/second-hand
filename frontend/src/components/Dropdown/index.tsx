@@ -4,6 +4,8 @@ import * as S from './styles';
 
 import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { patchMainLocation } from '../../api/member';
 
 interface Location {
   locationId: string;
@@ -16,24 +18,34 @@ interface DropdownProps {
   options: Location[];
   isSetLocationOption: boolean;
   isReverse: boolean;
+  fetchUserData?: () => Promise<void> | undefined;
 }
 
 const Dropdown = ({
   options,
   isSetLocationOption,
   isReverse,
+  fetchUserData,
 }: DropdownProps) => {
-  // TODO : 동네설정 state를 홈에서 받아와서 필터 해주기
-  const [selectedOption, setSelectedOption] = useState<string>(
-    options[0]?.locationShortening,
-  );
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  console.log(options);
+
+  const mainLocation =
+    options.find((locationIndo) => locationIndo.isMainLocation)
+      ?.locationShortening || undefined;
 
   // TODO : 다른 곳 클릭하면 드롭다운 닫기 옵션 추가하기
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
-    setIsOpen(false);
+  const handleFetchUserData = async (index: number) => {
+    console.log(index);
+
+    // TODO : 유저 정보 변경하는 API 필요
+    await patchMainLocation(accessToken, index);
+
+    if (fetchUserData) {
+      fetchUserData();
+    }
   };
 
   const toggleDropdown = () => {
@@ -50,7 +62,7 @@ const Dropdown = ({
     <S.DropdownContainer>
       <S.DropdownWrapper />
       <S.DropdownHeader onClick={toggleDropdown}>
-        <S.SelectedOption>{selectedOption}</S.SelectedOption>
+        <S.SelectedOption>{mainLocation}</S.SelectedOption>
         {isReverse === false && <Icon name={'chevronDown'} width="17" />}
       </S.DropdownHeader>
       {isOpen && (
@@ -59,14 +71,18 @@ const Dropdown = ({
             <DropdownPanel
               key={index}
               option={option.locationShortening}
-              onClick={handleOptionClick}
+              onClickNonOption={
+                options.length === 1
+                  ? undefined
+                  : () => handleFetchUserData(index)
+              }
             />
           ))}
           {isSetLocationOption && (
             <DropdownPanel
               key={2}
               option={'내 동네 변경하기'}
-              onClick={handleChangeOptionClick}
+              onClickOption={handleChangeOptionClick}
               isLastPanel={true}
             />
           )}

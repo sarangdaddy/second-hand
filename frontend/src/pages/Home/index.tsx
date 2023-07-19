@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
@@ -47,7 +47,7 @@ const HomePage = () => {
   const [isUserLogin, setIsUserLogin] = useState<boolean>(true);
 
   // 사용자 정보에서 location 가져오기
-  const fetchUserData = async () => {
+  const fetchUserDataRef = useRef<() => Promise<void> | undefined>(async () => {
     const { data: userData } = await getMembers(accessToken);
     const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
@@ -56,7 +56,9 @@ const HomePage = () => {
       : setIsUserLogin(true);
 
     setCurLocationDatas(userLocationDatas);
-  };
+  });
+
+  const fetchUserData = fetchUserDataRef.current;
 
   // location정보에서 locationID로 물품 리스트 가져오기
   const fetchProductsData = async () => {
@@ -100,6 +102,7 @@ const HomePage = () => {
         iconOnClick={handleIconClick}
         userLocationDatas={curLocationDatas}
         isUserLogin={isUserLogin}
+        fetchUserData={fetchUserData}
       />
       {!isResultEmpty ? (
         <div>
