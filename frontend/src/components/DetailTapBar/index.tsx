@@ -64,11 +64,7 @@ const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
   // 방으로 이동
   const enterChatRoom = (roomId: string) => {
     sessionStorage.setItem('curRoomId', roomId);
-    if (curProductsId) {
-      sessionStorage.setItem('curProductsId', curProductsId);
-    } else {
-      sessionStorage.removeItem('curProductsId');
-    }
+    if (curProductsId) sessionStorage.setItem('curProductsId', curProductsId);
     navigate(`${CHATROOM}/${roomId}`);
   };
 
