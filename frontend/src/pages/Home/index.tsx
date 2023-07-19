@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
@@ -8,10 +9,17 @@ import ErrorPage from '../Error';
 import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
-import useAsync from '../../hooks/useAsync';
 import { getProducts } from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { getMembers } from '../../api/member';
+import { defaultLocation } from '../../constants/defaultValues';
+
+interface Location {
+  locationId: string;
+  locationDetails: string;
+  locationShortening: string;
+  isMainLocation: boolean;
+}
 
 interface Item {
   productId: number;
@@ -29,25 +37,43 @@ interface Item {
 }
 
 // TODO : 무한 스크롤 구현하기
-
-const defaultLocation = [
-  {
-    locationDetails: '서울특별시 강남구 역삼1동',
-    locationShortening: '역삼1동',
-    // TODO : 로케이션 ID 추가하기
-  },
-];
+// TODO : useMemo로 최적화 하기
 
 const HomePage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const [curLocationDatas, setCurLocationDatas] = useState<Location[]>([]);
+  const [itemList, setItemList] = useState<Item[]>([]);
 
-  const { data } = useAsync(() => getProducts());
-  const itemList = data?.data;
+  // 사용자 정보에서 location 가져오기
+  const fetchUserData = async () => {
+    const { data: userData } = await getMembers(accessToken);
+    const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
+    setCurLocationDatas(userLocationDatas);
+  };
+
+  // locarion정보에서 locarionID로 물품 리스트 가져오기
+  const fetchProductsData = async () => {
+    console.log(curLocationDatas);
+    const curLoactionId =
+      curLocationDatas.find((locationInfo) => locationInfo.isMainLocation)
+        ?.locationId || undefined;
+
+    console.log(curLoactionId);
+    const { data: productsData } = await getProducts(curLoactionId);
+    setItemList(productsData?.data);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [accessToken]);
+
+  useEffect(() => {
+    fetchProductsData();
+  }, [curLocationDatas]);
+
+  // TODO : 로딩페이지 만들기
   const isResultEmpty: boolean = itemList?.length === 0;
-
-  const { data: userData } = useAsync(() => getMembers(accessToken));
-  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
 
   const handleIconClick = () => {
     navigate(CATEGORY);
@@ -66,7 +92,7 @@ const HomePage = () => {
       <NavBarHome
         type="medium"
         iconOnClick={handleIconClick}
-        userLocationDatas={userLocationDatas}
+        userLocationDatas={curLocationDatas}
       />
       {!isResultEmpty ? (
         <div>
