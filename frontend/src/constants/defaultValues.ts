@@ -7,8 +7,8 @@ export const defaultLocation = [
   },
   {
     locationId: '12',
-    locationDetails: '서울특별시 강남구 역삼1동',
-    locationShortening: '역삼1동',
+    locationDetails: '서울특별시 강남구 삼성1동',
+    locationShortening: '삼성1동',
     isMainLocation: false,
   },
 ];

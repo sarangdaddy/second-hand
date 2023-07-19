@@ -44,15 +44,21 @@ const HomePage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const [curLocationDatas, setCurLocationDatas] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
+  const [isUserLogin, setIsUserLogin] = useState<boolean>(true);
 
   // 사용자 정보에서 location 가져오기
   const fetchUserData = async () => {
     const { data: userData } = await getMembers(accessToken);
     const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
+
+    userLocationDatas === defaultLocation
+      ? setIsUserLogin(false)
+      : setIsUserLogin(true);
+
     setCurLocationDatas(userLocationDatas);
   };
 
-  // locarion정보에서 locarionID로 물품 리스트 가져오기
+  // location정보에서 locationID로 물품 리스트 가져오기
   const fetchProductsData = async () => {
     console.log(curLocationDatas);
     const curLoactionId =
@@ -93,6 +99,7 @@ const HomePage = () => {
         type="medium"
         iconOnClick={handleIconClick}
         userLocationDatas={curLocationDatas}
+        isUserLogin={isUserLogin}
       />
       {!isResultEmpty ? (
         <div>
