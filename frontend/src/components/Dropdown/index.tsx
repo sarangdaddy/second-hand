@@ -5,13 +5,15 @@ import * as S from './styles';
 import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
 
-interface LocationData {
+interface Location {
+  locationId: string;
   locationDetails: string;
   locationShortening: string;
+  isMainLocation: boolean;
 }
 
 interface DropdownProps {
-  options: LocationData[];
+  options: Location[];
   isSetLocationOption: boolean;
   isReverse: boolean;
 }
