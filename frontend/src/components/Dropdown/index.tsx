@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
 
@@ -6,6 +7,7 @@ import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { patchMainLocation } from '../../api/member';
+import { LOCATION } from '../../constants/routeUrl';
 
 interface Location {
   locationId: string;
@@ -27,6 +29,7 @@ const Dropdown = ({
   isReverse,
   fetchUserData,
 }: DropdownProps) => {
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   console.log(options);
 
@@ -54,8 +57,8 @@ const Dropdown = ({
 
   // TODO(sarang_daddy) : "내 동네 변경하기" 기능 추후 추가 필요
   const handleChangeOptionClick = () => {
-    console.log('동네 변경 페이지로 넘어간다.');
     setIsOpen(false);
+    navigate(LOCATION);
   };
 
   return (
