@@ -31,13 +31,11 @@ const Dropdown = ({
 }: DropdownProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const [isOpen, setIsOpen] = useState(false);
 
   const mainLocation =
     options.find((locationInfo) => locationInfo.isMainLocation)
       ?.locationShortening || undefined;
-
-  // TODO : 다른 곳 클릭하면 드롭다운 닫기 옵션 추가하기
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleFetchUserData = async (index: number) => {
     console.log('클릭한 동네 배열 인덱스', index);
@@ -54,44 +52,45 @@ const Dropdown = ({
     setIsOpen((prevIsOpen) => !prevIsOpen);
   };
 
-  // TODO(sarang_daddy) : "내 동네 변경하기" 기능 추후 추가 필요
-  const handleChangeOptionClick = () => {
+  const handleChangeLocationClick = () => {
     setIsOpen(false);
     navigate(LOCATION);
   };
 
   return (
-    <S.DropdownContainer>
-      <S.DropdownWrapper />
-      <S.DropdownHeader onClick={toggleDropdown}>
-        <S.SelectedOption>{mainLocation}</S.SelectedOption>
-        {isReverse === false && <Icon name={'chevronDown'} width="17" />}
-      </S.DropdownHeader>
-      {isOpen && (
-        <S.PanelContainer isReverse={isReverse}>
-          {options.map((option, index) => (
-            <DropdownPanel
-              key={index}
-              option={option.locationShortening}
-              isMainLocation={option.isMainLocation}
-              onClickNonOption={
-                options.length === 1
-                  ? undefined
-                  : () => handleFetchUserData(index)
-              }
-            />
-          ))}
-          {isSetLocationOption && (
-            <DropdownPanel
-              key={2}
-              option={'내 동네 변경하기'}
-              onClickOption={handleChangeOptionClick}
-              isLastPanel={true}
-            />
-          )}
-        </S.PanelContainer>
-      )}
-    </S.DropdownContainer>
+    <>
+      {isOpen === true && <S.DropdownWrapper onClick={toggleDropdown} />}
+      <S.DropdownContainer>
+        <S.DropdownHeader onClick={toggleDropdown}>
+          <S.SelectedOption>{mainLocation}</S.SelectedOption>
+          {isReverse === false && <Icon name={'chevronDown'} width="17" />}
+        </S.DropdownHeader>
+        {isOpen && (
+          <S.PanelContainer isReverse={isReverse}>
+            {options.map((option, index) => (
+              <DropdownPanel
+                key={index}
+                option={option.locationShortening}
+                isMainLocation={option.isMainLocation}
+                onClickNonOption={
+                  options.length === 1
+                    ? undefined
+                    : () => handleFetchUserData(index)
+                }
+              />
+            ))}
+            {isSetLocationOption && (
+              <DropdownPanel
+                key={2}
+                option={'내 동네 변경하기'}
+                onClickOption={handleChangeLocationClick}
+                isLastPanel={true}
+              />
+            )}
+          </S.PanelContainer>
+        )}
+      </S.DropdownContainer>
+    </>
   );
 };
 

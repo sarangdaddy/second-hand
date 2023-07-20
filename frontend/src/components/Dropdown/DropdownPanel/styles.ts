@@ -10,6 +10,8 @@ export const DropdownPanel = styled.div<{
   align-items: center;
   border-bottom: 1px solid rgba(179, 179, 179, 0.39);
   ${({ isLastPanel }) => isLastPanel && `border-bottom: none;`}
+
+  z-index: 4;
 `;
 
 export const OptionTitle = styled.span<{
