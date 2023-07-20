@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const DropdownPanel = styled.div<{ isLastPanel?: boolean }>`
+export const DropdownPanel = styled.div<{
+  isLastPanel?: boolean;
+  isMainLocation?: boolean;
+}>`
   width: 240px;
   height: 45px;
   display: flex;
@@ -9,9 +12,12 @@ export const DropdownPanel = styled.div<{ isLastPanel?: boolean }>`
   ${({ isLastPanel }) => isLastPanel && `border-bottom: none;`}
 `;
 
-export const OptionTitle = styled.span<{ isLastPanel?: boolean }>`
+export const OptionTitle = styled.span<{
+  isLastPanel?: boolean;
+  isMainLocation?: boolean;
+}>`
   ${({ theme }) => theme.typo.subhead}
-  font-weight: ${({ isLastPanel }) => (isLastPanel ? '400' : '510')};
+  font-weight: ${({ isMainLocation }) => (isMainLocation ? '600' : '400')};
   ${({ theme }) => theme.color.neutralTextStrong}
   margin-left: 16px;
 `;
