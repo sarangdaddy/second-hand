@@ -15,6 +15,7 @@ import Layout from '../Layout';
 import Account from '../../pages/Account';
 import SalesMyItemPage from '../../pages/SalesMyItem';
 import ChatRoom from '../../pages/ChatRoom';
+import { Location } from '../../pages/Location';
 import {
   ACCOUNT,
   CALL_BACK,
@@ -28,6 +29,7 @@ import {
   REGISTER,
   ITEM_DETAIL,
   CHATROOM,
+  LOCATION,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
@@ -100,6 +102,7 @@ const router = createBrowserRouter([
     ),
   },
   { path: `${CHATROOM}/:roomId`, element: <ChatRoom /> },
+  { path: LOCATION, element: <Location /> },
 ]);
 
 const App = () => {
