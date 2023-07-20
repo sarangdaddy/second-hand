@@ -20,7 +20,7 @@ interface DropdownProps {
   options: Location[];
   isSetLocationOption: boolean;
   isReverse: boolean;
-  fetchUserData?: () => Promise<void> | undefined;
+  fetchUserData?: () => void;
 }
 
 const Dropdown = ({
@@ -31,17 +31,16 @@ const Dropdown = ({
 }: DropdownProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  console.log(options);
 
   const mainLocation =
-    options.find((locationIndo) => locationIndo.isMainLocation)
+    options.find((locationInfo) => locationInfo.isMainLocation)
       ?.locationShortening || undefined;
 
   // TODO : 다른 곳 클릭하면 드롭다운 닫기 옵션 추가하기
   const [isOpen, setIsOpen] = useState(false);
 
   const handleFetchUserData = async (index: number) => {
-    console.log(index);
+    console.log('클릭한 동네 배열 인덱스', index);
 
     // TODO : 유저 정보 변경하는 API 필요
     await patchMainLocation(accessToken, index);
@@ -74,6 +73,7 @@ const Dropdown = ({
             <DropdownPanel
               key={index}
               option={option.locationShortening}
+              isMainLocation={option.isMainLocation}
               onClickNonOption={
                 options.length === 1
                   ? undefined

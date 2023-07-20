@@ -2,6 +2,7 @@ import * as S from './styles';
 
 interface DropdownPanelProps {
   option: string;
+  isMainLocation?: boolean;
   onClickNonOption?: () => Promise<void> | undefined;
   onClickOption?: () => void | undefined;
   isLastPanel?: boolean;
@@ -9,6 +10,7 @@ interface DropdownPanelProps {
 
 const DropdownPanel = ({
   option,
+  isMainLocation,
   onClickNonOption,
   onClickOption,
   isLastPanel,
@@ -23,7 +25,9 @@ const DropdownPanel = ({
 
   return (
     <S.DropdownPanel onClick={handleClick} isLastPanel={isLastPanel}>
-      <S.OptionTitle isLastPanel={isLastPanel}>{option}</S.OptionTitle>
+      <S.OptionTitle isLastPanel={isLastPanel} isMainLocation={isMainLocation}>
+        {option}
+      </S.OptionTitle>
     </S.DropdownPanel>
   );
 };

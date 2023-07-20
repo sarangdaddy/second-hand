@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuthContext } from '../../context/Auth';
 import * as S from './styles';
 
 import NavBarHome from '../../components/NavBarHome';
@@ -10,8 +11,6 @@ import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import { getProducts } from '../../api/product';
-import { ACCESS_TOKEN } from '../../constants/login';
-import { getMembers } from '../../api/member';
 import { defaultLocation } from '../../constants/defaultValues';
 
 interface Location {
@@ -41,47 +40,43 @@ interface Item {
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const [curLocationDatas, setCurLocationDatas] = useState<Location[]>([]);
+  const userData = useAuthContext();
+  const isLoggedIn = userData.isLoggedIn;
+  const [curLocationData, setCurLocationData] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
-  const [isUserLogin, setIsUserLogin] = useState<boolean>(true);
+
+  console.log('홈 화면 렌더링 시 사용자 정보 : ', userData);
 
   // 사용자 정보에서 location 가져오기
-  const fetchUserDataRef = useRef<() => Promise<void> | undefined>(async () => {
-    const { data: userData } = await getMembers(accessToken);
-    const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
+  const fetchUserData = () => {
+    const userLocationData =
+      isLoggedIn === true ? userData.userInfo.locationDatas : defaultLocation;
 
-    userLocationDatas === defaultLocation
-      ? setIsUserLogin(false)
-      : setIsUserLogin(true);
-
-    setCurLocationDatas(userLocationDatas);
-  });
-
-  const fetchUserData = fetchUserDataRef.current;
+    setCurLocationData(userLocationData);
+  };
 
   // location정보에서 locationID로 물품 리스트 가져오기
   const fetchProductsData = async () => {
-    console.log(curLocationDatas);
+    console.log('현재 사용자 정보로 가져온 동네 정보', curLocationData);
     const curLoactionId =
-      curLocationDatas.find((locationInfo) => locationInfo.isMainLocation)
+      curLocationData.find((locationInfo) => locationInfo.isMainLocation)
         ?.locationId || undefined;
 
-    console.log(curLoactionId);
+    console.log('현재 사용자 동네 중 main인 동네 코드', curLoactionId);
     const { data: productsData } = await getProducts(curLoactionId);
     setItemList(productsData?.data);
   };
 
   useEffect(() => {
     fetchUserData();
-  }, [accessToken]);
+  }, [userData]);
 
   useEffect(() => {
     fetchProductsData();
-  }, [curLocationDatas]);
+  }, [curLocationData]);
 
   // TODO : 로딩페이지 만들기
-  const isResultEmpty: boolean = itemList?.length === 0;
+  const isResultEmpty: boolean = itemList.length === 0;
 
   const handleIconClick = () => {
     navigate(CATEGORY);
@@ -100,8 +95,8 @@ const HomePage = () => {
       <NavBarHome
         type="medium"
         iconOnClick={handleIconClick}
-        userLocationDatas={curLocationDatas}
-        isUserLogin={isUserLogin}
+        userLocationDatas={curLocationData}
+        isLoggedIn={isLoggedIn}
         fetchUserData={fetchUserData}
       />
       {!isResultEmpty ? (
