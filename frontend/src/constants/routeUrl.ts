@@ -11,3 +11,4 @@ export const REGISTER = '/register';
 export const ITEM_DETAIL = '/products';
 export const CHATROOM = '/chatRoom';
 export const LOCATION = `/location`;
+export const LOCATION_SET = `/locations`;

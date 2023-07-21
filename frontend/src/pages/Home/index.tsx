@@ -128,7 +128,7 @@ const HomePage = () => {
       )}
       <S.ButtonPosition>
         <Button circle active onClick={handleFABClick}>
-          <Icon name="symbol" width="18" height="20" />
+          <Icon name="symbol" width="18" height="20" fill="white" />
         </Button>
       </S.ButtonPosition>
     </>
