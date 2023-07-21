@@ -15,9 +15,22 @@ export const Signboard = styled.div`
   flex-direction: column;
   padding-top: 40px;
   padding-bottom: 48px;
+
+  span {
+    ${({ theme }) => theme.typo.footnote}
+    ${({ theme }) => theme.color.neutralTextStrong}
+  }
 `;
 
 export const BtnContainer = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+export const deleteButton = styled.div`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
