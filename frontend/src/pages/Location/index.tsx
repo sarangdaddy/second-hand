@@ -17,27 +17,24 @@ interface Location {
 export const Location = () => {
   const navigate = useNavigate();
 
-  const loggedInuserData = useAuthContext();
-  console.log(loggedInuserData);
+  const loggedInUserData = useAuthContext();
+  const curLocationData = loggedInUserData.userInfo.locationDatas;
 
-  // const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  // const [curLocationDatas, setCurLocationDatas] = useState<Location[]>([]);
-
-  // // 사용자 정보에서 location 가져오기
-  // const fetchUserDataRef = useRef<() => Promise<void> | undefined>(async () => {
-  //   const { data: userData } = await getMembers(accessToken);
-  //   const userLocationDatas = userData?.data?.locationDatas;
-
-  //   setCurLocationDatas(userLocationDatas);
-  // });
-
-  // const fetchUserData = fetchUserDataRef.current;
-
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, [accessToken]);
-
-  // console.log(curLocationDatas);
+  // API 추가되면 삭제해야함.
+  const defaultLocation = [
+    {
+      locationId: '18',
+      locationDetails: '서울특별시 강남구 역삼1동',
+      locationShortening: '역삼1동',
+      isMainLocation: true,
+    },
+    {
+      locationId: '12',
+      locationDetails: '서울특별시 강남구 삼성1동',
+      locationShortening: '삼성1동',
+      isMainLocation: false,
+    },
+  ];
 
   const handelBackClick = () => {
     navigate(-1);
@@ -58,12 +55,30 @@ export const Location = () => {
             <span>최대 2개까지 설정 가능해요.</span>
           </S.Signboard>
           <S.BtnContainer>
-            <Button active fullWidth>
-              <Icon name="symbol" width="18" height="20" />
-            </Button>
-            <Button active fullWidth>
-              <Icon name="symbol" width="18" height="20" />
-            </Button>
+            {defaultLocation.map((location) => (
+              <Button
+                key={location.locationId}
+                spaceBetween
+                fullWidth
+                active={location.isMainLocation}
+              >
+                <span>{location.locationShortening}</span>
+                <S.deleteButton>
+                  <Icon
+                    name="x"
+                    width="18"
+                    height="20"
+                    fill={location.isMainLocation ? 'white' : 'black'}
+                  />
+                </S.deleteButton>
+              </Button>
+            ))}
+            {defaultLocation.length === 1 && (
+              <Button fullWidth>
+                <Icon name="symbol" width="13" height="20" fill="black" />
+                <span>동네 추가</span>
+              </Button>
+            )}
           </S.BtnContainer>
         </S.LocationContainer>
       </S.Main>
