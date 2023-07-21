@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useAuthContext } from '../../context/Auth';
 import * as S from './styles';
 
+import { useAuthContext } from '../../context/Auth';
 import NavBarTitle from '../../components/NavBarTitle';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
+import { patchMembersLocation } from '../../api/member';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { HOME } from '../../constants/routeUrl';
 
 interface Location {
   locationId: string;
@@ -14,30 +17,46 @@ interface Location {
   isMainLocation: boolean;
 }
 
-export const Location = () => {
+export const LocationPage = () => {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const loggedInUserData = useAuthContext();
   const curLocationData = loggedInUserData.userInfo.locationDatas;
 
-  // API 추가되면 삭제해야함.
-  const defaultLocation = [
-    {
-      locationId: '18',
-      locationDetails: '서울특별시 강남구 역삼1동',
-      locationShortening: '역삼1동',
-      isMainLocation: true,
-    },
-    {
-      locationId: '12',
-      locationDetails: '서울특별시 강남구 삼성1동',
-      locationShortening: '삼성1동',
-      isMainLocation: false,
-    },
-  ];
+  const handleMainLocation = () => {
+    console.log('메인 동네 변경');
+    /*
+    1. 선택한 동네를 메인으로 한다 (메인으로 바꾸는 로직 & API 필요)
+    2. 메인으로 바뀌면 홈화면으로 돌아간다.
+    */
+  };
+
+  const handleDeleteLocation = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    console.log('동네 삭제');
+    /*
+    1. X 버튼을 클릭하면 정말로 삭제 하는지 물어본다.
+    2. 삭제를 클릭하면 유저 정보에서 동네가 삭제된다.
+    3. 삭제된 유저 정보로 Location 페이지가 재 렌더링 된다.
+    (동네 삭제하는 로직 & API 필요 - 동네가 1개만 있으면 삭제 불가 안내)
+    */
+  };
+
+  const handleAddLocation = () => {
+    console.log('동네 추가');
+    /*
+    1. 동네 추가를 누르면 동네 선택 페이지로 넘어간다.
+    2. 선택된 동네를 가져와서 고객 정보 변경 요청을 보낸다.
+    */
+
+    // 동네 리스트 변경 요청 로직
+    const locationIdList = ['3', '18'];
+    patchMembersLocation(accessToken, locationIdList);
+  };
 
   const handelBackClick = () => {
-    navigate(-1);
+    navigate(HOME);
   };
 
   return (
@@ -55,32 +74,34 @@ export const Location = () => {
             <span>최대 2개까지 설정 가능해요.</span>
           </S.Signboard>
           <S.BtnContainer>
-            {defaultLocation.map((location) => (
+            {curLocationData.map((location) => (
               <Button
                 key={location.locationId}
                 spaceBetween
                 fullWidth
                 active={location.isMainLocation}
+                onClick={handleMainLocation}
               >
                 <span>{location.locationShortening}</span>
-                <S.deleteButton>
+                <S.deleteButton onClick={handleDeleteLocation}>
                   <Icon
                     name="x"
-                    width="18"
+                    width="30"
                     height="20"
                     fill={location.isMainLocation ? 'white' : 'black'}
                   />
                 </S.deleteButton>
               </Button>
             ))}
-            {defaultLocation.length === 1 && (
-              <Button fullWidth>
+            {curLocationData.length === 1 && (
+              <Button onClick={handleAddLocation} fullWidth>
                 <Icon name="symbol" width="13" height="20" fill="black" />
                 <span>동네 추가</span>
               </Button>
             )}
           </S.BtnContainer>
         </S.LocationContainer>
+        <button onClick={handleAddLocation}>동네 변경 요청</button>
       </S.Main>
     </>
   );
