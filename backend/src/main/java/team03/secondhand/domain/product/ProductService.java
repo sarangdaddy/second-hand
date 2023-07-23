@@ -12,7 +12,9 @@ import team03.secondhand.domain.member.Member;
 import team03.secondhand.domain.member.MemberRepository;
 import team03.secondhand.domain.product.dto.ProductDataRequestDTO;
 import team03.secondhand.domain.product.dto.ProductDataResponseDTO;
+import team03.secondhand.domain.product.dto.query.ProductDetailDTO;
 import team03.secondhand.error.MemberError;
+import team03.secondhand.error.ProductError;
 import team03.secondhand.util.imageUpload.ImageUploadModule;
 
 import javax.transaction.Transactional;
@@ -22,8 +24,10 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductQueryRepository productQueryRepository;
     private final CategoryRepository categoryRepository;
     private final LocationRepository locationRepository;
     private final MemberRepository memberRepository;
@@ -33,7 +37,6 @@ public class ProductService {
      * Public Method
      */
 
-    @Transactional
     public ProductDataResponseDTO.SimpleInfo createProduct(Long memberId, ProductDataRequestDTO request) {
         if (memberId == 0L) {
             throw new MemberError.InvalidGuest();
@@ -56,13 +59,16 @@ public class ProductService {
         Product savedProduct = productRepository.save(product);
 
         // Upload Product Images
-        uploadProductImages(request.getProductImageUrls(), product);
+        uploadProductImages(request.getProductImageUrls(), savedProduct);
 
-        return convertToProductDTO(savedProduct);
+        return new ProductDataResponseDTO.SimpleInfo(savedProduct);
     }
 
-    private ProductDataResponseDTO.SimpleInfo convertToProductDTO(Product product) {
-        return new ProductDataResponseDTO.SimpleInfo(product);
+    public ProductDetailDTO getDetailProductBy(Long memberId, Long productId) {
+        Product product = productQueryRepository.getDetailProductBy(productId)
+                .orElseThrow(ProductError.NotFoundProduct::new);
+        product.incrementLookupCount();
+        return new ProductDetailDTO(memberId, product);
     }
 
     /**

@@ -8,9 +8,11 @@ import team03.secondhand.domain.product.vo.ProductSearchCondition;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static team03.secondhand.domain.category.QCategory.*;
 import static team03.secondhand.domain.location.QLocation.*;
+import static team03.secondhand.domain.member.QMember.member;
 import static team03.secondhand.domain.product.QProduct.product;
 
 @Repository
@@ -22,6 +24,17 @@ public class ProductQueryRepository {
     public ProductQueryRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
         queryFactory = new JPAQueryFactory(entityManager);
+    }
+
+    public Optional<Product> getDetailProductBy(Long productId) {
+        return Optional.ofNullable(queryFactory
+                .select(product)
+                .from(product)
+                .join(product.member, member).fetchJoin()
+                .join(product.location, location).fetchJoin()
+                .join(product.category, category).fetchJoin()
+                .where(product.productId.eq(productId))
+                .fetchOne());
     }
 
     public List<Product> getProductsBy(ProductSearchCondition condition, Pageable pageable) {
