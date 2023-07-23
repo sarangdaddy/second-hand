@@ -17,9 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProductQueryService {
-
-    final private ProductQueryRepository productQueryRepository;
-    final private ProductRepository productRepository;
+    private final ProductQueryRepository productQueryRepository;
 
 
     public List<ProductInfoDTO> getProductsBy(Long memberId, ProductSearchCondition condition, Pageable pageable) {
@@ -28,13 +26,6 @@ public class ProductQueryService {
         return products.stream()
                 .map(product -> new ProductInfoDTO(memberId, product))
                 .collect(Collectors.toList());
-    }
-
-    public ProductDetailDTO getProductBy(Long memberId, Long productId) {
-        Product product = productRepository.findProductByProductId(productId)
-                .orElseThrow(() -> new ProductError.NotFoundProduct());
-
-        return new ProductDetailDTO(product, memberId);
     }
 
 

@@ -37,8 +37,8 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public DataResponse<ProductDetailDTO> getProductsBy(@RequestAttribute Long memberId, @PathVariable Long productId) {
-        ProductDetailDTO productDetailDTO = productQueryService.getProductBy(memberId, productId);
+    public DataResponse<ProductDetailDTO> getDetailProductBy(@RequestAttribute Long memberId, @PathVariable Long productId) {
+        ProductDetailDTO productDetailDTO = productService.getDetailProductBy(memberId, productId);
         return new DataResponse<>(StatusCode.RESPONSE_SUCCESS, productDetailDTO);
     }
 
