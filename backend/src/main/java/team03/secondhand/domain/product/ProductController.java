@@ -25,7 +25,6 @@ public class ProductController {
 
     @PostMapping
     public DataResponse<ProductDataResponseDTO.SimpleInfo> createProduct(@RequestAttribute Long memberId, @ModelAttribute ProductDataRequestDTO requestDTO) {
-        log.debug("새로운 물품 등록");
         ProductDataResponseDTO.SimpleInfo createdProductInfo = productService.createProduct(memberId, requestDTO);
         return new DataResponse<>(StatusCode.REQUEST_SUCCESS, createdProductInfo);
     }
@@ -33,7 +32,6 @@ public class ProductController {
     // TODO: 프론트 테스트 끝나면 동네ID 부분 수정 바람(필수로)
     @GetMapping
     public DataResponse<List<ProductInfoDTO>> getProductsBy(@RequestAttribute Long memberId, @ModelAttribute ProductSearchCondition condition, Pageable pageable) {
-        log.debug("물품 목록 응답(필터 적용)");
         List<ProductInfoDTO> productsDTO = productQueryService.getProductsBy(memberId, condition, pageable);
         return new DataResponse<>(StatusCode.RESPONSE_SUCCESS, productsDTO);
     }
