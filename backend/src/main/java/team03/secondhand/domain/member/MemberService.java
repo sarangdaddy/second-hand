@@ -1,14 +1,9 @@
 package team03.secondhand.domain.member;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import team03.secondhand.JwtTokenProvider;
 import team03.secondhand.domain.location.Location;
 import team03.secondhand.domain.location.LocationRepository;
