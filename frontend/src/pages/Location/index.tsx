@@ -6,12 +6,12 @@ import { useAuthContext } from '../../context/Auth';
 import NavBarTitle from '../../components/NavBarTitle';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
-import { patchMembersLocation } from '../../api/member';
+import { patchMainLocation, patchMembersLocation } from '../../api/member';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { HOME } from '../../constants/routeUrl';
 
 interface Location {
-  locationId: string;
+  locationId: number;
   locationDetails: string;
   locationShortening: string;
   isMainLocation: boolean;
@@ -24,12 +24,15 @@ export const LocationPage = () => {
   const loggedInUserData = useAuthContext();
   const curLocationData = loggedInUserData.userInfo.locationDatas;
 
-  const handleMainLocation = () => {
+  const handleMainLocation = async (index: number) => {
     console.log('메인 동네 변경');
     /*
     1. 선택한 동네를 메인으로 한다 (메인으로 바꾸는 로직 & API 필요)
     2. 메인으로 바뀌면 홈화면으로 돌아간다.
     */
+
+    // 유저 동네 메인 정보 변경 요청
+    await patchMainLocation(accessToken, index);
   };
 
   const handleDeleteLocation = (event: React.MouseEvent) => {
@@ -74,13 +77,13 @@ export const LocationPage = () => {
             <span>최대 2개까지 설정 가능해요.</span>
           </S.Signboard>
           <S.BtnContainer>
-            {curLocationData.map((location) => (
+            {curLocationData.map((location, index) => (
               <Button
                 key={location.locationId}
                 spaceBetween
                 fullWidth
                 active={location.isMainLocation}
-                onClick={handleMainLocation}
+                onClick={() => handleMainLocation(index)}
               >
                 <span>{location.locationShortening}</span>
                 <S.deleteButton onClick={handleDeleteLocation}>
