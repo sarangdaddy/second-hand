@@ -8,14 +8,10 @@ import team03.secondhand.domain.category.Category;
 import team03.secondhand.domain.location.Location;
 import team03.secondhand.domain.member.Member;
 import team03.secondhand.domain.product.model.ProductWatchList;
-import team03.secondhand.domain.watchlist.Watchlist;
 import team03.secondhand.domain.product.model.ProductImages;
 import team03.secondhand.model.Timestamped;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,7 +34,7 @@ public class Product extends Timestamped {
     private String content;
 
     @Column(name = "lookup_count")
-    private final Integer lookupCount = 0;
+    private Integer lookupCount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sales_status")
@@ -70,6 +66,7 @@ public class Product extends Timestamped {
         this.category = category;
         this.location = location;
         this.member = member;
+        this.lookupCount = 0;
     }
 
     public String getCategoryTitle() {
@@ -88,12 +85,20 @@ public class Product extends Timestamped {
         return productWatchList.isWatchedByMemberId(memberId);
     }
 
+    public String getSellerNickname() {
+        return member.getNickname();
+    }
+
     public List<String> getImages() {
         return productImages.getImageUrlList();
     }
 
     public void changeImages(List<String> images) {
         this.productImages = new ProductImages(images);
+    }
+
+    public void incrementLookupCount() {
+        lookupCount++;
     }
 
 }
