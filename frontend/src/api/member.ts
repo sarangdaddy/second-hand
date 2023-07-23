@@ -46,11 +46,13 @@ export const getSeller = async (
 
 export const patchMembersLocation = async (
   token: string | null,
-  locations: string[],
+  locations: number[],
 ) => {
   const res = await axiosInstanceWithBearer.patch(
     `/api/members/locations`,
-    locations,
+    {
+      locationIdList: locations,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -43,7 +43,7 @@ export const LocationPage = () => {
     */
   };
 
-  const handleAddLocation = () => {
+  const handleAddLocation = async () => {
     console.log('동네 추가');
     /*
     1. 동네 추가를 누르면 동네 선택 페이지로 넘어간다.
@@ -51,8 +51,8 @@ export const LocationPage = () => {
     */
 
     // 동네 리스트 변경 요청 로직
-    const locationIdList = ['3', '18'];
-    patchMembersLocation(accessToken, locationIdList);
+    const locationIdList = [18, 3];
+    await patchMembersLocation(accessToken, locationIdList);
   };
 
   const handelBackClick = () => {

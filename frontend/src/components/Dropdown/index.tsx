@@ -10,7 +10,7 @@ import { patchMainLocation } from '../../api/member';
 import { LOCATION } from '../../constants/routeUrl';
 
 interface Location {
-  locationId: string;
+  locationId: number;
   locationDetails: string;
   locationShortening: string;
   isMainLocation: boolean;
