@@ -6,3 +6,11 @@ export const Main = styled.main`
   padding: 0 16px;
   width: 100%;
 `;
+
+export const location = styled.li`
+  ${({ theme }) => theme.color.neutralText}
+  ${({ theme }) => theme.typo.subhead}
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(179, 179, 179, 0.39);
+`;

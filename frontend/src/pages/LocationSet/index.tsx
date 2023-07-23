@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import * as S from './styles';
 
@@ -7,9 +7,10 @@ import NavBarTitle from '../../components/NavBarTitle';
 import { LOCATION } from '../../constants/routeUrl';
 import { getLocation } from '../../api/location';
 import useAsync from '../../hooks/useAsync';
+import { SearchBar } from '../../components/SearchBar';
 
 interface Location {
-  locationId: string;
+  locationId: number;
   locationDetails: string;
   locationShortening: string;
   isMainLocation: boolean;
@@ -20,7 +21,20 @@ export const LocationSetPage = () => {
 
   const { data } = useAsync(getLocation);
   const locationList = data?.data;
-  console.log(locationList);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState<Location[]>([]);
+
+  useEffect(() => {
+    setSearchResults(locationList);
+  }, [locationList]);
+
+  useEffect(() => {
+    const results = locationList?.filter((neighborhood: Location) =>
+      neighborhood.locationShortening.startsWith(searchTerm),
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
 
   const handelBackClick = () => {
     navigate(LOCATION);
@@ -34,11 +48,12 @@ export const LocationSetPage = () => {
         preTitleClick={handelBackClick}
       />
       <S.Main>
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <ul>
-          {locationList?.map((location: Location) => (
-            <li key={location.locationId}>
+          {searchResults?.map((location: Location) => (
+            <S.location key={location.locationId}>
               <span>{location.locationDetails}</span>
-            </li>
+            </S.location>
           ))}
         </ul>
       </S.Main>
