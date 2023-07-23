@@ -70,17 +70,16 @@ public class ProductService {
      */
 
     private void uploadProductImages(List<MultipartFile> multipartFiles, Product product) {
-        product.clearProductId();
-
+        List<String> imageUrls = new ArrayList<>();
         int indexNum = 0;
         for (MultipartFile multipartFile : multipartFiles) {
 
             indexNum += 1;
             String imgName = product.getProductId() + "-" + indexNum; // 파일 이름(물품ID + index)
             String imagePath = imageUploadModule.productImageUpload(multipartFile, imgName);
-
-            product.addProductId(imagePath);
+            imageUrls.add(imagePath);
         }
+        product.changeImages(imageUrls);
     }
 
 }
