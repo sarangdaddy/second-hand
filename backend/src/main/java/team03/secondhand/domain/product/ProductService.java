@@ -1,9 +1,5 @@
 package team03.secondhand.domain.product;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +18,10 @@ import team03.secondhand.domain.productImg.ProductImgRepository;
 import team03.secondhand.domain.watchlist.WatchlistRepository;
 import team03.secondhand.error.MemberError;
 import team03.secondhand.error.ProductError;
+import team03.secondhand.util.imageUpload.ImageUploadModule;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,12 +35,7 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final ProductImgRepository productImgRepository;
     private final WatchlistRepository watchlistRepository;
-    private final AmazonS3Client amazonS3Client;
-
-    @Value("${aws.bucketName}")
-    private String S3Bucket; // Bucket 이름
-    @Value("${aws.bucketFolderPath}")
-    private String folderPath; // 폴더 경로
+    private final ImageUploadModule imageUploadModule;
 
     /**
      * Public Method
@@ -125,26 +118,15 @@ public class ProductService {
     }
 
     private void uploadProductImages(List<MultipartFile> multipartFiles, Product product) {
+        product.clearProductId();
+
         int indexNum = 0;
         for (MultipartFile multipartFile : multipartFiles) {
+
             indexNum += 1;
-            String imgName = "product_" + product.getProductId() + "-" + indexNum; // 파일 이름(물품ID + index)
-            long size = multipartFile.getSize(); // 파일 크기
+            String imgName = product.getProductId() + "-" + indexNum; // 파일 이름(물품ID + index)
+            String imagePath = imageUploadModule.productImageUpload(multipartFile, imgName);
 
-            ObjectMetadata objectMetaData = new ObjectMetadata();
-            objectMetaData.setContentType(multipartFile.getContentType());
-            objectMetaData.setContentLength(size);
-
-            // S3에 업로드
-            try {
-                amazonS3Client.putObject(
-                        new PutObjectRequest(S3Bucket, folderPath + imgName, multipartFile.getInputStream(), objectMetaData)
-                                .withCannedAcl(CannedAccessControlList.PublicRead)
-                );
-            } catch (Exception e) {
-                log.error(("예외 발생: " + e.getMessage()));
-            }
-            String imagePath = amazonS3Client.getUrl(S3Bucket, folderPath + imgName).toString(); // 접근가능한 URL 가져오기
             product.addProductId(imagePath);
         }
     }
