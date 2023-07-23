@@ -14,7 +14,7 @@ import { getProducts } from '../../api/product';
 import { defaultLocation } from '../../constants/defaultValues';
 
 interface Location {
-  locationId: string;
+  locationId: number;
   locationDetails: string;
   locationShortening: string;
   isMainLocation: boolean;

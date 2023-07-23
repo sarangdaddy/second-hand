@@ -2,7 +2,7 @@ import { axiosInstanceWithoutBearer, axiosInstanceWithBearer } from './axios';
 
 // http://localhost:8080/api/products?locationId=1&categoryId=1&page=20 물품 데이터 요청 예시
 
-export const getProducts = async (locationId: string | undefined) => {
+export const getProducts = async (locationId: number | undefined) => {
   const res = await axiosInstanceWithoutBearer.get(
     `/api/products?locationId=${locationId}`,
   );

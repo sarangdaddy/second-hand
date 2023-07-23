@@ -1,12 +1,12 @@
 export const defaultLocation = [
   {
-    locationId: '18',
+    locationId: 18,
     locationDetails: '서울특별시 강남구 역삼1동',
     locationShortening: '역삼1동',
     isMainLocation: false,
   },
   {
-    locationId: '12',
+    locationId: 12,
     locationDetails: '서울특별시 강남구 삼성1동',
     locationShortening: '삼성1동',
     isMainLocation: true,
