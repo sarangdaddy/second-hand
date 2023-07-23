@@ -4,17 +4,17 @@ import Dropdown from '../Dropdown';
 import Icon from '../Icon';
 
 interface Location {
-  locationId: string;
+  locationId: number;
   locationDetails: string;
   locationShortening: string;
   isMainLocation: boolean;
 }
 
 interface NavBarHomeProps {
-  type: string;
-  iconOnClick?: () => void;
   userLocationDatas: Location[];
+  type: string;
   isLoggedIn: boolean;
+  iconOnClick?: () => void;
   fetchUserData: () => void;
 }
 
