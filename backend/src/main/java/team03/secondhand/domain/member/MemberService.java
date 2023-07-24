@@ -72,14 +72,12 @@ public class MemberService {
         if (foundLocations.size() != locationIdList.size()) {
             throw new MemberError.NotFoundLocation();
         }
-        member.deleteAllLocation();
-        foundLocations.forEach(member::addLocation);
+        member.changeLocation(foundLocations);
     }
 
     private void setLocations(Member member, String searchKey) {
-        Location foundLocations = locationRepository.findByLocationShortening(searchKey);
-        member.deleteAllLocation();
-        member.addLocation(foundLocations);
+        List<Location> foundLocations = locationRepository.findByLocationShortening(searchKey);
+        member.changeLocation(foundLocations);
     }
 
     private void isRegistrationBy(String oauthId) {

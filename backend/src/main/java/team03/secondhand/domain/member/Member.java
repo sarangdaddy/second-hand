@@ -11,7 +11,9 @@ import team03.secondhand.domain.watchlist.Watchlist;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -48,12 +50,11 @@ public class Member {
         this.oauthId = oauthId;
     }
 
-    public void addLocation(Location location) {
-        memberAndLocationList.add(new MemberAndLocation(this, location));
-    }
-
-    public void deleteAllLocation() {
+    public void changeLocation(List<Location> locations) {
         memberAndLocationList.clear();
+        memberAndLocationList.addAll(locations.stream()
+                .map(location -> new MemberAndLocation(this, location))
+                .collect(Collectors.toList()));
     }
 
 }
