@@ -54,5 +54,4 @@ public class MemberAndLocation {
     public void setMainLocationState() {
         mainLocationState = true;
     }
-
 }
