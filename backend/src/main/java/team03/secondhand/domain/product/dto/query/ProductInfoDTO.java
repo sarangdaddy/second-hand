@@ -17,7 +17,7 @@ public class ProductInfoDTO {
     private Long chatRoomCount;
     private Integer watchListCount;
     private Boolean isWatchlistChecked;
-    private List<String> imageList;
+    private String productMainImgUrl;
     private ProductState salesStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -31,7 +31,7 @@ public class ProductInfoDTO {
         this.chatRoomCount = 0L;
         this.watchListCount = product.getWatchCount();
         this.isWatchlistChecked = product.isWatchedByMemberId(memberId);
-        this.imageList = product.getImages();
+        this.productMainImgUrl = product.getMainImage();
         this.salesStatus = product.getSalesStatus();
         this.createdAt = product.getCreatedAt();
         this.updatedAt = product.getUpdatedAt();

@@ -93,6 +93,10 @@ public class Product extends Timestamped {
         return productImages.getImageUrlList();
     }
 
+    public String getMainImage() {
+        return productImages.getMainImage();
+    }
+
     public void changeImages(List<String> images) {
         this.productImages = new ProductImages(images);
     }

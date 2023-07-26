@@ -32,4 +32,9 @@ public class ProductImages {
                 .collect(Collectors.toList());
     }
 
+    public String getMainImage() {
+        ProductImage productImage = productImages.get(0);
+        return productImage.getImageUrl();
+    }
+
 }
