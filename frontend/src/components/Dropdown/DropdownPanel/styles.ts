@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const DropdownPanel = styled.div<{
   isLastPanel?: boolean;
-  isMainLocation?: boolean;
+  mainLocationState?: boolean;
 }>`
   width: 240px;
   height: 45px;
@@ -16,10 +16,11 @@ export const DropdownPanel = styled.div<{
 
 export const OptionTitle = styled.span<{
   isLastPanel?: boolean;
-  isMainLocation?: boolean;
+  mainLocationState?: boolean;
 }>`
   ${({ theme }) => theme.typo.subhead}
-  font-weight: ${({ isMainLocation }) => (isMainLocation ? '600' : '400')};
+  font-weight: ${({ mainLocationState }) =>
+    mainLocationState ? '600' : '400'};
   ${({ theme }) => theme.color.neutralTextStrong}
   margin-left: 16px;
 `;

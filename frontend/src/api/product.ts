@@ -9,6 +9,13 @@ export const getProducts = async (locationId: number | undefined) => {
   return res;
 };
 
+// export const getProducts = async (page, size, locationId, categoryId) => {
+//   const res = await axiosInstanceWithoutBearer.get(
+//     `/api/products?page=${page}&size=${size}&locationId=${locationId}&category-id=${categoryId}`,
+//   );
+//   return res;
+// };
+
 export const postProducts = async (
   formData: FormData,
   // token: string | null,
