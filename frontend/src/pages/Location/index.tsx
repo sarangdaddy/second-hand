@@ -14,7 +14,7 @@ interface Location {
   locationId: number;
   locationDetails: string;
   locationShortening: string;
-  isMainLocation: boolean;
+  mainLocationState: boolean;
 }
 
 export const LocationPage = () => {
@@ -23,6 +23,8 @@ export const LocationPage = () => {
 
   const loggedInUserData = useAuthContext();
   const curLocationData = loggedInUserData.userInfo.locationDatas;
+
+  console.log(loggedInUserData);
 
   const handleMainLocation = async (index: number) => {
     console.log('메인 동네 변경');
@@ -54,8 +56,9 @@ export const LocationPage = () => {
     */
 
     // 동네 리스트 변경 요청 로직
-    const locationIdList = [18, 3];
-    await patchMembersLocation(accessToken, locationIdList);
+    const locationIdList = [6, 1];
+    const mainLocationIndex = 1;
+    await patchMembersLocation(accessToken, locationIdList, mainLocationIndex);
   };
 
   const handelBackClick = () => {
@@ -82,7 +85,7 @@ export const LocationPage = () => {
                 key={location.locationId}
                 spaceBetween
                 fullWidth
-                active={location.isMainLocation}
+                active={location.mainLocationState}
                 onClick={() => handleMainLocation(index)}
               >
                 <span>{location.locationShortening}</span>
@@ -91,7 +94,7 @@ export const LocationPage = () => {
                     name="x"
                     width="30"
                     height="20"
-                    fill={location.isMainLocation ? 'white' : 'black'}
+                    fill={location.mainLocationState ? 'white' : 'black'}
                   />
                 </S.deleteButton>
               </Button>

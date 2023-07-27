@@ -46,12 +46,14 @@ export const getSeller = async (
 
 export const patchMembersLocation = async (
   token: string | null,
-  locations: number[],
+  locationIdList: number[],
+  mainLocationIndex: number,
 ) => {
   const res = await axiosInstanceWithBearer.patch(
     `/api/members/locations`,
     {
-      locationIdList: locations,
+      locationIdList,
+      mainLocationIndex,
     },
     {
       headers: {
