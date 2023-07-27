@@ -13,7 +13,7 @@ interface Location {
   locationId: number;
   locationDetails: string;
   locationShortening: string;
-  isMainLocation: boolean;
+  mainLocationState: boolean;
 }
 
 interface DropdownProps {
@@ -34,7 +34,7 @@ const Dropdown = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const mainLocation =
-    options.find((locationInfo) => locationInfo.isMainLocation)
+    options.find((locationInfo) => locationInfo.mainLocationState)
       ?.locationShortening || undefined;
 
   const handleFetchUserData = async (index: number) => {
@@ -71,7 +71,7 @@ const Dropdown = ({
               <DropdownPanel
                 key={index}
                 option={option.locationShortening}
-                isMainLocation={option.isMainLocation}
+                mainLocationState={option.mainLocationState}
                 onClickNonOption={
                   options.length === 1
                     ? undefined

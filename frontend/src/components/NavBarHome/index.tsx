@@ -7,7 +7,7 @@ interface Location {
   locationId: number;
   locationDetails: string;
   locationShortening: string;
-  isMainLocation: boolean;
+  mainLocationState: boolean;
 }
 
 interface NavBarHomeProps {

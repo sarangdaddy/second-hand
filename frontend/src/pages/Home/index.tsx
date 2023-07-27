@@ -17,7 +17,7 @@ interface Location {
   locationId: number;
   locationDetails: string;
   locationShortening: string;
-  isMainLocation: boolean;
+  mainLocationState: boolean;
 }
 
 interface Item {
@@ -59,7 +59,7 @@ const HomePage = () => {
   const fetchProductsData = async () => {
     console.log('현재 사용자 정보로 가져온 동네 정보', curLocationData);
     const curLoactionId =
-      curLocationData.find((locationInfo) => locationInfo.isMainLocation)
+      curLocationData.find((locationInfo) => locationInfo.mainLocationState)
         ?.locationId || undefined;
 
     console.log('현재 사용자 동네 중 main인 동네 코드', curLoactionId);
@@ -76,7 +76,7 @@ const HomePage = () => {
   }, [curLocationData]);
 
   // TODO : 로딩페이지 만들기
-  const isResultEmpty: boolean = itemList.length === 0;
+  const isResultEmpty: boolean = itemList?.length === 0;
 
   const handleIconClick = () => {
     navigate(CATEGORY);
@@ -89,6 +89,8 @@ const HomePage = () => {
   const handleItemClick = (productId: number) => {
     navigate(`${ITEM_DETAIL}/${productId}`);
   };
+
+  console.log(itemList);
 
   return (
     <>
