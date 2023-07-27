@@ -28,8 +28,6 @@ const Callback = () => {
       handleLogin(jwt);
       navigate(HOME);
     }
-
-    console.log(data);
   }, [data]);
 
   return <div>Callback</div>;
