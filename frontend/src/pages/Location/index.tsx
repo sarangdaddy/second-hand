@@ -20,21 +20,21 @@ interface Location {
 export const LocationPage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-
   const loggedInUserData = useAuthContext();
   const curLocationData = loggedInUserData.userInfo.locationDatas;
+  const { handleUpdateUserInfo } = useAuthContext();
 
-  console.log(loggedInUserData);
-
-  const handleMainLocation = async (index: number) => {
-    console.log('메인 동네 변경');
-    /*
-    1. 선택한 동네를 메인으로 한다 (메인으로 바꾸는 로직 & API 필요)
-    2. 메인으로 바뀌면 홈화면으로 돌아간다.
-    */
-
-    // 유저 동네 메인 정보 변경 요청
-    // await patchMembersLocation(accessToken, index);
+  const handleFetchUserData = async (index: number) => {
+    const mainLocationIndex = curLocationData.findIndex(
+      (location) => location.mainLocationState === true,
+    );
+    const locationIdList = curLocationData.map(
+      (location) => location.locationId,
+    );
+    if (mainLocationIndex !== index) locationIdList.reverse();
+    await patchMembersLocation(accessToken, locationIdList);
+    handleUpdateUserInfo();
+    navigate(HOME);
   };
 
   const handleDeleteLocation = (event: React.MouseEvent) => {
@@ -86,7 +86,7 @@ export const LocationPage = () => {
                 spaceBetween
                 fullWidth
                 active={location.mainLocationState}
-                onClick={() => handleMainLocation(index)}
+                onClick={() => handleFetchUserData(index)}
               >
                 <span>{location.locationShortening}</span>
                 <S.deleteButton onClick={handleDeleteLocation}>
