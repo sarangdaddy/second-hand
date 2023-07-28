@@ -13,4 +13,5 @@ export const location = styled.li`
   padding-top: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(179, 179, 179, 0.39);
+  cursor: pointer;
 `;

@@ -1,5 +1,4 @@
 import * as S from './styles';
-
 import Dropdown from '../Dropdown';
 import Icon from '../Icon';
 
