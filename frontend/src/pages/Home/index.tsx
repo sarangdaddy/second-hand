@@ -45,8 +45,6 @@ const HomePage = () => {
   const [curLocationData, setCurLocationData] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
 
-  console.log('홈 화면 렌더링 시 사용자 정보 : ', userData);
-
   // 사용자 정보에서 location 가져오기
   const fetchUserData = () => {
     const userLocationData =
@@ -57,12 +55,10 @@ const HomePage = () => {
 
   // location정보에서 locationID로 물품 리스트 가져오기
   const fetchProductsData = async () => {
-    console.log('현재 사용자 정보로 가져온 동네 정보', curLocationData);
     const curLoactionId =
       curLocationData.find((locationInfo) => locationInfo.mainLocationState)
         ?.locationId || undefined;
 
-    console.log('현재 사용자 동네 중 main인 동네 코드', curLoactionId);
     const { data: productsData } = await getProducts(curLoactionId);
     setItemList(productsData?.data);
   };
@@ -90,8 +86,6 @@ const HomePage = () => {
     navigate(`${ITEM_DETAIL}/${productId}`);
   };
 
-  console.log(itemList);
-
   return (
     <>
       <NavBarHome
@@ -99,7 +93,7 @@ const HomePage = () => {
         iconOnClick={handleIconClick}
         userLocationDatas={curLocationData}
         isLoggedIn={isLoggedIn}
-        fetchUserData={fetchUserData}
+        // fetchUserData={fetchUserData}
       />
       {!isResultEmpty ? (
         <div>
