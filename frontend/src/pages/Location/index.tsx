@@ -6,7 +6,7 @@ import { useAuthContext } from '../../context/Auth';
 import NavBarTitle from '../../components/NavBarTitle';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
-import { patchMainLocation, patchMembersLocation } from '../../api/member';
+import { patchMembersLocation } from '../../api/member';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { HOME } from '../../constants/routeUrl';
 
@@ -34,7 +34,7 @@ export const LocationPage = () => {
     */
 
     // 유저 동네 메인 정보 변경 요청
-    await patchMainLocation(accessToken, index);
+    // await patchMembersLocation(accessToken, index);
   };
 
   const handleDeleteLocation = (event: React.MouseEvent) => {
@@ -58,7 +58,7 @@ export const LocationPage = () => {
     // 동네 리스트 변경 요청 로직
     const locationIdList = [6, 1];
     const mainLocationIndex = 1;
-    await patchMembersLocation(accessToken, locationIdList, mainLocationIndex);
+    // await patchMembersLocation(accessToken, locationIdList, mainLocationIndex);
   };
 
   const handelBackClick = () => {
