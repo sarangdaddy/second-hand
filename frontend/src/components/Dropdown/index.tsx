@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuthContext } from '../../context/Auth';
 import * as S from './styles';
 
 import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
 import { ACCESS_TOKEN } from '../../constants/login';
-import { patchMainLocation } from '../../api/member';
+import { patchMembersLocation } from '../../api/member';
 import { LOCATION } from '../../constants/routeUrl';
 
 interface Location {
@@ -20,17 +21,17 @@ interface DropdownProps {
   options: Location[];
   isSetLocationOption: boolean;
   isReverse: boolean;
-  // fetchUserData?: () => void;
 }
 
 const Dropdown = ({
   options,
   isSetLocationOption,
   isReverse,
-}: // fetchUserData,
-DropdownProps) => {
+}: DropdownProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { handleUpdateUserInfo } = useAuthContext();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const mainLocation =
@@ -38,10 +39,16 @@ DropdownProps) => {
       ?.locationShortening || undefined;
 
   const handleFetchUserData = async (index: number) => {
-    console.log('클릭한 동네 배열 인덱스', index);
+    const mainLocationIndex = options.findIndex(
+      (location) => location.mainLocationState === true,
+    );
+    const locationIdList = options.map((location) => location.locationId);
 
-    // TODO : 유저 정보 변경하는 API 필요
-    await patchMainLocation(accessToken, index);
+    if (mainLocationIndex !== index) locationIdList.reverse();
+
+    await patchMembersLocation(accessToken, locationIdList);
+    handleUpdateUserInfo();
+    setIsOpen(false);
   };
 
   const toggleDropdown = () => {

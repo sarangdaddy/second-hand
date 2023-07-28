@@ -93,7 +93,6 @@ const HomePage = () => {
         iconOnClick={handleIconClick}
         userLocationDatas={curLocationData}
         isLoggedIn={isLoggedIn}
-        // fetchUserData={fetchUserData}
       />
       {!isResultEmpty ? (
         <div>
