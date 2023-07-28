@@ -51,6 +51,8 @@ export const ModalDim = styled.div`
 export const ModalContainer = styled.div`
   background-color: white;
   border-radius: 10px;
+  white-space: pre-line;
+  text-align: center;
 
   p {
     padding: 20px;
