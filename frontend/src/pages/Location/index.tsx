@@ -26,7 +26,10 @@ export const LocationPage = () => {
   const { handleUpdateUserInfo } = useAuthContext();
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null,
+  );
+  const [modalMessage, setModalMessage] = useState<string>('');
 
   const handleFetchUserData = async (index: number) => {
     const mainLocationIndex = curLocationsData.findIndex(
@@ -41,13 +44,18 @@ export const LocationPage = () => {
     navigate(HOME);
   };
 
-  const handleDelLocation = () => {
-    /*
-  1. X 버튼을 클릭하면 정말로 삭제 하는지 물어본다.
-  2. 삭제를 클릭하면 유저 정보에서 동네가 삭제된다.
-  3. 삭제된 유저 정보로 Location 페이지가 재 렌더링 된다.
-  (동네 삭제하는 로직 & API 필요 - 동네가 1개만 있으면 삭제 불가 안내)
-  */
+  const handleDelLocation = async () => {
+    const locationIdList = curLocationsData.reduce((acc, location) => {
+      if (selectedLocation?.locationId !== location.locationId) {
+        acc.push(location.locationId);
+      }
+      return acc;
+    }, []);
+
+    await patchMembersLocation(accessToken, locationIdList);
+    handleUpdateUserInfo();
+
+    setModalOpen(false);
   };
 
   const handleAddLocation = async () => {
@@ -58,14 +66,25 @@ export const LocationPage = () => {
     */
 
     // 동네 리스트 변경 요청 로직
-    const locationIdList = [6, 1];
-    const mainLocationIndex = 1;
-    // await patchMembersLocation(accessToken, locationIdList, mainLocationIndex);
+    const locationIdList = [18, 1];
+    await patchMembersLocation(accessToken, locationIdList);
+    handleUpdateUserInfo();
   };
 
   const handleOpenModal = (event: React.MouseEvent, location: Location) => {
     event.stopPropagation();
-    setSelectedLocation(location.locationShortening);
+    setSelectedLocation(location);
+
+    if (curLocationsData.length === 1) {
+      setModalMessage(
+        `동네는 최소 1개 이상 선택해야해요.
+        새로운 동네를 등록한 후, 삭제해주세요.`,
+      );
+    } else {
+      setModalMessage(
+        `정말로 '${location.locationShortening}'을(를) 삭제하시겠습니까?`,
+      );
+    }
     setModalOpen(true);
   };
 
@@ -126,16 +145,16 @@ export const LocationPage = () => {
         {isModalOpen && (
           <S.ModalDim>
             <S.ModalContainer>
-              <p>
-                정말로 &apos;{selectedLocation}&apos;을(를) 삭제하시겠습니까?
-              </p>
+              <p>{modalMessage}</p>
               <S.ModalBtns>
                 <S.ModalBtn onClick={handleCloseModal}>
                   <span>취소</span>
                 </S.ModalBtn>
-                <S.ModalBtn onClick={handleDelLocation}>
-                  <span>삭제</span>
-                </S.ModalBtn>
+                {modalMessage.includes('삭제하시겠습니까') && (
+                  <S.ModalBtn onClick={handleDelLocation}>
+                    <span>삭제</span>
+                  </S.ModalBtn>
+                )}
               </S.ModalBtns>
             </S.ModalContainer>
           </S.ModalDim>
