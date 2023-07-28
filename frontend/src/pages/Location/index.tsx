@@ -1,15 +1,15 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
-
 import { useAuthContext } from '../../context/Auth';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { patchMembersLocation } from '../../api/member';
+
+import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
-import { patchMembersLocation } from '../../api/member';
-import { ACCESS_TOKEN } from '../../constants/login';
-import { HOME } from '../../constants/routeUrl';
-import { useState } from 'react';
+import { HOME, LOCATION_SET } from '../../constants/routeUrl';
 
 interface Location {
   locationId: number;
@@ -58,17 +58,8 @@ export const LocationPage = () => {
     setModalOpen(false);
   };
 
-  const handleAddLocation = async () => {
-    console.log('동네 추가');
-    /*
-    1. 동네 추가를 누르면 동네 선택 페이지로 넘어간다.
-    2. 선택된 동네를 가져와서 고객 정보 변경 요청을 보낸다.
-    */
-
-    // 동네 리스트 변경 요청 로직
-    const locationIdList = [18, 1];
-    await patchMembersLocation(accessToken, locationIdList);
-    handleUpdateUserInfo();
+  const handleAddClick = () => {
+    navigate(LOCATION_SET);
   };
 
   const handleOpenModal = (event: React.MouseEvent, location: Location) => {
@@ -134,14 +125,13 @@ export const LocationPage = () => {
               </Button>
             ))}
             {curLocationsData.length === 1 && (
-              <Button onClick={handleAddLocation} fullWidth>
+              <Button onClick={handleAddClick} fullWidth>
                 <Icon name="symbol" width="13" height="20" fill="black" />
                 <span>동네 추가</span>
               </Button>
             )}
           </S.BtnContainer>
         </S.LocationContainer>
-        <button onClick={handleAddLocation}>동네 변경 요청</button>
         {isModalOpen && (
           <S.ModalDim>
             <S.ModalContainer>

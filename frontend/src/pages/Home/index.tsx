@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '../../context/Auth';
-import * as S from './styles';
+import { getProducts } from '../../api/product';
 
+import * as S from './styles';
 import NavBarHome from '../../components/NavBarHome';
 import SecondHandItem from '../../components/SecondHandItem';
 import ErrorPage from '../Error';
 import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
-import { getProducts } from '../../api/product';
 import { defaultLocation } from '../../constants/defaultValues';
 
 interface Location {
@@ -45,7 +45,6 @@ const HomePage = () => {
   const [curLocationData, setCurLocationData] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
 
-  // 사용자 정보에서 location 가져오기
   const fetchUserData = () => {
     const userLocationData =
       isLoggedIn === true ? userData.userInfo.locationDatas : defaultLocation;
@@ -53,7 +52,6 @@ const HomePage = () => {
     setCurLocationData(userLocationData);
   };
 
-  // location정보에서 locationID로 물품 리스트 가져오기
   const fetchProductsData = async () => {
     const curLoactionId =
       curLocationData.find((locationInfo) => locationInfo.mainLocationState)
