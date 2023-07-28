@@ -9,6 +9,7 @@ import Icon from '../../components/Icon';
 import { patchMembersLocation } from '../../api/member';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { HOME } from '../../constants/routeUrl';
+import { useState } from 'react';
 
 interface Location {
   locationId: number;
@@ -21,14 +22,17 @@ export const LocationPage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const loggedInUserData = useAuthContext();
-  const curLocationData = loggedInUserData.userInfo.locationDatas;
+  const curLocationsData = loggedInUserData.userInfo.locationDatas;
   const { handleUpdateUserInfo } = useAuthContext();
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+
   const handleFetchUserData = async (index: number) => {
-    const mainLocationIndex = curLocationData.findIndex(
+    const mainLocationIndex = curLocationsData.findIndex(
       (location) => location.mainLocationState === true,
     );
-    const locationIdList = curLocationData.map(
+    const locationIdList = curLocationsData.map(
       (location) => location.locationId,
     );
     if (mainLocationIndex !== index) locationIdList.reverse();
@@ -37,15 +41,13 @@ export const LocationPage = () => {
     navigate(HOME);
   };
 
-  const handleDeleteLocation = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    console.log('동네 삭제');
+  const handleDelLocation = () => {
     /*
-    1. X 버튼을 클릭하면 정말로 삭제 하는지 물어본다.
-    2. 삭제를 클릭하면 유저 정보에서 동네가 삭제된다.
-    3. 삭제된 유저 정보로 Location 페이지가 재 렌더링 된다.
-    (동네 삭제하는 로직 & API 필요 - 동네가 1개만 있으면 삭제 불가 안내)
-    */
+  1. X 버튼을 클릭하면 정말로 삭제 하는지 물어본다.
+  2. 삭제를 클릭하면 유저 정보에서 동네가 삭제된다.
+  3. 삭제된 유저 정보로 Location 페이지가 재 렌더링 된다.
+  (동네 삭제하는 로직 & API 필요 - 동네가 1개만 있으면 삭제 불가 안내)
+  */
   };
 
   const handleAddLocation = async () => {
@@ -59,6 +61,17 @@ export const LocationPage = () => {
     const locationIdList = [6, 1];
     const mainLocationIndex = 1;
     // await patchMembersLocation(accessToken, locationIdList, mainLocationIndex);
+  };
+
+  const handleOpenModal = (event: React.MouseEvent, location: Location) => {
+    event.stopPropagation();
+    setSelectedLocation(location.locationShortening);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedLocation(null);
   };
 
   const handelBackClick = () => {
@@ -80,7 +93,7 @@ export const LocationPage = () => {
             <span>최대 2개까지 설정 가능해요.</span>
           </S.Signboard>
           <S.BtnContainer>
-            {curLocationData.map((location, index) => (
+            {curLocationsData.map((location, index) => (
               <Button
                 key={location.locationId}
                 spaceBetween
@@ -89,17 +102,19 @@ export const LocationPage = () => {
                 onClick={() => handleFetchUserData(index)}
               >
                 <span>{location.locationShortening}</span>
-                <S.deleteButton onClick={handleDeleteLocation}>
+                <S.DeleteButton
+                  onClick={(event) => handleOpenModal(event, location)}
+                >
                   <Icon
                     name="x"
                     width="30"
                     height="20"
                     fill={location.mainLocationState ? 'white' : 'black'}
                   />
-                </S.deleteButton>
+                </S.DeleteButton>
               </Button>
             ))}
-            {curLocationData.length === 1 && (
+            {curLocationsData.length === 1 && (
               <Button onClick={handleAddLocation} fullWidth>
                 <Icon name="symbol" width="13" height="20" fill="black" />
                 <span>동네 추가</span>
@@ -108,6 +123,23 @@ export const LocationPage = () => {
           </S.BtnContainer>
         </S.LocationContainer>
         <button onClick={handleAddLocation}>동네 변경 요청</button>
+        {isModalOpen && (
+          <S.ModalDim>
+            <S.ModalContainer>
+              <p>
+                정말로 &apos;{selectedLocation}&apos;을(를) 삭제하시겠습니까?
+              </p>
+              <S.ModalBtns>
+                <S.ModalBtn onClick={handleCloseModal}>
+                  <span>취소</span>
+                </S.ModalBtn>
+                <S.ModalBtn onClick={handleDelLocation}>
+                  <span>삭제</span>
+                </S.ModalBtn>
+              </S.ModalBtns>
+            </S.ModalContainer>
+          </S.ModalDim>
+        )}
       </S.Main>
     </>
   );
