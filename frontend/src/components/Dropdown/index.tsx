@@ -20,15 +20,15 @@ interface DropdownProps {
   options: Location[];
   isSetLocationOption: boolean;
   isReverse: boolean;
-  fetchUserData?: () => void;
+  // fetchUserData?: () => void;
 }
 
 const Dropdown = ({
   options,
   isSetLocationOption,
   isReverse,
-  fetchUserData,
-}: DropdownProps) => {
+}: // fetchUserData,
+DropdownProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const [isOpen, setIsOpen] = useState(false);
@@ -42,10 +42,6 @@ const Dropdown = ({
 
     // TODO : 유저 정보 변경하는 API 필요
     await patchMainLocation(accessToken, index);
-
-    if (fetchUserData) {
-      fetchUserData();
-    }
   };
 
   const toggleDropdown = () => {
