@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { ACCESS_TOKEN } from '../../constants/login';
 import { useAuthContext } from '../../context/Auth';
-import * as S from './styles';
+import { patchMembersLocation } from '../../api/member';
 
+import * as S from './styles';
 import DropdownPanel from './DropdownPanel';
 import Icon from '../Icon';
-import { ACCESS_TOKEN } from '../../constants/login';
-import { patchMembersLocation } from '../../api/member';
 import { LOCATION } from '../../constants/routeUrl';
 
 interface Location {
