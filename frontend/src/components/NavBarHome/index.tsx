@@ -15,7 +15,7 @@ interface NavBarHomeProps {
   type: string;
   isLoggedIn: boolean;
   iconOnClick?: () => void;
-  fetchUserData: () => void;
+  // fetchUserData: () => void;
 }
 
 const NavBarHome = ({
@@ -23,8 +23,8 @@ const NavBarHome = ({
   iconOnClick,
   userLocationDatas,
   isLoggedIn,
-  fetchUserData,
-}: NavBarHomeProps) => {
+}: // fetchUserData,
+NavBarHomeProps) => {
   return (
     <S.NavBarContainer type={type}>
       <S.NavBarBody>
@@ -33,7 +33,7 @@ const NavBarHome = ({
             options={userLocationDatas}
             isSetLocationOption={isLoggedIn}
             isReverse={false}
-            fetchUserData={fetchUserData}
+            // fetchUserData={fetchUserData}
           />
         </S.ClinkElement>
         <S.ClinkElement>
