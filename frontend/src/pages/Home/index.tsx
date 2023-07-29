@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAuthContext } from '../../context/Auth';
 import { getProducts } from '../../api/product';
@@ -44,6 +44,8 @@ const HomePage = () => {
   const isLoggedIn = userData.isLoggedIn;
   const [curLocationData, setCurLocationData] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
+  const params = useParams();
+  const categoryId = params.categoryId || '';
 
   const fetchUserData = () => {
     const userLocationData =
@@ -53,11 +55,11 @@ const HomePage = () => {
   };
 
   const fetchProductsData = async () => {
-    const curLoactionId =
+    const curLocationId =
       curLocationData.find((locationInfo) => locationInfo.mainLocationState)
         ?.locationId || undefined;
 
-    const { data: productsData } = await getProducts(curLoactionId);
+    const { data: productsData } = await getProducts(curLocationId, categoryId);
     setItemList(productsData?.data);
   };
 
@@ -67,7 +69,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchProductsData();
-  }, [curLocationData]);
+  }, [curLocationData, categoryId]);
 
   // TODO : 로딩페이지 만들기
   const isResultEmpty: boolean = itemList?.length === 0;

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: HOME,
+        path: `${HOME}/:categoryId?`,
         element: <HomePage />,
       },
       {

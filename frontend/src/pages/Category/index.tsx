@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
-
-import NavBarTitle from '../../components/NavBarTitle';
 import useAsync from '../../hooks/useAsync';
 import { getCategory } from '../../api/category';
+
+import * as S from './styles';
+import NavBarTitle from '../../components/NavBarTitle';
 
 // TODO : 카테고리 클릭시 카테고리 필터 기능 추가 적용
 
@@ -36,7 +36,10 @@ const CategoryPage = () => {
       <S.Categories>
         {categoryList?.map((category: Category) => {
           return (
-            <S.Category key={category.categoryId}>
+            <S.Category
+              key={category.categoryId}
+              onClick={() => navigate(`/${category.categoryId}`)}
+            >
               <img src={category.categoryImgUrl} width="44" height="44" />
               <span>{category.title}</span>
             </S.Category>
