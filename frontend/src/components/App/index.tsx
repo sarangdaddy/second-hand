@@ -92,7 +92,11 @@ const router = createBrowserRouter([
   },
   {
     path: SALES_ITEM,
-    element: <SalesMyItemPage />,
+    element: (
+      <ProtectedRoute>
+        <SalesMyItemPage />
+      </ProtectedRoute>
+    ),
   },
   { path: REGISTER, element: <Register /> },
   {
