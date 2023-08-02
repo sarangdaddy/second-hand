@@ -8,7 +8,7 @@ import {
 } from '../../context/SalesItem/useContext';
 
 const COMMENT_PLACEHOLDER =
-  '역삼1동에 올릴 게시물 내용을 작성해주세요. (판매듬지 물품은 게시가 제한될 수 있어요.)';
+  '동록하실 게시물 내용을 작성해주세요. (판매금지 물품은 게시가 제한될 수 있어요.)';
 
 const COMMENT_MAX_LENGTH = 500;
 

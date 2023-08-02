@@ -24,18 +24,14 @@ export const getProducts = async (
 
 export const postProducts = async (
   formData: FormData,
-  // token: string | null,
+  token: string | null,
 ) => {
   try {
-    const res = await axiosInstanceWithBearer.post(
-      `/api/products`,
-      formData,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
-    );
+    const res = await axiosInstanceWithBearer.post(`/api/products`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (res.status === 200) {
       console.log('POST 요청이 성공적으로 완료되었습니다.');
