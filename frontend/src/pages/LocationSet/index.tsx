@@ -37,7 +37,9 @@ export const LocationSetPage = () => {
     const closestLiElement = targetElement.closest('li');
 
     if (closestLiElement) {
-      const clickedLocationId = Number(targetElement.getAttribute('data-key'));
+      const clickedLocationId = Number(
+        closestLiElement.getAttribute('data-key'),
+      );
       const locationIdList = [
         ...curLocationsData.map((location) => location.locationId),
         clickedLocationId,
