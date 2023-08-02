@@ -36,7 +36,10 @@ const NavBarTitle = ({
           {centerTitle && <span>{centerTitle}</span>}
         </S.CenterTitle>
         <S.RightTitle>
-          <S.RightTitleContents onClick={rightTitleClick}>
+          <S.RightTitleContents
+            onClick={rightTitleClick}
+            disabled={!rightTitleClick}
+          >
             {rightTitle && <span>{rightTitle}</span>}
             {moreIcon && <Icon name={'ellipsis'} />}
           </S.RightTitleContents>
