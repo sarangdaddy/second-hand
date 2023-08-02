@@ -4,6 +4,8 @@ import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
+import { v4 as uuidv4 } from 'uuid';
+
 import * as S from './styles';
 import Icon from '../Icon';
 
@@ -44,40 +46,39 @@ const UploadPhoto = () => {
   };
 
   const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const files = Array.from(event.target.files || []);
 
-    console.log(event.target.files);
-    console.log(file);
+    if (uploadedImages.length + files.length > maxImageCount) {
+      alert('You can upload up to 10 images.');
+      return;
+    }
 
-    if (file) {
+    files.forEach((file) => {
       const imageUrl = URL.createObjectURL(file);
       const isDuplicate = uploadedImages.some(
         (image) =>
           image.file.name === file.name && image.file.size === file.size,
       );
 
-      if (isDuplicate) {
-        event.target.value = '';
-        return;
+      if (!isDuplicate) {
+        const newUploadedImage: UploadedImageType = {
+          id: uuidv4(),
+          imageUrl,
+          file,
+        };
+
+        setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
+        setUploadedCount((prevCount) => prevCount + 1);
+
+        const formData = new FormData();
+        formData.append('productImageUrls', file);
+
+        setPostObject((prevPostObject: PostObjectType) => ({
+          ...prevPostObject,
+          files: [...(prevPostObject.files || []), formData],
+        }));
       }
-
-      const newUploadedImage: UploadedImageType = {
-        id: Date.now().toString(),
-        imageUrl,
-        file,
-      };
-
-      setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
-      setUploadedCount((prevCount) => prevCount + 1);
-
-      const formData = new FormData();
-      formData.append('productImageUrls', file);
-
-      setPostObject((prevPostObject: PostObjectType) => ({
-        ...prevPostObject,
-        files: [...(prevPostObject.files || []), formData],
-      }));
-    }
+    });
     event.target.value = '';
   };
 
@@ -98,6 +99,7 @@ const UploadPhoto = () => {
             accept="image/*"
             onChange={handleUploadImage}
             ref={fileInputRef}
+            multiple
           />
         </S.UploadIcon>
         <S.Photos>
