@@ -1,16 +1,51 @@
-import * as S from './styles';
+import { useContext, useState, useEffect } from 'react';
 
+import {
+  postSalesItemContext,
+  PostObjectType,
+} from '../../context/SalesItem/useContext';
+import { useAuthContext } from '../../context/Auth';
+
+import * as S from './styles';
 import Dropdown from '../Dropdown';
 import Icon from '../Icon';
-import { ACCESS_TOKEN } from '../../constants/login';
-import useAsync from '../../hooks/useAsync';
-import { getMembers } from '../../api/member';
-import { defaultLocation } from '../../constants/defaultValues';
+interface Location {
+  locationId: number;
+  locationDetails: string;
+  locationShortening: string;
+  mainLocationState: boolean;
+}
 
 const UploadLocation = () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const { data: userData } = useAsync(() => getMembers(accessToken));
-  const userLocationDatas = userData?.data?.locationDatas || defaultLocation;
+  const userData = useAuthContext();
+  const isLoggedIn = userData.isLoggedIn;
+  const [curLocationData, setCurLocationData] = useState<Location[]>([]);
+  const { setPostObject } = useContext(postSalesItemContext);
+
+  const fetchUserData = () => {
+    if (isLoggedIn) {
+      const userLocationData = userData.userInfo.locationDatas;
+      setCurLocationData(userLocationData);
+    }
+  };
+
+  useEffect(() => {
+    const curLocation = curLocationData.find(
+      (locationInfo) => locationInfo.mainLocationState === true,
+    );
+
+    if (curLocation) {
+      const curLocationId = curLocation.locationId;
+      setPostObject((prevPostObject: PostObjectType) => ({
+        ...prevPostObject,
+        locationId: curLocationId,
+      }));
+    }
+  }, [curLocationData]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [userData]);
 
   return (
     <>
@@ -19,8 +54,8 @@ const UploadLocation = () => {
           <S.Left>
             <Icon name="slider" width="20" height="18" />
             <Dropdown
-              options={userLocationDatas}
-              isSetLocationOption={false}
+              options={curLocationData}
+              isSetLocationOption={isLoggedIn}
               isReverse={true}
             />
           </S.Left>
