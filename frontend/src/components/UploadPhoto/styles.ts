@@ -66,6 +66,22 @@ export const DeleteBtn = styled.div`
   right: 10px;
 `;
 
+export const MainPhoto = styled.div`
+  position: absolute;
+  bottom: 5px;
+  width: 80px;
+  height: 24px;
+  margin-right: 16px;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  ${({ theme }) => theme.color.neutralOveray};
+  ${({ theme }) => theme.color.accentText};
+  ${({ theme }) => theme.typo.caption2};
+`;
+
 export const ModalDim = styled.div`
   position: fixed;
   top: 0;
