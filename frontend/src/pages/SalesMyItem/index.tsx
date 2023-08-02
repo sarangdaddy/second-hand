@@ -14,12 +14,12 @@ import UploadPrice from '../../components/UploadPrice';
 import UploadComment from '../../components/UploadComment';
 import UploadLocation from '../../components/UploadLocation';
 import { postProducts } from '../../api/product';
-// import { ACCESS_TOKEN } from '../../constants/login';
+import { ACCESS_TOKEN } from '../../constants/login';
 
 // TODO : 사용자 설정 동네 ID를 가져와야함
 
 const SalesMyItemPage = () => {
-  // const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const navigation = useNavigate();
 
   const handleBackIconClick = () => {
@@ -31,7 +31,7 @@ const SalesMyItemPage = () => {
     price: null,
     content: null,
     categoryId: null,
-    locationId: 18, //TODO : 로그인 및 동네설정 필요
+    locationId: null,
     files: null,
   };
   const [postObject, setPostObject] = useState(initialPostObject);
@@ -53,10 +53,11 @@ const SalesMyItemPage = () => {
       });
     }
 
-    // TODO : 토큰 검토 후 상품 등록 되도록 바뀌어야 함
-    await postProducts(formData);
+    await postProducts(formData, accessToken);
     navigation(-1);
   };
+
+  console.log(postObject);
 
   return (
     <>
