@@ -45,7 +45,7 @@ const HomePage = () => {
   const [curLocationData, setCurLocationData] = useState<Location[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
   const params = useParams();
-  const categoryId = params.categoryId || '';
+  const categoryId = params.categoryId;
 
   const fetchUserData = () => {
     const userLocationData =
@@ -55,12 +55,19 @@ const HomePage = () => {
   };
 
   const fetchProductsData = async () => {
-    const curLocationId =
-      curLocationData.find((locationInfo) => locationInfo.mainLocationState)
-        ?.locationId || undefined;
+    const curLocation = curLocationData.find(
+      (locationInfo) => locationInfo.mainLocationState === true,
+    );
 
-    const { data: productsData } = await getProducts(curLocationId, categoryId);
-    setItemList(productsData?.data);
+    if (curLocation) {
+      const curLocationId = curLocation.locationId;
+
+      const { data: productsData } = await getProducts(
+        curLocationId,
+        categoryId,
+      );
+      setItemList(productsData?.data);
+    }
   };
 
   useEffect(() => {

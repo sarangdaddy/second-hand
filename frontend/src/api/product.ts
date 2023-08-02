@@ -6,9 +6,19 @@ export const getProducts = async (
   locationId: number | undefined,
   categoryId: string | undefined,
 ) => {
-  const res = await axiosInstanceWithoutBearer.get(
-    `/api/products?locationId=${locationId}&categoryId=${categoryId}`,
-  );
+  let url = `/api/products?`;
+
+  if (locationId !== undefined) {
+    url += `locationId=${locationId}`;
+    if (categoryId !== undefined) {
+      url += '&';
+    }
+  }
+  if (categoryId !== undefined) {
+    url += `categoryId=${categoryId}`;
+  }
+
+  const res = await axiosInstanceWithoutBearer.get(url);
   return res;
 };
 
