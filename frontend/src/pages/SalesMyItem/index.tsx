@@ -20,10 +20,6 @@ const SalesMyItemPage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const navigation = useNavigate();
 
-  const handleBackIconClick = () => {
-    navigation(-1);
-  };
-
   const initialPostObject: PostObjectType = {
     title: null,
     price: null,
@@ -35,6 +31,7 @@ const SalesMyItemPage = () => {
   const [postObject, setPostObject] = useState(initialPostObject);
 
   const handleUploadComplete = async () => {
+    console.log('check');
     const formData = new FormData();
 
     formData.append('title', postObject.title ?? '');
@@ -57,7 +54,14 @@ const SalesMyItemPage = () => {
     navigation(-1);
   };
 
-  console.log(postObject);
+  const isAllValuesNotNullExceptPrice = (object: PostObjectType) => {
+    const { price, ...rest } = object;
+    return Object.values(rest).every((value) => value !== null);
+  };
+
+  const handleBackIconClick = () => {
+    navigation(-1);
+  };
 
   return (
     <>
@@ -67,7 +71,11 @@ const SalesMyItemPage = () => {
             prevTitle="닫기"
             type="high"
             preTitleClick={handleBackIconClick}
-            rightTitleClick={handleUploadComplete}
+            rightTitleClick={
+              isAllValuesNotNullExceptPrice(postObject)
+                ? handleUploadComplete
+                : undefined
+            }
             centerTitle="내 물건 팔기"
             rightTitle="완료"
           />

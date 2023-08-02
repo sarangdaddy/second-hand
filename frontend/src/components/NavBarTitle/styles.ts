@@ -4,6 +4,10 @@ interface NavBarContainerProps {
   type: string;
 }
 
+interface RightTitleContentsProps {
+  disabled: boolean;
+}
+
 export const NavBarContainer = styled.div<NavBarContainerProps>`
   position: fixed;
   width: 100%;
@@ -71,8 +75,15 @@ export const PrevTitleContents = styled.div`
   cursor: pointer;
 `;
 
-export const RightTitleContents = styled.div`
+export const RightTitleContents = styled.div<RightTitleContentsProps>`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    opacity: 0.5;
+    pointer-events: none;
+  `}
 `;
