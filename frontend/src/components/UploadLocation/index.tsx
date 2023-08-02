@@ -5,13 +5,7 @@ import Icon from '../Icon';
 import { ACCESS_TOKEN } from '../../constants/login';
 import useAsync from '../../hooks/useAsync';
 import { getMembers } from '../../api/member';
-
-const defaultLocation = [
-  {
-    locationDetails: '서울특별시 강남구 역삼1동',
-    locationShortening: '역삼1동',
-  },
-];
+import { defaultLocation } from '../../constants/defaultValues';
 
 const UploadLocation = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
