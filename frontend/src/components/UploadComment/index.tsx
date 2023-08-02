@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 
-import * as S from './styles';
-
 import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
+
+import * as S from './styles';
 
 const COMMENT_PLACEHOLDER =
   '동록하실 게시물 내용을 작성해주세요. (판매금지 물품은 게시가 제한될 수 있어요.)';
@@ -16,7 +16,7 @@ const COMMENT_MAX_LENGTH = 500;
 // https://bydawn25.tistory.com/44
 
 const UploadComment = () => {
-  const [textareaValue, setTextareaValue] = useState('');
+  const [textareaValue, setTextareaValue] = useState<string | null>(null);
   const [textareaHeight, setTextareaHeight] = useState(110);
   const { setPostObject } = useContext(postSalesItemContext);
 
@@ -29,7 +29,7 @@ const UploadComment = () => {
 
     setTextareaValue(inputValue);
 
-    if (textareaValue.length > inputValue.length) {
+    if (textareaValue !== null && textareaValue.length > inputValue.length) {
       setTextareaHeight(newHeight - 22);
     } else {
       setTextareaHeight(newHeight);
@@ -49,14 +49,14 @@ const UploadComment = () => {
         <S.testDiv>
           <S.CommentTextarea
             placeholder={COMMENT_PLACEHOLDER}
-            value={textareaValue}
+            value={textareaValue || ''}
             onChange={handleTextareaChange}
             maxLength={COMMENT_MAX_LENGTH}
             height={textareaHeight}
           />
         </S.testDiv>
         <S.CommentLengthNotify>
-          {textareaValue.length} / {COMMENT_MAX_LENGTH}
+          {textareaValue ? textareaValue.length : 0} / {COMMENT_MAX_LENGTH}
         </S.CommentLengthNotify>
       </S.CommentContainer>
     </>

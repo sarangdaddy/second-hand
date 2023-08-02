@@ -1,22 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import * as S from './styles';
-
+import { postProducts } from '../../api/product';
+import { ACCESS_TOKEN } from '../../constants/login';
 import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
+
+import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
 import UploadPhoto from '../../components/UploadPhoto';
 import UploadTitle from '../../components/UploadTitle';
 import UploadPrice from '../../components/UploadPrice';
 import UploadComment from '../../components/UploadComment';
 import UploadLocation from '../../components/UploadLocation';
-import { postProducts } from '../../api/product';
-import { ACCESS_TOKEN } from '../../constants/login';
-
-// TODO : 사용자 설정 동네 ID를 가져와야함
 
 const SalesMyItemPage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
@@ -61,8 +59,8 @@ const SalesMyItemPage = () => {
 
   return (
     <>
-      <S.Main>
-        <postSalesItemContext.Provider value={{ postObject, setPostObject }}>
+      <postSalesItemContext.Provider value={{ postObject, setPostObject }}>
+        <S.Main>
           <NavBarTitle
             prevTitle="닫기"
             type="high"
@@ -75,9 +73,9 @@ const SalesMyItemPage = () => {
           <UploadTitle />
           <UploadPrice />
           <UploadComment />
-        </postSalesItemContext.Provider>
-      </S.Main>
-      <UploadLocation />
+        </S.Main>
+        <UploadLocation />
+      </postSalesItemContext.Provider>
     </>
   );
 };
