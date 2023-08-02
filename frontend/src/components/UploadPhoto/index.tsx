@@ -1,10 +1,10 @@
 import { useState, ChangeEvent, useRef, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
-import { v4 as uuidv4 } from 'uuid';
 
 import * as S from './styles';
 import Icon from '../Icon';
@@ -15,14 +15,13 @@ interface UploadedImageType {
   file: File;
 }
 
-// TODO : 최대 업로드 사진 수 제한 주기
-
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { setPostObject } = useContext(postSalesItemContext);
   const [uploadedCount, setUploadedCount] = useState<number>(0);
   const [uploadedImages, setUploadedImages] = useState<UploadedImageType[]>([]);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleDeleteBtnClick = (id: string) => {
     setUploadedImages((prevImages) =>
@@ -49,7 +48,7 @@ const UploadPhoto = () => {
     const files = Array.from(event.target.files || []);
 
     if (uploadedImages.length + files.length > maxImageCount) {
-      alert('You can upload up to 10 images.');
+      setModalOpen(true);
       return;
     }
 
@@ -86,6 +85,10 @@ const UploadPhoto = () => {
     fileInputRef.current?.click();
   };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <S.UploadPhotoContainer>
@@ -113,6 +116,18 @@ const UploadPhoto = () => {
           ))}
         </S.Photos>
       </S.UploadPhotoContainer>
+      {isModalOpen && (
+        <S.ModalDim>
+          <S.ModalContainer>
+            <p>사진은 최대 10장까지 등록 가능합니다.</p>
+            <S.ModalBtns>
+              <S.ModalBtn onClick={handleCloseModal}>
+                <span>닫기</span>
+              </S.ModalBtn>
+            </S.ModalBtns>
+          </S.ModalContainer>
+        </S.ModalDim>
+      )}
     </>
   );
 };
