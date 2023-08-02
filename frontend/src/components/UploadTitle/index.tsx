@@ -77,6 +77,7 @@ const UploadTitle = () => {
             placeholder="글제목"
             type="text"
             onChange={handleTitleInput}
+            maxLength={30}
           />
         </S.Title>
         {hasInputValue && (
