@@ -38,7 +38,9 @@ const SalesMyItemPage = () => {
     const formData = new FormData();
 
     formData.append('title', postObject.title ?? '');
-    formData.append('price', String(postObject.price) ?? '');
+    if (postObject.price != null) {
+      formData.append('price', String(postObject.price));
+    }
     formData.append('content', postObject.content ?? '');
     formData.append('categoryId', String(postObject.categoryId) ?? '');
     formData.append('locationId', String(postObject.locationId) ?? '');
