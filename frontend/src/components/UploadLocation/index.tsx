@@ -55,7 +55,7 @@ const UploadLocation = () => {
             <Icon name="slider" width="20" height="18" />
             <Dropdown
               options={curLocationData}
-              isSetLocationOption={isLoggedIn}
+              isSetLocationOption={false}
               isReverse={true}
             />
           </S.Left>
