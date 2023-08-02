@@ -106,8 +106,9 @@ const UploadPhoto = () => {
           />
         </S.UploadIcon>
         <S.Photos>
-          {uploadedImages.map((image) => (
+          {uploadedImages.map((image, index) => (
             <S.PhotoElement key={image.id}>
+              {index === 0 ? <S.MainPhoto>대표 사진</S.MainPhoto> : null}
               <S.Photo src={image.imageUrl} />
               <S.DeleteBtn onClick={() => handleDeleteBtnClick(image.id)}>
                 <Icon name="x" width="20" height="20" fill="white" />
