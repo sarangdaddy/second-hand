@@ -63,6 +63,8 @@ const SalesMyItemPage = () => {
     navigation(-1);
   };
 
+  console.log(postObject);
+
   return (
     <>
       <postSalesItemContext.Provider value={{ postObject, setPostObject }}>
