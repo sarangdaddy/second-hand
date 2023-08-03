@@ -32,7 +32,7 @@ const UploadTitle = () => {
   );
 
   useEffect(() => {
-    if (hasInputValue !== null && categoryList !== null) {
+    if (hasInputValue !== '' && categoryList !== null) {
       const chosenCategory = categoryList?.find(
         (category) => category.categoryId === selectedCategoryId,
       );

@@ -15,6 +15,8 @@ interface UploadedImageType {
   file: File;
 }
 
+//TODO : FromData를 로컬스토리지에 저장하는것은 불가능하다. 파일을 업로드 하는 순간 DB에 저장해야함.
+
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);

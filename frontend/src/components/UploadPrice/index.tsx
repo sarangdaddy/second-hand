@@ -8,10 +8,8 @@ import {
 } from '../../context/SalesItem/useContext';
 import { formatString } from '../../utils/formatNumber';
 
-// TODO : 가격 필터링 더 멋지게 바꾸기 ex) 백만 단위 천만 단위 등
-
 const UploadPrice = () => {
-  const { setPostObject } = useContext(postSalesItemContext);
+  const { postObject, setPostObject } = useContext(postSalesItemContext);
   const [inputPrice, setInputPrice] = useState<string>('');
   const [formattedPrice, setFormattedPrice] = useState<string>('');
 
@@ -29,7 +27,15 @@ const UploadPrice = () => {
       ...prevPostObject,
       price: inputPrice !== '' ? Number(inputPrice) : null,
     }));
+    setFormattedPrice(inputPrice);
   }, [inputPrice]);
+
+  useEffect(() => {
+    if (postObject.price) {
+      const localStoragePrice = postObject.price.toString();
+      setInputPrice(localStoragePrice);
+    }
+  }, [postObject]);
 
   return (
     <>
@@ -40,7 +46,7 @@ const UploadPrice = () => {
             type="text"
             pattern="^[0-9]*$"
             onChange={handlePriceInput}
-            value={formattedPrice}
+            value={inputPrice}
           />
           {inputPrice !== '' && (
             <S.FormattedPrice>₩ {formattedPrice} 원</S.FormattedPrice>
