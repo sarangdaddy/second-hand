@@ -18,7 +18,7 @@ const COMMENT_MAX_LENGTH = 500;
 const UploadComment = () => {
   const [textareaValue, setTextareaValue] = useState<string | null>(null);
   const [textareaHeight, setTextareaHeight] = useState(110);
-  const { setPostObject } = useContext(postSalesItemContext);
+  const { postObject, setPostObject } = useContext(postSalesItemContext);
 
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -42,6 +42,13 @@ const UploadComment = () => {
       content: textareaValue,
     }));
   }, [textareaValue]);
+
+  useEffect(() => {
+    if (postObject.content) {
+      const localStorageContent = postObject.content;
+      setTextareaValue(localStorageContent);
+    }
+  }, [postObject]);
 
   return (
     <>

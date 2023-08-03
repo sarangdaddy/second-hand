@@ -35,6 +35,8 @@ export const CategorySetPage = () => {
         categoryId: clickedCategoryId,
       }));
     }
+
+    navigate(-1);
   };
 
   useEffect(() => {
