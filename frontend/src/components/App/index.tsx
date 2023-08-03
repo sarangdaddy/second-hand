@@ -32,12 +32,14 @@ import {
   CHATROOM,
   LOCATION,
   LOCATION_SET,
+  CATEGORY_SET,
 } from '../../constants/routeUrl';
 import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
 import Callback from '../Callback/';
 import Register from '../../pages/Register';
 import ItemDetail from '../../pages/ItemDetail';
+import { CategorySetPage } from '../../pages/CategorySet';
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: CATEGORY,
     element: <CategoryPage />,
+  },
+  {
+    path: CATEGORY_SET,
+    element: <CategorySetPage />,
   },
   {
     path: SALES_ITEM,

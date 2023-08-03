@@ -9,8 +9,8 @@ import {
 import Icon from '../Icon';
 import useAsync from '../../hooks/useAsync';
 import { getCategory } from '../../api/category';
-
-// TODO : 카테고리 더 보기 기능 추가 필요
+import { useNavigate } from 'react-router-dom';
+import { CATEGORY_SET } from '../../constants/routeUrl';
 
 interface Category {
   categoryId: number;
@@ -19,6 +19,7 @@ interface Category {
 }
 
 const UploadTitle = () => {
+  const navigate = useNavigate();
   const { data } = useAsync(getCategory);
   const categoryList: Category[] = data?.data;
 
@@ -69,6 +70,10 @@ const UploadTitle = () => {
     }));
   };
 
+  const handleAddClick = () => {
+    navigate(CATEGORY_SET);
+  };
+
   return (
     <>
       <S.UploadTitle>
@@ -93,8 +98,7 @@ const UploadTitle = () => {
                 </S.Category>
               ))}
             </S.Categories>
-            <S.MoreIcon>
-              {/*TODO(sarang_daddy) : 카테고리 목록 리스트로 이동 추가해야함.*/}
+            <S.MoreIcon onClick={handleAddClick}>
               <Icon name="chevronRight" height="11" width="22" />
             </S.MoreIcon>
           </S.Contents>
