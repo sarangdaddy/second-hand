@@ -8,7 +8,7 @@ import {
 import * as S from './styles';
 
 const COMMENT_PLACEHOLDER =
-  '동록하실 게시물 내용을 작성해주세요. (판매금지 물품은 게시가 제한될 수 있어요.)';
+  '등록하실 게시물 내용을 작성해주세요. (판매금지 물품은 게시가 제한될 수 있어요.)';
 
 const COMMENT_MAX_LENGTH = 500;
 
