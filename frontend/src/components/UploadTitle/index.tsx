@@ -1,15 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
-
+import useAsync from '../../hooks/useAsync';
+import { getCategory } from '../../api/category';
 import {
   postSalesItemContext,
   PostObjectType,
 } from '../../context/SalesItem/useContext';
+
+import * as S from './styles';
 import Icon from '../Icon';
-import useAsync from '../../hooks/useAsync';
-import { getCategory } from '../../api/category';
-import { useNavigate } from 'react-router-dom';
 import { CATEGORY_SET } from '../../constants/routeUrl';
 
 interface Category {
@@ -23,17 +23,31 @@ const UploadTitle = () => {
   const { data } = useAsync(getCategory);
   const categoryList: Category[] = data?.data;
 
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-  const [hasInputValue, setHasInputValue] = useState<boolean>(false);
-  const [chooseCategory, setChooseCategory] = useState<number | null>(null);
+  const { postObject, setPostObject } = useContext(postSalesItemContext);
 
-  const { setPostObject } = useContext(postSalesItemContext);
+  const [randomCategories, setRandomCategories] = useState<Category[]>([]);
+  const [hasInputValue, setHasInputValue] = useState<string>('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null,
+  );
 
   useEffect(() => {
-    if (hasInputValue) {
-      const shuffledCategories = categoryList?.sort(() => 0.5 - Math.random());
-      const selectedCategories = shuffledCategories?.slice(0, 3);
-      setSelectedCategories(selectedCategories);
+    if (hasInputValue !== null && categoryList !== null) {
+      const chosenCategory = categoryList?.find(
+        (category) => category.categoryId === selectedCategoryId,
+      );
+      const otherCategories = categoryList?.filter(
+        (category) => category.categoryId !== selectedCategoryId,
+      );
+      const shuffledCategories = otherCategories?.sort(
+        () => 0.5 - Math.random(),
+      );
+      const randomCategories = shuffledCategories?.slice(0, 3);
+      if (chosenCategory) {
+        setRandomCategories([chosenCategory, ...randomCategories]);
+      } else {
+        setRandomCategories(randomCategories);
+      }
     } else {
       setPostObject((prevPostObject: PostObjectType) => ({
         ...prevPostObject,
@@ -41,18 +55,18 @@ const UploadTitle = () => {
         categoryId: null,
       }));
     }
-  }, [hasInputValue]);
+  }, [hasInputValue, categoryList]);
 
   const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     const hasValue = inputValue !== '';
 
     if (hasValue) {
-      setHasInputValue(true);
+      setHasInputValue(inputValue);
     } else {
-      setHasInputValue(false);
-      setSelectedCategories([]);
-      setChooseCategory(null);
+      setHasInputValue('');
+      setRandomCategories([]);
+      setSelectedCategoryId(null);
     }
 
     setPostObject((prevPostObject: PostObjectType) => ({
@@ -62,7 +76,7 @@ const UploadTitle = () => {
   };
 
   const handleCategoryChoice = (categoryId: number) => {
-    setChooseCategory(categoryId);
+    setSelectedCategoryId(categoryId);
 
     setPostObject((prevPostObject: PostObjectType) => ({
       ...prevPostObject,
@@ -74,6 +88,15 @@ const UploadTitle = () => {
     navigate(CATEGORY_SET);
   };
 
+  useEffect(() => {
+    if (postObject.title) {
+      setHasInputValue(postObject.title);
+    }
+    if (postObject.categoryId) {
+      setSelectedCategoryId(postObject.categoryId);
+    }
+  }, [postObject]);
+
   return (
     <>
       <S.UploadTitle>
@@ -83,16 +106,17 @@ const UploadTitle = () => {
             type="text"
             onChange={handleTitleInput}
             maxLength={30}
+            value={hasInputValue}
           />
         </S.Title>
         {hasInputValue && (
           <S.Contents>
             <S.Categories>
-              {selectedCategories.map((category) => (
+              {randomCategories?.map((category) => (
                 <S.Category
                   key={category.categoryId}
                   onClick={() => handleCategoryChoice(category.categoryId)}
-                  isActive={chooseCategory === category.categoryId}
+                  isActive={selectedCategoryId === category.categoryId}
                 >
                   {category.title}
                 </S.Category>

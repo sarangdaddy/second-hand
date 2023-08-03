@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAsync from '../../hooks/useAsync';
@@ -5,6 +6,8 @@ import { getCategory } from '../../api/category';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
+
+import { PostObjectType } from '../../context/SalesItem/useContext';
 
 interface Category {
   categoryId: number;
@@ -16,10 +19,35 @@ export const CategorySetPage = () => {
   const navigate = useNavigate();
   const { data } = useAsync(getCategory);
   const categoryList = data?.data;
+  const [storageObject, setStorageObject] = useState<PostObjectType>({});
 
   const handleAddCategory = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event.target);
+    const targetElement = event.target as Element;
+    const closestLiElement = targetElement.closest('li');
+
+    if (closestLiElement) {
+      const clickedCategoryId = Number(
+        closestLiElement.getAttribute('data-key'),
+      );
+
+      setStorageObject((prevStorageObject) => ({
+        ...prevStorageObject,
+        categoryId: clickedCategoryId,
+      }));
+    }
   };
+
+  useEffect(() => {
+    const storedPostObject = localStorage.getItem('postObject');
+    if (storedPostObject) {
+      const parsedPostObject = JSON.parse(storedPostObject);
+      setStorageObject(parsedPostObject);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('postObject', JSON.stringify(storageObject));
+  }, [storageObject]);
 
   const handleBackClick = () => {
     navigate(-1);

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { postProducts } from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
@@ -28,10 +28,11 @@ const SalesMyItemPage = () => {
     locationId: null,
     files: null,
   };
-  const [postObject, setPostObject] = useState(initialPostObject);
+
+  const [postObject, setPostObject] =
+    useState<PostObjectType>(initialPostObject);
 
   const handleUploadComplete = async () => {
-    console.log('check');
     const formData = new FormData();
 
     formData.append('title', postObject.title ?? '');
@@ -60,10 +61,20 @@ const SalesMyItemPage = () => {
   };
 
   const handleBackIconClick = () => {
+    localStorage.removeItem('postObject');
     navigation(-1);
   };
 
-  console.log(postObject);
+  useEffect(() => {
+    const storedPostObject = localStorage.getItem('postObject');
+    if (storedPostObject) {
+      setPostObject(JSON.parse(storedPostObject));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('postObject', JSON.stringify(postObject));
+  }, [postObject]);
 
   return (
     <>
