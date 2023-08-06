@@ -52,6 +52,7 @@ const SalesMyItemPage = () => {
     }
 
     await postProducts(formData, accessToken);
+    localStorage.removeItem('postObject');
     navigation(-1);
   };
 
@@ -73,7 +74,9 @@ const SalesMyItemPage = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('postObject', JSON.stringify(postObject));
+    const postObjectToStore = { ...postObject };
+    delete postObjectToStore.files; // files 필드를 제거 , TODO : 파일 임시 저장 필요
+    localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
   }, [postObject]);
 
   return (
