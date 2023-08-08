@@ -27,7 +27,7 @@ const UploadComment = () => {
     // const rowCount = inputValue.split(/\r\n|\r|\n/).length;
     const newHeight = event.target.scrollHeight;
 
-    setTextareaValue(inputValue);
+    setTextareaValue(inputValue === '' ? null : inputValue);
 
     if (textareaValue !== null && textareaValue.length > inputValue.length) {
       setTextareaHeight(newHeight - 22);
