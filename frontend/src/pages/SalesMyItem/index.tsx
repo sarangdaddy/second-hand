@@ -31,6 +31,7 @@ const SalesMyItemPage = () => {
 
   const [postObject, setPostObject] =
     useState<PostObjectType>(initialPostObject);
+  const [isUploadCompleteEnabled, setIsUploadCompleteEnabled] = useState(false);
 
   const handleUploadComplete = async () => {
     const formData = new FormData();
@@ -44,11 +45,21 @@ const SalesMyItemPage = () => {
     formData.append('locationId', String(postObject.locationId) ?? '');
 
     if (postObject.files) {
-      postObject.files.forEach((file) => {
-        file.forEach((value, name) => {
-          formData.append(name, value);
+      for (const fileItem of postObject.files) {
+        const fileData = JSON.parse(fileItem); // JSON 문자열을 객체로 변환
+        const { imageUrl, fileName, fileSize } = fileData;
+
+        // imageUrl을 Blob으로 변환
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], fileName, {
+          type: blob.type,
+          lastModified: fileSize,
         });
-      });
+
+        // formData에 파일 추가
+        formData.append('productImageUrls', file);
+      }
     }
 
     await postProducts(formData, accessToken);
@@ -56,8 +67,8 @@ const SalesMyItemPage = () => {
     navigation(-1);
   };
 
-  const isAllValuesNotNullExceptPrice = (object: PostObjectType) => {
-    const { price, ...rest } = object;
+  const isAllValuesNotNullExceptPrice = (postObject: PostObjectType) => {
+    const { price, ...rest } = postObject;
     return Object.values(rest).every((value) => value !== null);
   };
 
@@ -75,8 +86,12 @@ const SalesMyItemPage = () => {
 
   useEffect(() => {
     const postObjectToStore = { ...postObject };
-    delete postObjectToStore.files; // files 필드를 제거 , TODO : 파일 임시 저장 필요
     localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
+  }, [postObject]);
+
+  useEffect(() => {
+    const isCompleteEnabled = isAllValuesNotNullExceptPrice(postObject);
+    setIsUploadCompleteEnabled(isCompleteEnabled);
   }, [postObject]);
 
   return (
@@ -88,9 +103,7 @@ const SalesMyItemPage = () => {
             type="high"
             preTitleClick={handleBackIconClick}
             rightTitleClick={
-              isAllValuesNotNullExceptPrice(postObject)
-                ? handleUploadComplete
-                : undefined
+              isUploadCompleteEnabled ? handleUploadComplete : undefined
             }
             centerTitle="내 물건 팔기"
             rightTitle="완료"

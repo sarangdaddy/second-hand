@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useRef, useContext } from 'react';
+import { useState, ChangeEvent, useRef, useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -12,24 +12,22 @@ import Icon from '../Icon';
 interface UploadedImageType {
   id: string;
   imageUrl: string;
-  file: File;
+  fileName: string;
+  fileSize: number;
 }
-
-//TODO : FromData를 로컬스토리지에 저장하는것은 불가능하다. 파일을 업로드 하는 순간 DB에 저장해야함.
 
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { setPostObject } = useContext(postSalesItemContext);
-  const [uploadedCount, setUploadedCount] = useState<number>(0);
+  const { postObject, setPostObject } = useContext(postSalesItemContext);
   const [uploadedImages, setUploadedImages] = useState<UploadedImageType[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const uploadedCount = uploadedImages.length;
 
   const handleDeleteBtnClick = (id: string) => {
     setUploadedImages((prevImages) =>
       prevImages.filter((image) => image.id !== id),
     );
-    setUploadedCount((prevCount) => prevCount - 1);
 
     setPostObject((prevPostObject: PostObjectType) => {
       const updatedFiles = prevPostObject.files
@@ -41,7 +39,7 @@ const UploadPhoto = () => {
 
       return {
         ...prevPostObject,
-        files: updatedFiles,
+        files: updatedFiles && updatedFiles.length === 0 ? null : updatedFiles,
       };
     });
   };
@@ -56,27 +54,30 @@ const UploadPhoto = () => {
 
     files.forEach((file) => {
       const imageUrl = URL.createObjectURL(file);
+      const id = uuidv4();
+      const fileName = file.name;
+      const fileSize = file.size;
+
       const isDuplicate = uploadedImages.some(
-        (image) =>
-          image.file.name === file.name && image.file.size === file.size,
+        (image) => image.fileName === file.name && image.fileSize === file.size,
       );
 
       if (!isDuplicate) {
         const newUploadedImage: UploadedImageType = {
-          id: uuidv4(),
+          id,
           imageUrl,
-          file,
+          fileName,
+          fileSize,
         };
 
         setUploadedImages((prevImages) => [...prevImages, newUploadedImage]);
-        setUploadedCount((prevCount) => prevCount + 1);
-
-        const formData = new FormData();
-        formData.append('productImageUrls', file);
 
         setPostObject((prevPostObject: PostObjectType) => ({
           ...prevPostObject,
-          files: [...(prevPostObject.files || []), formData],
+          files: [
+            ...(prevPostObject.files || []),
+            JSON.stringify(newUploadedImage),
+          ],
         }));
       }
     });
@@ -90,6 +91,17 @@ const UploadPhoto = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    if (postObject.files) {
+      const images: UploadedImageType[] = [];
+      for (const fileItem of postObject.files) {
+        const fileData = JSON.parse(fileItem);
+        images.push(fileData);
+      }
+      setUploadedImages(images);
+    }
+  }, [postObject]);
 
   return (
     <>
