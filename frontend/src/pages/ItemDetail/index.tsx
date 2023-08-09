@@ -31,10 +31,8 @@ interface Item {
   lookupCount: number;
 }
 
-// TODO : 판매자 정보 추가로 받아오기
 // TODO : 나의 판매 상품인지 확인하기
 // TODO : 이미지 크기 조절하기, 이미지 슬라이딩 구현하기
-// TODO : 상세 페이지 꾸미기
 // TODO : 판매상품 수정하기 기능 추가 (moreIcon)
 
 const ItemDetail = () => {
