@@ -7,6 +7,8 @@ interface PanelContainerProps {
 export const Container = styled.div`
   position: relative;
   z-index: 3;
+  margin-bottom: 16px;
+  width: 106px;
 `;
 
 export const Wrapper = styled.div`

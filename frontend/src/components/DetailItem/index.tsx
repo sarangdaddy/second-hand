@@ -1,40 +1,39 @@
+import * as S from './styles';
 import elapsedTime from '../../utils/elapsedTime';
 
 interface DetailItemProps {
   title: string;
-  salesStatus: '판매중' | '예약중' | '판매완료';
+  categoryTitle: string;
   updatedAt: string;
+  contents: string;
   chatRoomCount: number;
   watchlistCount: number;
-  categoryTitle: string;
-  contents: string;
+  lookupCount: number;
 }
-
-// TODO : 물품상세에서 조회수 필요
-// TODO : 물품상세에서 판매자 정보 필요 (id, 닉네임)
-// TODO : 판매 상태 표시 추가 필요
 
 const DetailItem = ({
   title,
+  categoryTitle,
   updatedAt,
-  salesStatus,
+  contents,
   chatRoomCount,
   watchlistCount,
-  categoryTitle,
-  contents,
+  lookupCount,
 }: DetailItemProps) => {
   return (
     <>
-      <div className="DetailItemContainer">
-        <div className="title">{title}</div>
-        <div className="subTitle">
-          {categoryTitle} - {elapsedTime(updatedAt)}
-        </div>
-        <div className="content">{contents}</div>
-        <div className="count">
-          채팅 수 : {chatRoomCount} 관심 수 : {watchlistCount} 조회수 필요
-        </div>
-      </div>
+      <S.DetailItemContainer>
+        <S.Title>{title}</S.Title>
+        <S.SubTitle>
+          {categoryTitle} ﹒ {elapsedTime(updatedAt)}
+        </S.SubTitle>
+        <S.Content>{contents}</S.Content>
+        <S.CountInfo>
+          <S.ChatRoomCount>채팅 {chatRoomCount} </S.ChatRoomCount>
+          <S.WatchListCount>관심 {watchlistCount} </S.WatchListCount>
+          <S.LookUpCount>조회 {lookupCount} </S.LookUpCount>
+        </S.CountInfo>
+      </S.DetailItemContainer>
     </>
   );
 };
