@@ -82,7 +82,10 @@ const ItemDetail = () => {
         <DetailSliderPhotos imageList={selectedItem.imageList[0]} />
       )}
       <S.Main>
-        <div className="sellerInfo">{selectedItem?.memberNickName}</div>
+        <S.SellerInfo>
+          <div>{'판매자 정보'}</div>
+          <div>{selectedItem?.memberNickName}</div>
+        </S.SellerInfo>
         <div>현재 제품은 {productsId} 번 입니다.</div>
         <SelectSalesStatus
           salesStatus={selectedItem?.salesStatus}
