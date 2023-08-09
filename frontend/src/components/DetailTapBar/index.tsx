@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
 
 import { ACCESS_TOKEN } from '../../constants/login';
-import { CHATROOM } from '../../constants/routeUrl';
+import { CHAT, CHATROOM } from '../../constants/routeUrl';
 import { getRoomsList, postNewChatRoom } from '../../api/chat';
 import { formatNumber } from '../../utils/formatNumber';
 import Button from '../Button';
@@ -14,6 +15,8 @@ import Icon from '../Icon';
 interface DetailTapBarProps {
   price: number | null;
   curProductsId: string | undefined;
+  isMyProduct: boolean;
+  chatRoomCount: number;
 }
 
 interface Room {
@@ -23,9 +26,15 @@ interface Room {
   buyerId: number;
 }
 
-const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
+const DetailTapBar = ({
+  price,
+  curProductsId,
+  isMyProduct,
+  chatRoomCount,
+}: DetailTapBarProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleChatClick = async () => {
     if (curProductsId) {
@@ -68,9 +77,20 @@ const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
     navigate(`${CHATROOM}/${roomId}`);
   };
 
+  const handleJoinChatRoom = () => {
+    if (chatRoomCount === 0) {
+      setModalOpen(true);
+    } else {
+      navigate(CHAT);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   // TODO: 방이 있으면 "입장" 업으면 "채팅하기" 버튼 상태 변경 필요
   // TODO: 관심 제품이면 하트 색 주기
-  // TODO: 판매자 확인하고 내 제품이면 채팅시작하기 없어야함
 
   return (
     <>
@@ -79,16 +99,38 @@ const DetailTapBar = ({ price, curProductsId }: DetailTapBarProps) => {
           <div>
             <S.Left>
               <Icon name="heart" width="27" height="28" />
-              {price !== null && <S.Price>{formatNumber(price)}원</S.Price>}
+              {price !== null ? (
+                <S.Price>{formatNumber(price)}원</S.Price>
+              ) : (
+                <S.Price>가격미정</S.Price>
+              )}
             </S.Left>
           </div>
           <S.Right>
-            <Button active={!!curProductsId} onClick={handleChatClick}>
-              채팅하기
-            </Button>
+            {isMyProduct ? (
+              <Button active={!!curProductsId} onClick={handleJoinChatRoom}>
+                대화 중인 채팅방 ({chatRoomCount})
+              </Button>
+            ) : (
+              <Button active={!!curProductsId} onClick={handleChatClick}>
+                채팅하기
+              </Button>
+            )}
           </S.Right>
         </S.Menu>
       </S.DetailTapBarContainer>
+      {isModalOpen && (
+        <S.ModalDim>
+          <S.ModalContainer>
+            <p>채팅한 이웃이 없습니다.</p>
+            <S.ModalBtns>
+              <S.ModalBtn onClick={handleCloseModal}>
+                <span>닫기</span>
+              </S.ModalBtn>
+            </S.ModalBtns>
+          </S.ModalContainer>
+        </S.ModalDim>
+      )}
     </>
   );
 };
