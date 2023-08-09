@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
+import { useAuthContext } from '../../context/Auth';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { getProductsDetail } from '../../api/product';
 
+import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
 import DetailSliderPhotos from '../../components/DetailSliderPhotos';
 import DetailItem from '../../components/DetailItem';
 import DetailTapBar from '../../components/DetailTapBar';
-import useAsync from '../../hooks/useAsync';
-import { ACCESS_TOKEN } from '../../constants/login';
-import { getProductsDetail } from '../../api/product';
+import SelectSalesStatus from '../../components/SelectSalesStatus';
 
 interface Item {
   productId: number;
@@ -24,6 +26,9 @@ interface Item {
   isWatchlistChecked: boolean;
   imageList: string[];
   categoryTitle: string;
+  memberId: number;
+  memberNickName: string;
+  lookupCount: number;
 }
 
 // TODO : 판매자 정보 추가로 받아오기
@@ -36,14 +41,33 @@ const ItemDetail = () => {
   const navigation = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
+  const userData = useAuthContext();
+
   const { productsId } = useParams();
   const curProductsId: string | undefined = productsId;
-  const { data } = useAsync(() => getProductsDetail(productsId, accessToken));
-  const selectedItem: Item = data?.data;
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+  // const { data } = useAsync(() => getProductsDetail(productsId, accessToken));
+  // const selectedItem: Item = data?.data;
+
+  // 상품 상세 업데이트 요청 API
+  const handleItemDetailChange = async () => {
+    // const updatedItemDetail = await updateItemDetail();
+    // setSelectedItem(updatedItemDetail);
+  };
 
   const handleBackIconClick = () => {
     navigation(-1);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getProductsDetail(productsId, accessToken);
+      setSelectedItem(response.data.data);
+    };
+
+    fetchData();
+  }, [productsId, accessToken]);
 
   return (
     <>
@@ -57,8 +81,12 @@ const ItemDetail = () => {
         <DetailSliderPhotos imageList={selectedItem.imageList[0]} />
       )}
       <S.Main>
+        <div className="sellerInfo">{selectedItem?.memberNickName}</div>
         <div>현재 제품은 {productsId} 번 입니다.</div>
-        <div className="DetaulSellerInfo">판매자 정보</div>
+        <SelectSalesStatus
+          salesStatus={selectedItem?.salesStatus}
+          onChange={handleItemDetailChange}
+        />
         {selectedItem && (
           <DetailItem
             title={selectedItem.title}
