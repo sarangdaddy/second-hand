@@ -86,7 +86,6 @@ const ItemDetail = () => {
           <div>{'판매자 정보'}</div>
           <div>{selectedItem?.memberNickName}</div>
         </S.SellerInfo>
-        <div>현재 제품은 {productsId} 번 입니다.</div>
         <SelectSalesStatus
           salesStatus={selectedItem?.salesStatus}
           onChange={handleSalesStatus}
@@ -94,12 +93,12 @@ const ItemDetail = () => {
         {selectedItem && (
           <DetailItem
             title={selectedItem.title}
+            categoryTitle={selectedItem.categoryTitle}
             updatedAt={selectedItem.updatedAt}
-            salesStatus={selectedItem.salesStatus}
+            contents={selectedItem.contents}
             chatRoomCount={selectedItem.chatRoomCount}
             watchlistCount={selectedItem.watchlistCount}
-            categoryTitle={selectedItem.categoryTitle}
-            contents={selectedItem.contents}
+            lookupCount={selectedItem.lookupCount}
           />
         )}
       </S.Main>
