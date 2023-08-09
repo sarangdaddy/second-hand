@@ -51,7 +51,8 @@ const ItemDetail = () => {
   // const selectedItem: Item = data?.data;
 
   // 상품 상세 업데이트 요청 API
-  const handleItemDetailChange = async () => {
+  const handleSalesStatus = (selectedOption: string) => {
+    console.log(selectedOption);
     // const updatedItemDetail = await updateItemDetail();
     // setSelectedItem(updatedItemDetail);
   };
@@ -85,7 +86,7 @@ const ItemDetail = () => {
         <div>현재 제품은 {productsId} 번 입니다.</div>
         <SelectSalesStatus
           salesStatus={selectedItem?.salesStatus}
-          onChange={handleItemDetailChange}
+          onChange={handleSalesStatus}
         />
         {selectedItem && (
           <DetailItem
