@@ -45,6 +45,10 @@ const ItemDetail = () => {
   const curProductsId: string | undefined = productsId;
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
+  // 유저 ID로 수정해야함
+  const isMyProduct =
+    userData?.userInfo.nickname === selectedItem?.memberNickName;
+
   // const { data } = useAsync(() => getProductsDetail(productsId, accessToken));
   // const selectedItem: Item = data?.data;
 
@@ -84,10 +88,12 @@ const ItemDetail = () => {
           <div>{'판매자 정보'}</div>
           <div>{selectedItem?.memberNickName}</div>
         </S.SellerInfo>
-        <SelectSalesStatus
-          salesStatus={selectedItem?.salesStatus}
-          onChange={handleSalesStatus}
-        />
+        {isMyProduct && (
+          <SelectSalesStatus
+            salesStatus={selectedItem?.salesStatus}
+            onChange={handleSalesStatus}
+          />
+        )}
         {selectedItem && (
           <DetailItem
             title={selectedItem.title}
@@ -105,6 +111,8 @@ const ItemDetail = () => {
         <DetailTapBar
           curProductsId={curProductsId}
           price={selectedItem.price}
+          isMyProduct={isMyProduct}
+          chatRoomCount={selectedItem.chatRoomCount}
         />
       )}
     </>
