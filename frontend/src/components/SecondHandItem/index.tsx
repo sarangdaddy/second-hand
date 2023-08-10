@@ -12,7 +12,7 @@ interface SecondHandItemProps {
   price: number | null;
   location: string;
   chatRoomCount: number;
-  watchlistCount: number;
+  watchListCount: number;
   isWatchlistChecked: boolean;
   productMainImgUrl: string;
   isSetEditOption?: boolean;
@@ -25,7 +25,7 @@ const SecondHandItem = ({
   price,
   location,
   chatRoomCount,
-  watchlistCount,
+  watchListCount,
   isWatchlistChecked,
   productMainImgUrl,
   isSetEditOption,
@@ -56,17 +56,21 @@ const SecondHandItem = ({
           </div>
         </S.ItemContents>
         <S.ItemIssue>
-          <IconWithCount
-            name={'message'}
-            count={chatRoomCount}
-            checked={false}
-          />
+          <IconWithCount name={'message'} count={chatRoomCount} />
           <S.HeartIconWithCount>
-            <IconWithCount
-              name={'heart'}
-              count={watchlistCount}
-              checked={isWatchlistChecked}
-            />
+            {isWatchlistChecked === true ? (
+              <IconWithCount
+                name={'heart'}
+                count={watchListCount}
+                fill={'black'}
+              />
+            ) : (
+              <IconWithCount
+                name={'heartFill'}
+                count={watchListCount}
+                fill={'red'}
+              />
+            )}
           </S.HeartIconWithCount>
         </S.ItemIssue>
       </S.ItemInfo>
