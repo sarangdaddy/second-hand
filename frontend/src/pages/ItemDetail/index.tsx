@@ -89,7 +89,7 @@ const ItemDetail = () => {
         preTitleClick={handleBackIconClick}
       />
       {selectedItem && (
-        <DetailSliderPhotos imageList={selectedItem.imageList[0]} />
+        <DetailSliderPhotos imageList={selectedItem.imageList} />
       )}
       <S.Main>
         <S.SellerInfo>
