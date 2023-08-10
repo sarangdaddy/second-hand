@@ -22,14 +22,14 @@ interface Location {
 
 interface Item {
   productId: number;
-  createAt: string;
   title: string;
+  createAt: string;
   salesStatus: '판매중' | '예약중' | '판매완료';
   updatedAt: string;
   price: number | null;
   location: string;
   chatRoomCount: number;
-  watchlistCount: number;
+  watchListCount: number;
   isWatchlistChecked: boolean;
   productMainImgUrl: string;
   isSetEditOption?: boolean;
@@ -116,7 +116,7 @@ const HomePage = () => {
                   price={item.price}
                   location={item.location}
                   chatRoomCount={item.chatRoomCount}
-                  watchlistCount={item.watchlistCount}
+                  watchListCount={item.watchListCount}
                   isWatchlistChecked={item.isWatchlistChecked}
                   productMainImgUrl={item.productMainImgUrl}
                   isSetEditOption={false}
