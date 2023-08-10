@@ -25,6 +25,10 @@ export const Left = styled.div`
   gap: 5px;
 `;
 
+export const svgDiv = styled.div`
+  display: flex;
+`;
+
 export const Price = styled.span`
   ${({ theme }) => theme.typo.footnote}
 `;

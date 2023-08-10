@@ -9,6 +9,7 @@ import { ReactComponent as CircleFill } from './circleFill.svg';
 import { ReactComponent as Ellipsis } from './ellipsis.svg';
 import { ReactComponent as Hamburger } from './hamburger.svg';
 import { ReactComponent as Heart } from './heart.svg';
+import { ReactComponent as HeartFill } from './heartFill.svg';
 import { ReactComponent as Home } from './home.svg';
 import { ReactComponent as Keyboard } from './keyboard.svg';
 import { ReactComponent as Message } from './message.svg';
@@ -35,6 +36,7 @@ const iconfiles = {
   ellipsis: Ellipsis,
   hamburger: Hamburger,
   heart: Heart,
+  heartFill: HeartFill,
   home: Home,
   keyboard: Keyboard,
   message: Message,
