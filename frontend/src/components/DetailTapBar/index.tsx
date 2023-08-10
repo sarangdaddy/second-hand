@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
-
 import { ACCESS_TOKEN } from '../../constants/login';
-import { CHAT, CHATROOM } from '../../constants/routeUrl';
 import { getRoomsList, postNewChatRoom } from '../../api/chat';
+
+import * as S from './styles';
+import { CHAT, CHATROOM } from '../../constants/routeUrl';
 import { formatNumber } from '../../utils/formatNumber';
 import Button from '../Button';
 import Icon from '../Icon';
@@ -17,6 +17,8 @@ interface DetailTapBarProps {
   curProductsId: string | undefined;
   isMyProduct: boolean;
   chatRoomCount: number;
+  isWatchlistChecked: boolean;
+  onWatchListCheck: () => void;
 }
 
 interface Room {
@@ -31,6 +33,8 @@ const DetailTapBar = ({
   curProductsId,
   isMyProduct,
   chatRoomCount,
+  isWatchlistChecked,
+  onWatchListCheck,
 }: DetailTapBarProps) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
@@ -89,16 +93,29 @@ const DetailTapBar = ({
     setModalOpen(false);
   };
 
-  // TODO: 방이 있으면 "입장" 업으면 "채팅하기" 버튼 상태 변경 필요
-  // TODO: 관심 제품이면 하트 색 주기
-
   return (
     <>
       <S.DetailTapBarContainer>
         <S.Menu>
           <div>
             <S.Left>
-              <Icon name="heart" width="27" height="28" />
+              {isWatchlistChecked ? (
+                <Icon
+                  onClick={onWatchListCheck}
+                  name="heartFill"
+                  width="28px"
+                  height="28px"
+                  fill="red"
+                />
+              ) : (
+                <Icon
+                  onClick={onWatchListCheck}
+                  name="heart"
+                  width="28px"
+                  height="28px"
+                  fill="red"
+                />
+              )}
               {price !== null ? (
                 <S.Price>{formatNumber(price)}원</S.Price>
               ) : (

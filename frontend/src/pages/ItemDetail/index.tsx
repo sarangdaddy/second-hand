@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/Auth';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { getProductsDetail } from '../../api/product';
+import { deleteWatchList, postWatchList } from '../../api/watchList';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
@@ -49,8 +50,10 @@ const ItemDetail = () => {
   const isMyProduct =
     userData?.userInfo.nickname === selectedItem?.memberNickName;
 
-  // const { data } = useAsync(() => getProductsDetail(productsId, accessToken));
-  // const selectedItem: Item = data?.data;
+  const fetchSelectedItemData = async () => {
+    const response = await getProductsDetail(productsId, accessToken);
+    setSelectedItem(response.data.data);
+  };
 
   // 상품 상세 업데이트 요청 API
   const handleSalesStatus = (selectedOption: string) => {
@@ -59,17 +62,22 @@ const ItemDetail = () => {
     // setSelectedItem(updatedItemDetail);
   };
 
+  const handleWatchlistChecked = async () => {
+    if (selectedItem?.isWatchlistChecked === false) {
+      await postWatchList(accessToken, curProductsId);
+      fetchSelectedItemData();
+    } else {
+      await deleteWatchList(accessToken, curProductsId);
+      fetchSelectedItemData();
+    }
+  };
+
   const handleBackIconClick = () => {
     navigation(-1);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getProductsDetail(productsId, accessToken);
-      setSelectedItem(response.data.data);
-    };
-
-    fetchData();
+    fetchSelectedItemData();
   }, [productsId, accessToken]);
 
   return (
@@ -106,13 +114,15 @@ const ItemDetail = () => {
           />
         )}
       </S.Main>
-      {/* TODO : 내가 관심 체크 했는지 정보도 전달하기*/}
+
       {selectedItem && (
         <DetailTapBar
           curProductsId={curProductsId}
           price={selectedItem.price}
           isMyProduct={isMyProduct}
           chatRoomCount={selectedItem.chatRoomCount}
+          isWatchlistChecked={selectedItem.isWatchlistChecked}
+          onWatchListCheck={handleWatchlistChecked}
         />
       )}
     </>
