@@ -3,16 +3,28 @@ import styled from 'styled-components';
 export const SliderContainer = styled.div`
   display: flex;
   position: relative;
-  height: 491px;
   width: 100%;
+  overflow-x: hidden;
 `;
 
-// export const ImageContainer = styled.div<{ translateX: number }>`
-//   transform: translateX(${(props) => props.translateX}%);
-//   transition: transform 0.5s ease-in-out; // 트랜지션 효과 적용
-// `;
+export const ImageTrack = styled.div<{
+  translateX: number;
+  imageCount: number;
+}>`
+  display: flex;
+  width: ${(props) => props.imageCount * 100}%;
+  transform: translateX(${(props) => props.translateX}%);
+  transition: transform 0.3s ease-in-out;
+`;
 
-export const SliderTack = styled.div`
+export const SliderImage = styled.img`
+  flex: 0 0 auto;
+  width: 100%;
+  height: 491px;
+  object-fit: cover;
+`;
+
+export const SliderTrack = styled.div`
   position: absolute;
   bottom: 0px;
   margin-left: 0px;
@@ -25,16 +37,12 @@ export const SliderTack = styled.div`
   align-items: center;
 `;
 
-export const SliderImage = styled.img`
-  width: 100%;
-  object-fit: cover;
-`;
-
 export const Button = styled.button`
   width: 44px;
   height: 44px;
   font-size: 24px;
   ${({ theme }) => theme.color.neutralTextWeak}
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 `;
 
 export const ImgNavigate = styled.div`
@@ -52,4 +60,6 @@ export const Dot = styled.div<{ isActive: boolean }>`
     isActive
       ? `${theme.color.neutralTextStrong}`
       : `${theme.color.neutralTextWeak}`}
+
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 `;
