@@ -35,7 +35,7 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   display: flex;
   align-items: center;
 
-  z-index: 2;
+  z-index: 3;
 `;
 
 export const NavBarBody = styled.div`
