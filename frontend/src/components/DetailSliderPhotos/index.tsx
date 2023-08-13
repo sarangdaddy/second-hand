@@ -25,6 +25,7 @@ const DetailSliderPhotos = ({ imageList }: SecondHandItemProps) => {
   return (
     <>
       <S.SliderContainer>
+        <S.GradientOverlay />
         <S.ImageTrack translateX={translateX} imageCount={imageList.length}>
           {imageList.map((image, index) => (
             <S.SliderImage key={index} src={image} />
