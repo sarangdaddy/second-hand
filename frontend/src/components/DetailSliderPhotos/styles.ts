@@ -5,6 +5,21 @@ export const SliderContainer = styled.div`
   position: relative;
   width: 100%;
   overflow-x: hidden;
+  z-index: 2;
+`;
+
+export const GradientOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 1;
 `;
 
 export const ImageTrack = styled.div<{
@@ -35,6 +50,7 @@ export const SliderTrack = styled.div`
   justify-content: space-between;
   padding: 0 16px 0 16px;
   align-items: center;
+  z-index: 2;
 `;
 
 export const Button = styled.button`
@@ -42,7 +58,6 @@ export const Button = styled.button`
   height: 44px;
   font-size: 24px;
   ${({ theme }) => theme.color.neutralTextWeak}
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 `;
 
 export const ImgNavigate = styled.div`
@@ -60,6 +75,4 @@ export const Dot = styled.div<{ isActive: boolean }>`
     isActive
       ? `${theme.color.neutralTextStrong}`
       : `${theme.color.neutralTextWeak}`}
-
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 `;
