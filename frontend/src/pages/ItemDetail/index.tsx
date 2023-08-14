@@ -162,7 +162,7 @@ const ItemDetail = () => {
               <S.ModalBtn onClick={handleEditModal}>
                 <span>게시글 수정</span>
               </S.ModalBtn>
-              <S.ModalBtn onClick={handleDeleteModal}>
+              <S.ModalBtn btnType="delete" onClick={handleDeleteModal}>
                 <span>삭제</span>
               </S.ModalBtn>
             </S.ModalBtns>
