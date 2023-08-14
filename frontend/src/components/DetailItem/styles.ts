@@ -26,6 +26,7 @@ export const Content = styled.div`
 export const CountInfo = styled.div`
   ${({ theme }) => theme.typo.footnote}
   ${({ theme }) => theme.color.neutralTextWeak}
+  margin-bottom: 8px;
 `;
 
 export const ChatRoomCount = styled.span``;
