@@ -32,13 +32,6 @@ export const ImageTrack = styled.div<{
   transition: transform 0.3s ease-in-out;
 `;
 
-export const SliderImage = styled.img`
-  flex: 0 0 auto;
-  width: 100%;
-  height: 491px;
-  object-fit: cover;
-`;
-
 export const SliderTrack = styled.div`
   position: absolute;
   bottom: 0px;
@@ -51,6 +44,12 @@ export const SliderTrack = styled.div`
   padding: 0 16px 0 16px;
   align-items: center;
   z-index: 2;
+`;
+
+export const SliderImage = styled.img`
+  flex: 0 0 auto;
+  width: 100%;
+  height: 491px;
 `;
 
 export const Button = styled.button`

@@ -52,7 +52,7 @@ export const ModalContainer = styled.div`
   bottom: 8px;
 
   :first-child {
-    background-color: #f5f5f5b2;
+    ${({ theme }) => theme.color.systemBackgroundWeak}
   }
 
   :last-child {
@@ -60,12 +60,7 @@ export const ModalContainer = styled.div`
   }
 `;
 
-export const ModalBtns = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ModalBtn = styled.button`
+export const ModalBtn = styled.button<{ btnType?: 'delete' }>`
   display: flex;
   -webkit-box-align: center;
   width: 100%;
@@ -75,15 +70,19 @@ export const ModalBtn = styled.button`
   border-top: 1px solid rgba(179, 179, 179, 0.39);
 
   span {
-    font-size: 24px;
+    ${({ theme }) => theme.typo.title2}
+    ${({ theme }) => theme.color.systemDefault}
   }
 
-  :first-child {
-    border-right: 1px solid rgba(179, 179, 179, 0.39);
-    color: #007aff;
-  }
+  ${({ btnType, theme }) =>
+    btnType === 'delete' && `span {${theme.color.systemWarning}}`}
+`;
 
-  :nth-child(2) {
+export const ModalBtns = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  &:not(:only-child) ${ModalBtn}:last-child span {
     color: red;
   }
 `;
