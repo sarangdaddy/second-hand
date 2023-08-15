@@ -54,28 +54,42 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     if (!isLoggedIn) {
+      console.log('Not logged in, initializing user info.');
       setUserInfo({
         nickname: '',
         profileUrl: '',
         locationDatas: [],
       });
 
-      return;
+      return; // 로그인 상태가 아니면 추가 작업을 수행하지 않음
     }
+
+    let isCancelled = false;
 
     const fetchUserInfo = async () => {
       const accessToken = localStorage.getItem(ACCESS_TOKEN);
+      console.log('Fetching user info with access token:', accessToken);
       const res = await getMembers(accessToken);
       const { data } = res;
 
-      setUserInfo({
-        nickname: data.data.nickname,
-        profileUrl: data.data.profileUrl,
-        locationDatas: data.data.locationDatas,
-      });
+      if (!isCancelled) {
+        console.log('Setting user info:', data.data);
+        setUserInfo({
+          nickname: data.data.nickname,
+          profileUrl: data.data.profileUrl,
+          locationDatas: data.data.locationDatas,
+        });
+      } else {
+        console.log('User info fetch was cancelled.');
+      }
     };
 
     fetchUserInfo();
+
+    return () => {
+      console.log('Cleanup function called.');
+      isCancelled = true; // 컴포넌트가 언마운트되거나 다시 렌더링되기 전에 호출됨
+    };
   }, [isLoggedIn]);
 
   const handleUpdateUserInfo = async () => {
