@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 
 import * as S from './styles';
 
@@ -10,8 +10,13 @@ import { formatString } from '../../utils/formatNumber';
 
 const UploadPrice = () => {
   const { postObject, setPostObject } = useContext(postSalesItemContext);
-  const [inputPrice, setInputPrice] = useState<string>('');
-  const [formattedPrice, setFormattedPrice] = useState<string>('');
+
+  const [inputPrice, setInputPrice] = useState<string>(
+    postObject.price ? postObject.price.toString() : '',
+  );
+  const [formattedPrice, setFormattedPrice] = useState<string>(
+    formatString(inputPrice),
+  );
 
   const handlePriceInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = event.currentTarget.value.replace(/[^0-9]/g, '');
@@ -19,23 +24,13 @@ const UploadPrice = () => {
 
     const formattedValue = formatString(inputValue);
     setInputPrice(inputValue);
-    setFormattedPrice(formatString(formattedValue));
-  };
-
-  useEffect(() => {
     setPostObject((prevPostObject: PostObjectType) => ({
       ...prevPostObject,
-      price: inputPrice !== '' ? Number(inputPrice) : null,
+      price: inputValue !== '' ? Number(inputValue) : null,
     }));
-    setFormattedPrice(inputPrice);
-  }, [inputPrice]);
 
-  useEffect(() => {
-    if (postObject.price) {
-      const localStoragePrice = postObject.price.toString();
-      setInputPrice(localStoragePrice);
-    }
-  }, [postObject]);
+    setFormattedPrice(formattedValue);
+  };
 
   return (
     <>

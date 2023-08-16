@@ -26,9 +26,11 @@ const UploadTitle = () => {
   const { postObject, setPostObject } = useContext(postSalesItemContext);
 
   const [randomCategories, setRandomCategories] = useState<Category[]>([]);
-  const [hasInputValue, setHasInputValue] = useState<string>('');
+  const [hasInputValue, setHasInputValue] = useState<string | null>(
+    postObject.title ?? null,
+  );
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null,
+    postObject.categoryId ?? null,
   );
 
   useEffect(() => {
@@ -88,15 +90,6 @@ const UploadTitle = () => {
     navigate(CATEGORY_SET);
   };
 
-  useEffect(() => {
-    if (postObject.title) {
-      setHasInputValue(postObject.title);
-    }
-    if (postObject.categoryId) {
-      setSelectedCategoryId(postObject.categoryId);
-    }
-  }, [postObject]);
-
   return (
     <>
       <S.UploadTitle>
@@ -106,7 +99,7 @@ const UploadTitle = () => {
             type="text"
             onChange={handleTitleInput}
             maxLength={30}
-            value={hasInputValue}
+            value={hasInputValue || ''}
           />
         </S.Title>
         {hasInputValue && (

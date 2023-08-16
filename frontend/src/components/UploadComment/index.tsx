@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import {
   postSalesItemContext,
@@ -16,9 +16,11 @@ const COMMENT_MAX_LENGTH = 500;
 // https://bydawn25.tistory.com/44
 
 const UploadComment = () => {
-  const [textareaValue, setTextareaValue] = useState<string | null>(null);
-  const [textareaHeight, setTextareaHeight] = useState(110);
   const { postObject, setPostObject } = useContext(postSalesItemContext);
+  const [inputComment, setInputComment] = useState<string | null>(
+    postObject.content ? postObject.content : null,
+  );
+  const [textareaHeight, setTextareaHeight] = useState(110);
 
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -27,28 +29,19 @@ const UploadComment = () => {
     // const rowCount = inputValue.split(/\r\n|\r|\n/).length;
     const newHeight = event.target.scrollHeight;
 
-    setTextareaValue(inputValue === '' ? null : inputValue);
+    setInputComment(inputValue === '' ? null : inputValue);
 
-    if (textareaValue !== null && textareaValue.length > inputValue.length) {
+    if (inputComment !== null && inputComment.length > inputValue.length) {
       setTextareaHeight(newHeight - 22);
     } else {
       setTextareaHeight(newHeight);
     }
-  };
 
-  useEffect(() => {
     setPostObject((prevPostObject: PostObjectType) => ({
       ...prevPostObject,
-      content: textareaValue,
+      content: inputComment,
     }));
-  }, [textareaValue]);
-
-  useEffect(() => {
-    if (postObject.content) {
-      const localStorageContent = postObject.content;
-      setTextareaValue(localStorageContent);
-    }
-  }, [postObject]);
+  };
 
   return (
     <>
@@ -56,14 +49,14 @@ const UploadComment = () => {
         <S.testDiv>
           <S.CommentTextarea
             placeholder={COMMENT_PLACEHOLDER}
-            value={textareaValue || ''}
+            value={inputComment || ''}
             onChange={handleTextareaChange}
             maxLength={COMMENT_MAX_LENGTH}
             height={textareaHeight}
           />
         </S.testDiv>
         <S.CommentLengthNotify>
-          {textareaValue ? textareaValue.length : 0} / {COMMENT_MAX_LENGTH}
+          {inputComment ? inputComment.length : 0} / {COMMENT_MAX_LENGTH}
         </S.CommentLengthNotify>
       </S.CommentContainer>
     </>
