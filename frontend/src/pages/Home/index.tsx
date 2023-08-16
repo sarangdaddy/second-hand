@@ -12,28 +12,7 @@ import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import { defaultLocation } from '../../constants/defaultValues';
-
-interface Location {
-  locationId: number;
-  locationDetails: string;
-  locationShortening: string;
-  mainLocationState: boolean;
-}
-
-interface Item {
-  productId: number;
-  title: string;
-  createAt: string;
-  salesStatus: '판매중' | '예약중' | '판매완료';
-  updatedAt: string;
-  price: number | null;
-  location: string;
-  chatRoomCount: number;
-  watchListCount: number;
-  isWatchlistChecked: boolean;
-  productMainImgUrl: string;
-  isSetEditOption?: boolean;
-}
+import { Item, Location } from '../../context/types';
 
 // TODO : 무한 스크롤 구현하기
 // TODO : useMemo로 최적화 하기
@@ -102,7 +81,7 @@ const HomePage = () => {
         isLoggedIn={isLoggedIn}
       />
       {!isResultEmpty ? (
-        <div>
+        <S.ItemsContainer>
           {itemList?.map((item: Item) => {
             return (
               <li
@@ -124,7 +103,7 @@ const HomePage = () => {
               </li>
             );
           })}
-        </div>
+        </S.ItemsContainer>
       ) : (
         <ErrorPage />
       )}

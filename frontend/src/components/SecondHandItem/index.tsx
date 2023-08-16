@@ -49,22 +49,18 @@ const SecondHandItem = ({
               {price !== null && <S.Price>{formatNumber(price)}원</S.Price>}
             </S.ColumnBot>
           </S.Content>
-          <div className="Option">
+          <S.Option>
             {isSetEditOption && (
-              <Icon name={'ellipsis'} width={'17'} height={'20'} />
+              <button>
+                <Icon name={'ellipsis'} width={'17'} height={'20'} />
+              </button>
             )}
-          </div>
+          </S.Option>
         </S.ItemContents>
         <S.ItemIssue>
           <IconWithCount name={'message'} count={chatRoomCount} />
           <S.HeartIconWithCount>
-            {isWatchlistChecked === true ? (
-              <IconWithCount
-                name={'heart'}
-                count={watchListCount}
-                fill={'black'}
-              />
-            ) : (
+            {isWatchlistChecked && (
               <IconWithCount
                 name={'heartFill'}
                 count={watchListCount}

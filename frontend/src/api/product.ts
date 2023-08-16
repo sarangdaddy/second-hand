@@ -58,3 +58,12 @@ export const getProductsDetail = async (
   });
   return res;
 };
+
+export const getMyProducts = async (token: string | null) => {
+  const res = await axiosInstanceWithBearer.get(`/api/products/myProducts`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};
