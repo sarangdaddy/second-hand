@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAsync from '../../hooks/useAsync';
@@ -6,7 +5,6 @@ import { getCategory } from '../../api/category';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
-
 import { PostObjectType } from '../../context/SalesItem/useContext';
 
 interface Category {
@@ -19,7 +17,6 @@ export const CategorySetPage = () => {
   const navigate = useNavigate();
   const { data } = useAsync(getCategory);
   const categoryList = data?.data;
-  const [storageObject, setStorageObject] = useState<PostObjectType>({});
 
   const handleAddCategory = (event: React.MouseEvent<HTMLElement>) => {
     const targetElement = event.target as Element;
@@ -30,26 +27,17 @@ export const CategorySetPage = () => {
         closestLiElement.getAttribute('data-key'),
       );
 
-      setStorageObject((prevStorageObject) => ({
-        ...prevStorageObject,
-        categoryId: clickedCategoryId,
-      }));
+      const storedPostObject = localStorage.getItem('postObject');
+
+      if (storedPostObject) {
+        const parsedPostObject: PostObjectType = JSON.parse(storedPostObject);
+        parsedPostObject.categoryId = clickedCategoryId; // 카테고리 ID만 업데이트
+        localStorage.setItem('postObject', JSON.stringify(parsedPostObject)); // 로컬 스토리지에 저장
+      }
     }
 
     navigate(-1);
   };
-
-  useEffect(() => {
-    const storedPostObject = localStorage.getItem('postObject');
-    if (storedPostObject) {
-      const parsedPostObject = JSON.parse(storedPostObject);
-      setStorageObject(parsedPostObject);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('postObject', JSON.stringify(storageObject));
-  }, [storageObject]);
 
   const handleBackClick = () => {
     navigate(-1);

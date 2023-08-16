@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useRef, useContext, useEffect } from 'react';
+import { useState, ChangeEvent, useRef, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -19,10 +19,16 @@ interface UploadedImageType {
 const UploadPhoto = () => {
   const maxImageCount = 10;
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const { postObject, setPostObject } = useContext(postSalesItemContext);
-  const [uploadedImages, setUploadedImages] = useState<UploadedImageType[]>([]);
-  const [isModalOpen, setModalOpen] = useState(false);
+
+  const initialImages = postObject.files
+    ? postObject.files.map((fileItem) => JSON.parse(fileItem))
+    : [];
+  const [uploadedImages, setUploadedImages] =
+    useState<UploadedImageType[]>(initialImages);
   const uploadedCount = uploadedImages.length;
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleDeleteBtnClick = (id: string) => {
     setUploadedImages((prevImages) =>
@@ -91,17 +97,6 @@ const UploadPhoto = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-
-  useEffect(() => {
-    if (postObject.files) {
-      const images: UploadedImageType[] = [];
-      for (const fileItem of postObject.files) {
-        const fileData = JSON.parse(fileItem);
-        images.push(fileData);
-      }
-      setUploadedImages(images);
-    }
-  }, [postObject]);
 
   return (
     <>
