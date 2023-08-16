@@ -20,6 +20,7 @@ const SalesMyItemPage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const navigation = useNavigate();
 
+  const storedPostObject = localStorage.getItem('postObject');
   const initialPostObject: PostObjectType = {
     title: null,
     price: null,
@@ -29,9 +30,9 @@ const SalesMyItemPage = () => {
     files: null,
   };
 
-  const [postObject, setPostObject] =
-    useState<PostObjectType>(initialPostObject);
-  const [isUploadCompleteEnabled, setIsUploadCompleteEnabled] = useState(false);
+  const [postObject, setPostObject] = useState<PostObjectType>(
+    storedPostObject ? JSON.parse(storedPostObject) : initialPostObject,
+  );
 
   const handleUploadComplete = async () => {
     const formData = new FormData();
@@ -72,27 +73,19 @@ const SalesMyItemPage = () => {
     return Object.values(rest).every((value) => value !== null);
   };
 
+  const isUploadCompleteEnabled = isAllValuesNotNullExceptPrice(postObject);
+
   const handleBackIconClick = () => {
     localStorage.removeItem('postObject');
     navigation(-1);
   };
 
   useEffect(() => {
-    const storedPostObject = localStorage.getItem('postObject');
-    if (storedPostObject) {
-      setPostObject(JSON.parse(storedPostObject));
-    }
-  }, []);
-
-  useEffect(() => {
     const postObjectToStore = { ...postObject };
     localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
   }, [postObject]);
 
-  useEffect(() => {
-    const isCompleteEnabled = isAllValuesNotNullExceptPrice(postObject);
-    setIsUploadCompleteEnabled(isCompleteEnabled);
-  }, [postObject]);
+  console.log(postObject);
 
   return (
     <>
