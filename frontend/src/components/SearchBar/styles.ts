@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
-  width: 100%;
+  width: 95%;
   display: flex;
   align-items: center;
   padding: 7px;
   border-radius: 10px;
-  margin-top: 60px;
-  ${({ theme }) => theme.color.systemBackgroundWeak}
+  ${({ theme }) => theme.color.systemBackgroundStrong}
 `;
 
 export const IconWrapper = styled.div`

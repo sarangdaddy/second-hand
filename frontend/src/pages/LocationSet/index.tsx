@@ -68,13 +68,10 @@ export const LocationSetPage = () => {
 
   return (
     <>
-      <NavBarTitle
-        type="high"
-        prevTitle="닫기"
-        preTitleClick={handelBackClick}
-      />
-      <S.Main>
+      <NavBarTitle type="high" prevTitle="닫기" preTitleClick={handelBackClick}>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </NavBarTitle>
+      <S.Main>
         <ul onClick={(event) => handleAddLocation(event)}>
           {searchResults?.map((location: Location) => (
             <S.location
