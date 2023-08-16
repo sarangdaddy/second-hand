@@ -94,6 +94,9 @@ const color = {
   neutralOveray: css`
     background-color: rgba(0, 0, 0, 0.2);
   `,
+  neutralNone: css`
+    background-color: rgba(0, 0, 0, 0);
+  `,
   accentText: css`
     color: #ffffff;
   `,
@@ -117,6 +120,9 @@ const color = {
   `,
   systemBackgroundWeak: css`
     background-color: rgba(245, 245, 245, 0.7);
+  `,
+  systemBackgroundStrong: css`
+    background-color: rgba(245, 245, 245, 1);
   `,
 };
 
