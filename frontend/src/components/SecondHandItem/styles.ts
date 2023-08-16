@@ -46,6 +46,10 @@ export const Content = styled.div`
   margin-top: 16px;
 `;
 
+export const Option = styled.div`
+  margin-top: 10px;
+`;
+
 export const ColumnTop = styled.div`
   margin-bottom: 4px;
   ${({ theme }) => theme.typo.subhead}
