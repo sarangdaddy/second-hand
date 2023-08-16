@@ -114,7 +114,7 @@ const ItemDetail = () => {
     <>
       <NavBarTitle
         backIcon
-        moreIcon
+        moreIcon={isMyProduct}
         type="low"
         preTitleClick={handleBackIconClick}
         rightTitleClick={handleMoreIconClick}
