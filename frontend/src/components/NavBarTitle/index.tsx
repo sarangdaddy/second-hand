@@ -11,6 +11,7 @@ interface NavBarTitleProps {
   type: string;
   preTitleClick?: () => void;
   rightTitleClick?: () => void;
+  children?: React.ReactNode;
 }
 
 const NavBarTitle = ({
@@ -22,6 +23,7 @@ const NavBarTitle = ({
   type,
   preTitleClick,
   rightTitleClick,
+  children,
 }: NavBarTitleProps) => {
   return (
     <S.NavBarContainer type={type}>
@@ -45,6 +47,7 @@ const NavBarTitle = ({
           </S.RightTitleContents>
         </S.RightTitle>
       </S.NavBarBody>
+      {children}
     </S.NavBarContainer>
   );
 };

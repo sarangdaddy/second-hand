@@ -11,7 +11,6 @@ interface RightTitleContentsProps {
 export const NavBarContainer = styled.div<NavBarContainerProps>`
   position: fixed;
   width: 100%;
-  height: 50px;
   top: 0px;
   left: 0;
   background-color: ${({ type }) => {
@@ -33,7 +32,9 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   }};
 
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding-bottom: 8px;
 
   z-index: 3;
 `;
