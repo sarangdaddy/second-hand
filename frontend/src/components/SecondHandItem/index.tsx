@@ -16,6 +16,7 @@ interface SecondHandItemProps {
   isWatchlistChecked: boolean;
   productMainImgUrl: string;
   isSetEditOption?: boolean;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 const SecondHandItem = ({
@@ -29,6 +30,7 @@ const SecondHandItem = ({
   isWatchlistChecked,
   productMainImgUrl,
   isSetEditOption,
+  onClick,
 }: SecondHandItemProps) => {
   return (
     <S.ItemContainer>
@@ -51,7 +53,7 @@ const SecondHandItem = ({
           </S.Content>
           <S.Option>
             {isSetEditOption && (
-              <button>
+              <button onClick={onClick}>
                 <Icon name={'ellipsis'} width={'17'} height={'20'} />
               </button>
             )}
