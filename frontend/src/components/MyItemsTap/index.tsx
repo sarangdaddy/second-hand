@@ -1,25 +1,23 @@
-import { useState } from 'react';
 import * as S from './styles';
 
-export const MyItemsTap = () => {
-  const [selected, setSelected] = useState('판매중');
+interface MyItemsTap {
+  status: string;
+  onChange: (value: string) => void;
+}
 
-  const handleSelectBtn = (status: string) => {
-    setSelected(status);
-  };
-
+export const MyItemTap = ({ status, onChange }: MyItemsTap) => {
   return (
     <>
       <S.TapContainer>
         <S.TapButton
-          selected={selected === '판매중'}
-          onClick={() => handleSelectBtn('판매중')}
+          selected={status === '판매중'}
+          onClick={() => onChange('판매중')}
         >
           판매중
         </S.TapButton>
         <S.TapButton
-          selected={selected === '판매완료'}
-          onClick={() => handleSelectBtn('판매완료')}
+          selected={status === '판매완료'}
+          onClick={() => onChange('판매완료')}
         >
           판매완료
         </S.TapButton>
