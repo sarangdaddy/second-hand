@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { ACCESS_TOKEN } from '../../constants/login';
 import { useAuthContext } from '../../context/Auth';
-import { getProducts } from '../../api/product';
+import { getProducts, getProductsNoLogin } from '../../api/product';
 
 import * as S from './styles';
 import NavBarHome from '../../components/NavBarHome';
@@ -19,6 +20,7 @@ import { Item, Location } from '../../context/types';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const userData = useAuthContext();
   const isLoggedIn = userData.isLoggedIn;
   const [curLocationData, setCurLocationData] = useState<Location[]>([]);
@@ -37,11 +39,17 @@ const HomePage = () => {
     const curLocation = curLocationData.find(
       (locationInfo) => locationInfo.mainLocationState === true,
     );
+    const curLocationId = curLocation?.locationId;
 
-    if (curLocation) {
-      const curLocationId = curLocation.locationId;
-
+    if (isLoggedIn === true) {
       const { data: productsData } = await getProducts(
+        accessToken,
+        curLocationId,
+        categoryId,
+      );
+      setItemList(productsData?.data);
+    } else {
+      const { data: productsData } = await getProductsNoLogin(
         curLocationId,
         categoryId,
       );
