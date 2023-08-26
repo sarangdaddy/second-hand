@@ -41,6 +41,10 @@ const HomePage = () => {
     );
     const curLocationId = curLocation?.locationId;
 
+    if (!curLocationId) {
+      return;
+    }
+
     if (isLoggedIn === true) {
       const { data: productsData } = await getProducts(
         accessToken,
