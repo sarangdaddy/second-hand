@@ -1,6 +1,6 @@
 export const HOME = '/';
 export const SALES = '/sales';
-export const HEART = '/heart';
+export const WATCHLIST = '/watchList';
 export const CHAT = '/chat';
 export const ACCOUNT = '/account';
 export const LOGIN = '/login';

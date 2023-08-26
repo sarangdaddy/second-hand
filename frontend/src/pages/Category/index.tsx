@@ -5,14 +5,7 @@ import { getCategory } from '../../api/category';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
-
-// TODO : 카테고리 클릭시 카테고리 필터 기능 추가 적용
-
-interface Category {
-  categoryId: number;
-  title: string;
-  categoryImgUrl: string;
-}
+import { Category } from '../../context/types';
 
 const CategoryPage = () => {
   const navigate = useNavigate();

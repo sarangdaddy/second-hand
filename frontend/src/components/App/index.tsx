@@ -6,7 +6,7 @@ import theme from '../../styles/theme';
 import GlobalStyles from '../../styles/GlobalStyles';
 import HomePage from '../../pages/Home';
 import SalesPage from '../../pages/Sales';
-import HeartPage from '../../pages/Heart';
+import WatchListPage from '../../pages/WatchList';
 import ChatPage from '../../pages/Chat';
 import ErrorPage from '../../pages/Error';
 import Login from '../../pages/Login';
@@ -21,7 +21,7 @@ import {
   ACCOUNT,
   CALL_BACK,
   CHAT,
-  HEART,
+  WATCHLIST,
   HOME,
   LOGIN,
   SALES,
@@ -60,10 +60,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: HEART,
+        path: WATCHLIST,
         element: (
           <ProtectedRoute>
-            <HeartPage />
+            <WatchListPage />
           </ProtectedRoute>
         ),
       },

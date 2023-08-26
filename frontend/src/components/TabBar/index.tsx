@@ -15,7 +15,7 @@ interface Tab {
 const TABS: Tab[] = [
   { id: 0, name: 'home', label: '홈화면', path: '/' },
   { id: 1, name: 'newspaper', label: '판매내역', path: '/sales' },
-  { id: 2, name: 'heart', label: '관심목록', path: '/heart' },
+  { id: 2, name: 'heart', label: '관심목록', path: '/watchList' },
   { id: 3, name: 'message', label: '채팅', path: '/chat' },
   { id: 4, name: 'person', label: '내 계정', path: '/account' },
 ];
