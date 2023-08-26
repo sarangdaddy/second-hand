@@ -80,12 +80,20 @@ const SalesMyItemPage = () => {
     navigation(-1);
   };
 
-  useEffect(() => {
-    const postObjectToStore = { ...postObject };
-    localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
-  }, [postObject]);
+  const { title, price, content, categoryId, locationId, files } = postObject;
 
-  console.log(postObject);
+  useEffect(() => {
+    const postObjectToStore = {
+      title,
+      price,
+      content,
+      categoryId,
+      locationId,
+      files,
+    };
+    localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
+    console.log('렌더링 체크');
+  }, [title, price, content, categoryId, locationId, files]);
 
   return (
     <>
