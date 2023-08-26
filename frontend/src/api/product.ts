@@ -24,20 +24,19 @@ export const getProductsNoLogin = async (
 
 export const getProducts = async (
   token: string | null,
-  locationId: number | undefined,
-  categoryId: string | undefined,
+  locationId?: number,
+  categoryId?: string,
 ) => {
-  let url = `/api/products?`;
+  const params = [];
 
   if (locationId !== undefined) {
-    url += `locationId=${locationId}`;
-    if (categoryId !== undefined) {
-      url += '&';
-    }
+    params.push(`locationId=${locationId}`);
   }
   if (categoryId !== undefined) {
-    url += `categoryId=${categoryId}`;
+    params.push(`categoryId=${categoryId}`);
   }
+
+  const url = `/api/products?${params.join('&')}`;
 
   const res = await axiosInstanceWithBearer.get(url, {
     headers: {

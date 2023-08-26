@@ -92,7 +92,6 @@ const SalesMyItemPage = () => {
       files,
     };
     localStorage.setItem('postObject', JSON.stringify(postObjectToStore));
-    console.log('렌더링 체크');
   }, [title, price, content, categoryId, locationId, files]);
 
   return (
