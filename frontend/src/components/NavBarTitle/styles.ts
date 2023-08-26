@@ -34,7 +34,6 @@ export const NavBarContainer = styled.div<NavBarContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 8px;
 
   z-index: 3;
 `;

@@ -20,3 +20,9 @@ export interface Location {
   locationShortening: string;
   mainLocationState: boolean;
 }
+
+export interface Category {
+  categoryId: number;
+  title: string;
+  categoryImgUrl: string;
+}

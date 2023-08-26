@@ -91,3 +91,15 @@ export const getMyProducts = async (token: string | null) => {
   });
   return res;
 };
+
+export const getWatchProducts = async (token: string | null) => {
+  const res = await axiosInstanceWithBearer.get(
+    `/api/products/myWatchProducts`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return res;
+};

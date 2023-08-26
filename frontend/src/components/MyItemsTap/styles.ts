@@ -6,6 +6,7 @@ export const TapContainer = styled.div`
   height: 32px;
   border-radius: 8px;
   padding: 2px;
+  margin-bottom: 8px;
   ${({ theme }) => theme.color.neutralBackgroundBold}
 `;
 
