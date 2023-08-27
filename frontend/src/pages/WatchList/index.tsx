@@ -6,7 +6,7 @@ import useAsync from '../../hooks/useAsync';
 import { getCategory } from '../../api/category';
 
 import * as S from './styles';
-import { Category, Item } from '../../context/types';
+import { Category, Item } from '../../constants/types';
 import { getWatchProducts } from '../../api/product';
 import { ITEM_DETAIL } from '../../constants/routeUrl';
 import NavBarTitle from '../../components/NavBarTitle';

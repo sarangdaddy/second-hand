@@ -13,7 +13,7 @@ import { CATEGORY, ITEM_DETAIL, SALES_ITEM } from '../../constants/routeUrl';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import { defaultLocation } from '../../constants/defaultValues';
-import { Item, Location } from '../../context/types';
+import { Item, Location } from '../../constants/types';
 
 // TODO : 무한 스크롤 구현하기
 // TODO : useMemo로 최적화 하기
