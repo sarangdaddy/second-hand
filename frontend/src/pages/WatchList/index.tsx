@@ -15,33 +15,50 @@ import SecondHandItem from '../../components/SecondHandItem';
 const WatchListPage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const { data } = useAsync(getCategory);
+  const allCategoryList: Category[] = data?.data;
   const [myWatchList, setMyWatchList] = useState<Item[]>();
+  const [filteredMyWatchList, setFilteredMyWatchList] = useState<Item[]>();
   const isResultEmpty: boolean = myWatchList?.length === 0;
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(0);
 
-  const { data } = useAsync(getCategory);
-  const categoryList: Category[] = data?.data;
+  // 첫 렌더링에서 내가 관심 등록한 물품들의 카테고리 리스트를 가져온다.
   const myWatchListCategories = [
     {
       categoryId: 0,
       title: '전체',
+      categoryListAll: '',
     },
-    ...(categoryList?.filter((category) =>
+    ...(allCategoryList?.filter((category) =>
       myWatchList?.some((item) => item.categoryTitle === category.title),
     ) || []),
   ];
 
-  const handleCategoryChoice = (categoryId: number) => {
-    setSelectedCategoryId(categoryId);
-  };
+  // 특정 카테고리를 선택하면 해당 카테고리 관련 아이템으로 필터링 한다.
+  const handleCategoryChoice = (categoryId: number, title: string) => {
+    if (categoryId === 0) {
+      setFilteredMyWatchList(myWatchList);
+      setSelectedCategoryId(categoryId);
+      return;
+    }
 
-  const fetchWatchListData = async () => {
-    const { data: myWatchList } = await getWatchProducts(accessToken);
-    setMyWatchList(myWatchList.data);
+    const chosenCategoryItems = myWatchList?.filter(
+      (item) => item.categoryTitle === title,
+    );
+
+    setFilteredMyWatchList(chosenCategoryItems);
+    setSelectedCategoryId(categoryId);
   };
 
   const handleItemClick = (productId: number) => {
     navigate(`${ITEM_DETAIL}/${productId}`);
+  };
+
+  // 첫 렌더링에서 내가 관심 등록한 상품 리스트를 불러온다.
+  const fetchWatchListData = async () => {
+    const { data: myWatchList } = await getWatchProducts(accessToken);
+    setMyWatchList(myWatchList.data);
+    setFilteredMyWatchList(myWatchList.data);
   };
 
   useEffect(() => {
@@ -55,7 +72,9 @@ const WatchListPage = () => {
           {myWatchListCategories?.map((category) => (
             <S.Category
               key={category.categoryId}
-              onClick={() => handleCategoryChoice(category.categoryId)}
+              onClick={() =>
+                handleCategoryChoice(category.categoryId, category.title)
+              }
               isActive={selectedCategoryId === category.categoryId}
             >
               {category.title}
@@ -65,7 +84,7 @@ const WatchListPage = () => {
       </NavBarTitle>
       {!isResultEmpty ? (
         <S.ItemsContainer>
-          {myWatchList?.map((item: Item) => {
+          {filteredMyWatchList?.map((item: Item) => {
             return (
               <li
                 key={item.productId}
@@ -88,7 +107,7 @@ const WatchListPage = () => {
           })}
         </S.ItemsContainer>
       ) : (
-        <S.Empty>관심 내역이 없습니다.</S.Empty>
+        <S.Empty>관심 상품이 없습니다.</S.Empty>
       )}
     </>
   );
