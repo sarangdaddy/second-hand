@@ -5,7 +5,7 @@ import { getCategory } from '../../api/category';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
-import { Category } from '../../context/types';
+import { Category } from '../../constants/types';
 
 const CategoryPage = () => {
   const navigate = useNavigate();

@@ -7,7 +7,7 @@ import { ACCESS_TOKEN } from '../../constants/login';
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
 import { MyItemTap } from '../../components/MyItemsTap';
-import { Item } from '../../context/types';
+import { Item } from '../../constants/types';
 import SecondHandItem from '../../components/SecondHandItem';
 import { ITEM_DETAIL } from '../../constants/routeUrl';
 import { ModalStatusButtons } from './ModalStatusButtons';
