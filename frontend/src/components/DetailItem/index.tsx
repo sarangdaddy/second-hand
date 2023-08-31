@@ -7,7 +7,7 @@ interface DetailItemProps {
   updatedAt: string;
   contents: string;
   chatRoomCount: number;
-  watchlistCount: number;
+  watchListCount: number;
   lookupCount: number;
 }
 
@@ -17,7 +17,7 @@ const DetailItem = ({
   updatedAt,
   contents,
   chatRoomCount,
-  watchlistCount,
+  watchListCount,
   lookupCount,
 }: DetailItemProps) => {
   return (
@@ -30,7 +30,7 @@ const DetailItem = ({
         <S.Content>{contents}</S.Content>
         <S.CountInfo>
           <S.ChatRoomCount>채팅 {chatRoomCount} </S.ChatRoomCount>
-          <S.WatchListCount>관심 {watchlistCount} </S.WatchListCount>
+          <S.WatchListCount>관심 {watchListCount} </S.WatchListCount>
           <S.LookUpCount>조회 {lookupCount} </S.LookUpCount>
         </S.CountInfo>
       </S.DetailItemContainer>

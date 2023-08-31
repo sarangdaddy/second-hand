@@ -13,7 +13,7 @@ interface SecondHandItemProps {
   location: string;
   chatRoomCount: number;
   watchListCount: number;
-  isWatchlistChecked: boolean;
+  isWatchListChecked: boolean;
   productMainImgUrl: string;
   isSetEditOption?: boolean;
   onClick?: (event: React.MouseEvent) => void;
@@ -27,7 +27,7 @@ const SecondHandItem = ({
   location,
   chatRoomCount,
   watchListCount,
-  isWatchlistChecked,
+  isWatchListChecked,
   productMainImgUrl,
   isSetEditOption,
   onClick,
@@ -62,7 +62,7 @@ const SecondHandItem = ({
         <S.ItemIssue>
           <IconWithCount name={'message'} count={chatRoomCount} />
           <S.HeartIconWithCount>
-            {isWatchlistChecked && (
+            {isWatchListChecked && (
               <IconWithCount
                 name={'heartFill'}
                 count={watchListCount}
