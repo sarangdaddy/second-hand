@@ -9,7 +9,7 @@ export const getRoomsList = async (token: string | null) => {
     });
     return res.data.data;
   } catch (error) {
-    console.error('방 생성 에러:', error);
+    console.error('방 리스트 불러오기 에러:', error);
   }
 };
 
