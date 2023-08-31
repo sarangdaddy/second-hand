@@ -26,3 +26,10 @@ export interface Category {
   title: string;
   categoryImgUrl: string;
 }
+
+export interface Room {
+  roomId: string;
+  productId: string;
+  sellerId: string;
+  buyerId: string;
+}
