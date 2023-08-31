@@ -98,7 +98,7 @@ const WatchListPage = () => {
                   location={item.location}
                   chatRoomCount={item.chatRoomCount}
                   watchListCount={item.watchListCount}
-                  isWatchlistChecked={item.isWatchlistChecked}
+                  isWatchListChecked={item.isWatchListChecked}
                   productMainImgUrl={item.productMainImgUrl}
                   isSetEditOption={false}
                 />

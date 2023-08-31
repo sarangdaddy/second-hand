@@ -18,8 +18,8 @@ interface Item {
   price: number | null;
   location: string;
   chatRoomCount: number;
-  watchlistCount: number;
-  isWatchlistChecked: boolean;
+  watchListCount: number;
+  isWatchListChecked: boolean;
   imageList: string[];
   categoryTitle: string;
 }

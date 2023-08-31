@@ -23,8 +23,8 @@ interface Item {
   price: number | null;
   location: string;
   chatRoomCount: number;
-  watchlistCount: number;
-  isWatchlistChecked: boolean;
+  watchListCount: number;
+  isWatchListChecked: boolean;
   imageList: string[];
   categoryTitle: string;
   memberId: number;
@@ -63,7 +63,7 @@ const ItemDetail = () => {
   };
 
   const handleWatchlistChecked = async () => {
-    if (selectedItem?.isWatchlistChecked === false) {
+    if (selectedItem?.isWatchListChecked === false) {
       await postWatchList(accessToken, curProductsId);
       fetchSelectedItemData();
     } else {
@@ -140,7 +140,7 @@ const ItemDetail = () => {
             updatedAt={selectedItem.updatedAt}
             contents={selectedItem.contents}
             chatRoomCount={selectedItem.chatRoomCount}
-            watchlistCount={selectedItem.watchlistCount}
+            watchListCount={selectedItem.watchListCount}
             lookupCount={selectedItem.lookupCount}
           />
         )}
@@ -151,7 +151,7 @@ const ItemDetail = () => {
           price={selectedItem.price}
           isMyProduct={isMyProduct}
           chatRoomCount={selectedItem.chatRoomCount}
-          isWatchlistChecked={selectedItem.isWatchlistChecked}
+          isWatchListChecked={selectedItem.isWatchListChecked}
           onWatchListCheck={handleWatchlistChecked}
         />
       )}
