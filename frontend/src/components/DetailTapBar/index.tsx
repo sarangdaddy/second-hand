@@ -17,7 +17,7 @@ interface DetailTapBarProps {
   curProductsId: string | undefined;
   isMyProduct: boolean;
   chatRoomCount: number;
-  isWatchlistChecked: boolean;
+  isWatchListChecked: boolean;
   onWatchListCheck: () => void;
 }
 
@@ -33,7 +33,7 @@ const DetailTapBar = ({
   curProductsId,
   isMyProduct,
   chatRoomCount,
-  isWatchlistChecked,
+  isWatchListChecked,
   onWatchListCheck,
 }: DetailTapBarProps) => {
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ const DetailTapBar = ({
         <S.Menu>
           <div>
             <S.Left>
-              {isWatchlistChecked ? (
+              {isWatchListChecked ? (
                 <Icon
                   onClick={onWatchListCheck}
                   name="heartFill"

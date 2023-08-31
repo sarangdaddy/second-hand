@@ -6,7 +6,7 @@ export interface Item {
   location: string;
   chatRoomCount: number;
   watchListCount: number;
-  isWatchlistChecked: boolean;
+  isWatchListChecked: boolean;
   productMainImgUrl: string;
   salesStatus: '판매중' | '예약중' | '판매완료';
   createAt: string;
