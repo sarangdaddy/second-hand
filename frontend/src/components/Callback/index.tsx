@@ -5,6 +5,8 @@ import { useAuthContext } from '../../context/Auth';
 import useAsync from '../../hooks/useAsync';
 import { AUTHORIZATION_CODE } from '../../constants/login';
 import { postLogin } from '../../api/login';
+
+import * as S from './styles';
 import { HOME, REGISTER } from '../../constants/routeUrl';
 
 const Callback = () => {
@@ -15,7 +17,6 @@ const Callback = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO : 에러메세지 협의 끝나면 상수로 분리
     if (data?.status === 'FORBIDDEN') {
       const { nickname, profileUrl, oauthId } = data.data;
       navigate(
@@ -30,7 +31,13 @@ const Callback = () => {
     }
   }, [data]);
 
-  return <div>Callback</div>;
+  return (
+    <>
+      <S.Container>
+        <S.loadingText>로딩중...</S.loadingText>
+      </S.Container>
+    </>
+  );
 };
 
 export default Callback;
