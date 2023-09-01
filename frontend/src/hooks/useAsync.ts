@@ -55,58 +55,32 @@ function useAsync<T>(
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const fetchData = async (): Promise<void> => {
+    dispatch({ type: 'LOADING' });
+    try {
+      const response: AxiosResponse<T> = await callback();
+      dispatch({ type: 'SUCCESS', data: response.data });
+    } catch (e) {
+      dispatch({ type: 'ERROR', error: e as AxiosError });
+    }
+  };
+
+  let ignore = false;
+
   useEffect(() => {
-    let isCancelled = false; // 취소 플래그
+    if (skip) return;
 
-    const fetchData = async () => {
-      console.log('Fetch Data 시작'); // 시작 로그
-      dispatch({ type: 'LOADING' });
-      try {
-        const response: AxiosResponse<T> = await callback();
-        if (!isCancelled) {
-          console.log('Fetch Data 성공', response.data); // 성공 로그
-          dispatch({ type: 'SUCCESS', data: response.data });
-        } else {
-          console.log('Fetch Data 취소됨'); // 취소 로그
-        }
-      } catch (e) {
-        if (!isCancelled) {
-          console.log('Fetch Data 실패', e); // 실패 로그
-          dispatch({ type: 'ERROR', error: e as AxiosError });
-        } else {
-          console.log('Fetch Data 취소됨'); // 취소 로그
-        }
-      }
-    };
-
-    if (!skip) {
+    if (!ignore) {
       fetchData();
     }
-
     return () => {
-      isCancelled = true; // 클린업 시 취소 플래그 설정
-      console.log('Cleanup 실행됨'); // 클린업 로그
+      ignore = true;
     };
   }, deps);
 
   const { isLoading, data, error } = state;
 
-  const refetch = async () => {
-    const isCancelled = false;
-    dispatch({ type: 'LOADING' });
-    try {
-      const response: AxiosResponse<T> = await callback();
-      if (!isCancelled) {
-        dispatch({ type: 'SUCCESS', data: response.data });
-      }
-    } catch (e) {
-      if (!isCancelled) {
-        dispatch({ type: 'ERROR', error: e as AxiosError });
-      }
-    }
-  };
-
-  return { isLoading, data: data as T, error, refetch };
+  return { isLoading, data: data as T, error, refetch: fetchData };
 }
 
 export default useAsync;
