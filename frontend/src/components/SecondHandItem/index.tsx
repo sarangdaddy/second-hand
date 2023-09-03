@@ -27,7 +27,6 @@ const SecondHandItem = ({
   location,
   chatRoomCount,
   watchListCount,
-  isWatchListChecked,
   productMainImgUrl,
   isSetEditOption,
   onClick,
@@ -62,13 +61,11 @@ const SecondHandItem = ({
         <S.ItemIssue>
           <IconWithCount name={'message'} count={chatRoomCount} />
           <S.HeartIconWithCount>
-            {isWatchListChecked && (
-              <IconWithCount
-                name={'heartFill'}
-                count={watchListCount}
-                fill={'red'}
-              />
-            )}
+            <IconWithCount
+              name={'heartFill'}
+              count={watchListCount}
+              fill={'red'}
+            />
           </S.HeartIconWithCount>
         </S.ItemIssue>
       </S.ItemInfo>

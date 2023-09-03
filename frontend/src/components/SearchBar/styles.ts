@@ -7,6 +7,7 @@ export const SearchBarContainer = styled.div`
   padding: 7px;
   border-radius: 10px;
   ${({ theme }) => theme.color.systemBackgroundStrong}
+  margin-bottom: 8px;
 `;
 
 export const IconWrapper = styled.div`
