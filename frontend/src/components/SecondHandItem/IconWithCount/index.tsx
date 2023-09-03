@@ -14,7 +14,7 @@ interface IconWithCountProps {
 const IconWithCount = ({ name, count, fill }: IconWithCountProps) => {
   return (
     <>
-      {count > 0 && (
+      {count >= 1 && (
         <S.IconWithCountStyle>
           <Icon name={name} width={'20'} height={'16'} fill={fill} />
           <span>{count}</span>
