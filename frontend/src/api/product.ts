@@ -103,3 +103,37 @@ export const getWatchProducts = async (token: string | null) => {
   );
   return res;
 };
+
+export const patchProductsStatus = async (
+  token: string | null,
+  selectedOption: string,
+  productsId: string | undefined,
+) => {
+  const encodedSelectedOption = encodeURIComponent(selectedOption);
+  const res = await axiosInstanceWithBearer.patch(
+    `/api/products/${productsId}/${encodedSelectedOption}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return res;
+};
+
+export const deleteProducts = async (
+  token: string | null,
+  productsId: string | undefined,
+) => {
+  const res = await axiosInstanceWithBearer.delete(
+    `/api/products/${productsId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return res;
+};
