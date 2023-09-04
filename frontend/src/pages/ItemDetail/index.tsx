@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { ACCESS_TOKEN } from '../../constants/login';
-import { getProductsDetail } from '../../api/product';
+import {
+  getProductsDetail,
+  patchProductsStatus,
+  deleteProducts,
+} from '../../api/product';
 import { deleteWatchList, postWatchList } from '../../api/watchList';
 
 import * as S from './styles';
@@ -11,6 +15,7 @@ import DetailSliderPhotos from '../../components/DetailSliderPhotos';
 import DetailItem from '../../components/DetailItem';
 import DetailTapBar from '../../components/DetailTapBar';
 import SelectSalesStatus from '../../components/SelectSalesStatus';
+import { HOME } from '../../constants/routeUrl';
 
 interface Item {
   productId: number;
@@ -52,10 +57,9 @@ const ItemDetail = () => {
   };
 
   // 상품 상세 업데이트 요청 API
-  const handleSalesStatus = (selectedOption: string) => {
-    console.log(selectedOption);
-    // const updatedItemDetail = await updateItemDetail();
-    // setSelectedItem(updatedItemDetail);
+  const handleSalesStatus = async (selectedOption: string) => {
+    await patchProductsStatus(accessToken, selectedOption, curProductsId);
+    fetchSelectedItemData();
   };
 
   const handleWatchlistChecked = async () => {
@@ -89,12 +93,10 @@ const ItemDetail = () => {
     setIsDeleteConfirmOpen(true);
   };
 
-  // 사용자가 삭제를 확인하면 게시물을 삭제하고 모달을 닫음
-  const handleConfirmDelete = () => {
-    console.log('게시물을 삭제합니다.');
-    setIsOptionOpen(false);
-    setIsDeleteConfirmOpen(false);
-    // 실제 삭제 로직
+  // 사용자가 삭제를 확인하면 게시물을 삭제하고 홈화면으로 이동
+  const handleConfirmDelete = async () => {
+    await deleteProducts(accessToken, curProductsId);
+    navigation(HOME);
   };
 
   // 사용자가 삭제를 취소하면 모달만 닫음
