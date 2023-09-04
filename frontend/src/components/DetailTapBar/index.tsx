@@ -15,7 +15,7 @@ import Icon from '../Icon';
 interface DetailTapBarProps {
   price: number | null;
   curProductsId: string | undefined;
-  isMyProduct: boolean;
+  isMyProduct: boolean | undefined;
   chatRoomCount: number;
   isWatchListChecked: boolean;
   onWatchListCheck: () => void;

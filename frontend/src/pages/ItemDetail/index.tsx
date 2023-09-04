@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { useAuthContext } from '../../context/Auth';
 import { ACCESS_TOKEN } from '../../constants/login';
 import { getProductsDetail } from '../../api/product';
 import { deleteWatchList, postWatchList } from '../../api/watchList';
@@ -30,6 +29,7 @@ interface Item {
   memberId: number;
   memberNickName: string;
   lookupCount: number;
+  isMine: boolean;
 }
 
 // TODO : 판매상품 수정하기 기능 추가 (moreIcon)
@@ -38,17 +38,13 @@ const ItemDetail = () => {
   const navigation = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
-  const userData = useAuthContext();
-
   const { productsId } = useParams();
   const curProductsId: string | undefined = productsId;
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
-  // 유저 ID로 수정해야함
-  const isMyProduct =
-    userData?.userInfo.nickname === selectedItem?.memberNickName;
+  const isMyProduct = selectedItem?.isMine;
 
   const fetchSelectedItemData = async () => {
     const response = await getProductsDetail(productsId, accessToken);
