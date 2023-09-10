@@ -62,7 +62,9 @@ const ChatRoom = ({
             <span>{sellerNickName}</span>
           </S.ColumnTop>
           {chatHistory && typeof lastChatLength === 'number' ? (
-            <S.ColumnBot>{chatHistory[lastChatLength - 1].message}</S.ColumnBot>
+            <S.ColumnBot>
+              {chatHistory[lastChatLength - 1]?.message}
+            </S.ColumnBot>
           ) : null}
         </S.ItemInfo>
         <S.ItemImage imageURI={selectedItem?.imageList[0]} />

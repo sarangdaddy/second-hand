@@ -3,16 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
+import { BASE_URL } from '../../constants/api';
+import useAsync from '../../hooks/useAsync';
+import { ACCESS_TOKEN } from '../../constants/login';
+import { getSeller } from '../../api/member';
+import { getChatDetails, deleteChatRoom } from '../../api/chat';
 
+import * as S from './styles';
 import ChatRoomContents from '../../components/ChatRoomContents';
 import ChatRoomItem from '../../components/ChatRoomItem';
 import ChatInputBar from '../../components/ChatInputBar';
 import NavBarTitle from '../../components/NavBarTitle';
-import { BASE_URL } from '../../constants/api';
-import { ACCESS_TOKEN } from '../../constants/login';
-import useAsync from '../../hooks/useAsync';
-import { getSeller } from '../../api/member';
-import { getChatDetails } from '../../api/chat';
 import { ChatHistoryProps } from '../../constants/types';
 
 const ChattingPage = () => {
@@ -34,6 +35,9 @@ const ChattingPage = () => {
     null,
   );
   const [inputValue, setInputValue] = useState('');
+
+  const [isOptionOpen, setIsOptionOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   // 채팅 내역 조회하고 불러오기
   const checkChatDetails = async () => {
@@ -113,9 +117,31 @@ const ChattingPage = () => {
     navigate(-1);
   };
 
+  const handleDeleteChatRoom = async () => {
+    await deleteChatRoom(accessToken, curRoomId);
+    sessionStorage.clear();
+    navigate(-1);
+  };
+
   useEffect(() => {
     sendHandler(inputValue);
   }, [inputValue]);
+
+  const handleMoreIconClick = () => {
+    setIsOptionOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOptionOpen(false);
+  };
+
+  const handleDeleteModal = () => {
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteConfirmOpen(false);
+  };
 
   return (
     <>
@@ -126,10 +152,47 @@ const ChattingPage = () => {
         centerTitle={sellerId}
         moreIcon
         preTitleClick={handleBackIconClick}
+        rightTitleClick={handleMoreIconClick}
       />
       <ChatRoomItem curProductsId={curProductsId} />
       <ChatRoomContents chatHistory={chatHistory} />
       <ChatInputBar onChange={setInputValue} />
+      {isOptionOpen && (
+        <S.ModalDim>
+          <S.ModalContainer>
+            <S.ModalBtns>
+              <S.ModalBtn btnType="delete" onClick={handleDeleteModal}>
+                <span>채팅방 나가기</span>
+              </S.ModalBtn>
+            </S.ModalBtns>
+          </S.ModalContainer>
+          <S.ModalContainer>
+            <S.ModalBtns>
+              <S.ModalBtn onClick={handleCloseModal}>
+                <span>취소</span>
+              </S.ModalBtn>
+            </S.ModalBtns>
+          </S.ModalContainer>
+        </S.ModalDim>
+      )}
+      {/*TODO : Modal 컴포넌트 만들기*/}
+      {isDeleteConfirmOpen && (
+        <S.AlertModalDim>
+          <S.AlertModalContainer>
+            <p>
+              채팅방을 나가면 내역이 삭제됩니다. <br /> 정말로 나가시겠습니까?
+            </p>
+            <S.AlertModalBtns>
+              <S.AlertModalBtn onClick={handleDeleteChatRoom}>
+                <span>확인</span>
+              </S.AlertModalBtn>
+              <S.AlertModalBtn onClick={handleCancelDelete}>
+                <span>취소</span>
+              </S.AlertModalBtn>
+            </S.AlertModalBtns>
+          </S.AlertModalContainer>
+        </S.AlertModalDim>
+      )}
     </>
   );
 };

@@ -53,3 +53,16 @@ export const getChatDetails = async (
     console.error('채팅 내역 조회 에러', error);
   }
 };
+
+export const deleteChatRoom = async (
+  token: string | null,
+  curRoomId: string | undefined,
+) => {
+  const res = await axiosInstanceWithBearer.delete(`/chat/room/${curRoomId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res;
+};
