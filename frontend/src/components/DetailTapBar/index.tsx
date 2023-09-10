@@ -60,10 +60,9 @@ const DetailTapBar = ({
   // 방이 없다면 curProductsId와 accessToken으로 방 생성
   const createChatRoom = async (curProductsId: string) => {
     try {
-      const createdRoomId = await postNewChatRoom(accessToken, curProductsId);
-      console.log('Created Room ID:', createdRoomId); // 여기에 로그 추가
+      await postNewChatRoom(accessToken, curProductsId);
       // 생성된 방으로 이동
-      enterChatRoom(createdRoomId);
+      enterChatRoom(curProductsId);
     } catch (error) {
       console.error('방 생성 에러:', error);
     }
