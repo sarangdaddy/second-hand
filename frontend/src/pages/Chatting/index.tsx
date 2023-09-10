@@ -23,19 +23,14 @@ const ChattingPage = () => {
   // Stomp의 CompatClient 객체를 참조하는 객체 (리렌더링에도 유지를 위해 useRef 사용)
   // Stomp라이브러리와 소켓 연결을 수행하는 cliet객체에 접근할 수 있게 해준다.
   const client = useRef<CompatClient | null>(null);
-
   const curRoomId = sessionStorage.getItem('curRoomId') || undefined;
   const curProductsId = sessionStorage.getItem('curProductsId') || undefined;
-
-  // TODO : 판매자 번호 (추후 닉네임으로 받기)
   const sellerData = useAsync(() => getSeller(accessToken, curRoomId));
-  const sellerId = sellerData?.data?.data.sellerId;
-
+  const sellerNickName = sellerData?.data?.data.sellerNickName;
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[] | null>(
     null,
   );
   const [inputValue, setInputValue] = useState('');
-
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
@@ -149,7 +144,7 @@ const ChattingPage = () => {
         type="high"
         backIcon
         prevTitle="뒤로"
-        centerTitle={sellerId}
+        centerTitle={sellerNickName}
         moreIcon
         preTitleClick={handleBackIconClick}
         rightTitleClick={handleMoreIconClick}
