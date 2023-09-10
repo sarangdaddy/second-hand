@@ -14,7 +14,7 @@ import CategoryPage from '../../pages/Category';
 import Layout from '../Layout';
 import Account from '../../pages/Account';
 import SalesMyItemPage from '../../pages/SalesMyItem';
-import ChatRoom from '../../pages/ChatRoom';
+import ChattingPage from '../../pages/Chatting';
 import { LocationPage } from '../../pages/Location';
 import { LocationSetPage } from '../../pages/LocationSet';
 import {
@@ -38,7 +38,7 @@ import { AuthProvider } from '../../context/Auth';
 import ProtectedRoute from '../ProtectedRoute';
 import Callback from '../Callback/';
 import Register from '../../pages/Register';
-import ItemDetail from '../../pages/ItemDetail';
+import ItemDetailPage from '../../pages/ItemDetail';
 import { CategorySetPage } from '../../pages/CategorySet';
 
 const router = createBrowserRouter([
@@ -109,11 +109,11 @@ const router = createBrowserRouter([
     path: `${ITEM_DETAIL}/:productsId`,
     element: (
       <ProtectedRoute>
-        <ItemDetail />
+        <ItemDetailPage />
       </ProtectedRoute>
     ),
   },
-  { path: `${CHATROOM}/:roomId`, element: <ChatRoom /> },
+  { path: `${CHATROOM}/:roomId`, element: <ChattingPage /> },
   { path: LOCATION, element: <LocationPage /> },
   { path: LOCATION_SET, element: <LocationSetPage /> },
 ]);

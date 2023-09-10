@@ -16,36 +16,17 @@ import DetailItem from '../../components/DetailItem';
 import DetailTapBar from '../../components/DetailTapBar';
 import SelectSalesStatus from '../../components/SelectSalesStatus';
 import { HOME } from '../../constants/routeUrl';
-
-interface Item {
-  productId: number;
-  createAt: string;
-  title: string;
-  contents: string;
-  salesStatus: '판매중' | '예약중' | '판매완료';
-  updatedAt: string;
-  price: number | null;
-  location: string;
-  chatRoomCount: number;
-  watchListCount: number;
-  isWatchListChecked: boolean;
-  imageList: string[];
-  categoryTitle: string;
-  memberId: number;
-  memberNickName: string;
-  lookupCount: number;
-  isMine: boolean;
-}
+import { ItemDetail } from '../../constants/types';
 
 // TODO : 판매상품 수정하기 기능 추가 (moreIcon)
 
-const ItemDetail = () => {
+const ItemDetailPage = () => {
   const navigation = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const { productsId } = useParams();
   const curProductsId: string | undefined = productsId;
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ItemDetail | null>(null);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
@@ -194,4 +175,4 @@ const ItemDetail = () => {
   );
 };
 
-export default ItemDetail;
+export default ItemDetailPage;
