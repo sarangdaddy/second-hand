@@ -13,14 +13,9 @@ import { ACCESS_TOKEN } from '../../constants/login';
 import useAsync from '../../hooks/useAsync';
 import { getSeller } from '../../api/member';
 import { getChatDetails } from '../../api/chat';
+import { ChatHistoryProps } from '../../constants/types';
 
-interface ChatHistoryProps {
-  type: string;
-  sender: string;
-  message: string;
-}
-
-const ChatRoom = () => {
+const ChattingPage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -139,4 +134,4 @@ const ChatRoom = () => {
   );
 };
 
-export default ChatRoom;
+export default ChattingPage;
