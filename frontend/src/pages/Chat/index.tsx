@@ -29,7 +29,15 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    checkChatRooms();
+    let ignore = false;
+
+    if (!ignore) {
+      checkChatRooms();
+    }
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   return (

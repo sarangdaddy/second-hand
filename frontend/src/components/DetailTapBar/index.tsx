@@ -9,6 +9,7 @@ import { CHAT, CHATROOM } from '../../constants/routeUrl';
 import { formatNumber } from '../../utils/formatNumber';
 import Button from '../Button';
 import Icon from '../Icon';
+import { Room } from '../../constants/types';
 
 // TODO : 함수를 실행하는 부모 컴포넌트 하나가 존재한다면 패치 컴포넌트? 에러 처리가 쉬워진다. (숙제)
 
@@ -19,13 +20,6 @@ interface DetailTapBarProps {
   chatRoomCount: number;
   isWatchListChecked: boolean;
   onWatchListCheck: () => void;
-}
-
-interface Room {
-  roomId: string;
-  productId: string;
-  sellerId: number;
-  buyerId: number;
 }
 
 const DetailTapBar = ({
@@ -67,6 +61,7 @@ const DetailTapBar = ({
   const createChatRoom = async (curProductsId: string) => {
     try {
       const createdRoomId = await postNewChatRoom(accessToken, curProductsId);
+      console.log('Created Room ID:', createdRoomId); // 여기에 로그 추가
       // 생성된 방으로 이동
       enterChatRoom(createdRoomId);
     } catch (error) {
