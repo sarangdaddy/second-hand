@@ -20,9 +20,6 @@ const ChatRoomContents = ({ chatHistory }: ChatRoomContentsProps) => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const { data: userData } = useAsync(() => getMembers(accessToken));
 
-  // TODO : 채팅 기능 구현 완료 후 콘솔 지우기
-  console.log('채팅내역 확인', chatHistory);
-
   return (
     <>
       <S.ContentsContainer>

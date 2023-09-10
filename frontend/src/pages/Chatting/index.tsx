@@ -118,10 +118,6 @@ const ChattingPage = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    sendHandler(inputValue);
-  }, [inputValue]);
-
   const handleMoreIconClick = () => {
     setIsOptionOpen(true);
   };
@@ -151,7 +147,7 @@ const ChattingPage = () => {
       />
       <ChatRoomItem curProductsId={curProductsId} />
       <ChatRoomContents chatHistory={chatHistory} />
-      <ChatInputBar onChange={setInputValue} />
+      <ChatInputBar onChange={setInputValue} sendHandler={sendHandler} />
       {isOptionOpen && (
         <S.ModalDim>
           <S.ModalContainer>
