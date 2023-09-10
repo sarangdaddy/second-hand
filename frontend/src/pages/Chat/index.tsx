@@ -8,9 +8,7 @@ import { Room } from '../../constants/types';
 
 import * as S from './styles';
 import NavBarTitle from '../../components/NavBarTitle';
-
-// TODO : 채팅 페이지 꾸미기
-// TODO : 채팅방 목록 받아오기에서 판매자 이름도 필요함
+import ChatRoom from '../../components/ChatRoom/intex';
 
 const ChatPage = () => {
   const navigate = useNavigate();
@@ -40,16 +38,18 @@ const ChatPage = () => {
       {!isResultEmpty ? (
         <S.ItemsContainer>
           {myChatRoomList.map((room) => (
-            <li
+            <ChatRoom
               key={room.roomId}
+              roomId={room.roomId}
+              productId={room.productId}
+              sellerNickName={room.sellerNickName}
               onClick={() => enterChatRoom(room.roomId, room.productId)}
-            >
-              제품 아이디 : {room.productId} 방 번호 : {room.roomId}
-            </li>
+              sellerProfileUrl={room.sellerProfileUrl}
+            />
           ))}
         </S.ItemsContainer>
       ) : (
-        <S.Empty>관심 상품이 없습니다.</S.Empty>
+        <S.Empty>채팅 내역이 없습니다.</S.Empty>
       )}
     </>
   );

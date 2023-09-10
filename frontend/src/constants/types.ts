@@ -14,6 +14,26 @@ export interface Item {
   isSetEditOption?: boolean;
 }
 
+export interface ItemDetail {
+  productId: number;
+  createAt: string;
+  title: string;
+  contents: string;
+  salesStatus: '판매중' | '예약중' | '판매완료';
+  updatedAt: string;
+  price: number | null;
+  location: string;
+  chatRoomCount: number;
+  watchListCount: number;
+  isWatchListChecked: boolean;
+  imageList: string[];
+  categoryTitle: string;
+  memberId: number;
+  memberNickName: string;
+  lookupCount: number;
+  isMine: boolean;
+}
+
 export interface Location {
   locationId: number;
   locationDetails: string;
@@ -32,4 +52,12 @@ export interface Room {
   productId: string;
   sellerId: string;
   buyerId: string;
+  sellerNickName: string;
+  sellerProfileUrl: string;
+}
+
+export interface ChatHistoryProps {
+  type: string;
+  sender: string;
+  message: string;
 }
