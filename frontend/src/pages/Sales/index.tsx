@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getMyProducts, patchProductsStatus } from '../../api/product';
+import {
+  getMyProducts,
+  patchProductsStatus,
+  deleteProducts,
+} from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
 
 import * as S from './styles';
@@ -74,11 +78,14 @@ const SalesPage = () => {
 
   //TODO : 삭제 API 대기
   // 사용자가 삭제를 확인하면 게시물을 삭제하고 모달을 닫음
-  const handleConfirmDelete = () => {
-    console.log('게시물을 삭제합니다.');
+  const handleConfirmDelete = async () => {
+    if (selectedProductId) {
+      await deleteProducts(accessToken, selectedProductId.toString());
+    }
+
+    fetchProductsData();
     setIsOptionOpen(false);
     setIsDeleteConfirmOpen(false);
-    // 실제 삭제 로직 API 대기
   };
 
   const handleCancelDelete = () => {
