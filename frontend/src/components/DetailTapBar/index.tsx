@@ -61,8 +61,14 @@ const DetailTapBar = ({
   const createChatRoom = async (curProductsId: string) => {
     try {
       await postNewChatRoom(accessToken, curProductsId);
+
+      const roomsList = await getRoomsList(accessToken);
+      const matchedRoom = roomsList.find(
+        (room: Room) => String(room.productId) === curProductsId,
+      );
+
       // 생성된 방으로 이동
-      enterChatRoom(curProductsId);
+      enterChatRoom(matchedRoom.roomId);
     } catch (error) {
       console.error('방 생성 에러:', error);
     }

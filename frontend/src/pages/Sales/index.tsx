@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getMyProducts } from '../../api/product';
+import { getMyProducts, patchProductsStatus } from '../../api/product';
 import { ACCESS_TOKEN } from '../../constants/login';
 
 import * as S from './styles';
@@ -25,6 +25,9 @@ const SalesPage = () => {
   const [currentItem, setCurrentItem] = useState<
     '판매중' | '예약중' | '판매완료' | undefined
   >(undefined);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    null,
+  );
 
   const fetchProductsData = async () => {
     const { data: myProductsData } = await getMyProducts(accessToken);
@@ -51,6 +54,7 @@ const SalesPage = () => {
       (item) => item.productId === productID,
     );
     setCurrentItem(selectedItem?.salesStatus);
+    setSelectedProductId(productID);
     setIsOptionOpen(true);
   };
 
@@ -81,10 +85,14 @@ const SalesPage = () => {
     setIsDeleteConfirmOpen(false);
   };
 
-  //TODO : 상태변경 API 대기
-  const handleChangeStatus = (newStatus: '판매중' | '예약중' | '판매완료') => {
-    console.log('상태 변경 API 호출', newStatus);
-    // fetchProductsData();
+  const handleSalesStatus = async (
+    selectedOption: string,
+    productId: number | null,
+  ) => {
+    const curProductsId = productId?.toString();
+    await patchProductsStatus(accessToken, selectedOption, curProductsId);
+    fetchProductsData();
+    setIsOptionOpen(false);
   };
 
   useEffect(() => {
@@ -133,7 +141,8 @@ const SalesPage = () => {
               </S.ModalBtn>
               <ModalStatusButtons
                 status={currentItem}
-                handleChangeStatus={handleChangeStatus}
+                productId={selectedProductId}
+                handleChangeStatus={handleSalesStatus}
               />
               <S.ModalBtn btnType="delete" onClick={handleDeleteModal}>
                 <span>삭제</span>
