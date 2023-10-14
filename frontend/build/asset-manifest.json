@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.js": "/static/js/main.68ed99a5.js",
+    "static/media/keyboard.svg": "/static/media/keyboard.838d15757fb180ab85aa9acb2cd85893.svg",
+    "static/media/slider.svg": "/static/media/slider.60657b66ff28445d0549478e65dd519d.svg",
+    "static/media/newspaper.svg": "/static/media/newspaper.255da86709fbee18aaf7c99e6cbbb879.svg",
+    "static/media/camera.svg": "/static/media/camera.07b4e068a2a25205279cda507822bac0.svg",
+    "static/media/wifi.svg": "/static/media/wifi.ca87b739faf25681ecde484fe9afde58.svg",
+    "static/media/label.svg": "/static/media/label.e89182a2d1dbd927d55d21d0542525f6.svg",
+    "static/media/home.svg": "/static/media/home.3ebc004bf54945675e27c6d270f7371f.svg",
+    "static/media/heart.svg": "/static/media/heart.f7e6a0ef1f89e61e212588ee36a1ddd0.svg",
+    "static/media/message.svg": "/static/media/message.e993730bc01645749951da5f58f538cf.svg",
+    "static/media/cellular.svg": "/static/media/cellular.a780fb5f7e1fece29b81c50cd820585d.svg",
+    "static/media/symbol.svg": "/static/media/symbol.811d094d14d63e17189f2c2d6ca021fb.svg",
+    "static/media/person.svg": "/static/media/person.a3d57735934f6b5a1f65ecbe8acb970e.svg",
+    "static/media/hamburger.svg": "/static/media/hamburger.56a7c306b910f3ab4be32506f8d69125.svg",
+    "static/media/ellipsis.svg": "/static/media/ellipsis.db65c19c84bd6744c3d1a2d360d3426e.svg",
+    "static/media/chevronRight.svg": "/static/media/chevronRight.0432ed02ec91f0024b5094782a0aa06c.svg",
+    "static/media/arrowUp.svg": "/static/media/arrowUp.3677492f7e0bc9fe411660eecbb4488d.svg",
+    "static/media/search.svg": "/static/media/search.2284124f6079211b7dbcd2d01ad3580b.svg",
+    "static/media/plus.svg": "/static/media/plus.5858bc4560520222575f0eb044ff707d.svg",
+    "static/media/x.svg": "/static/media/x.4e2908069204f9af9db42de3b43e0263.svg",
+    "static/media/chevronDown.svg": "/static/media/chevronDown.4d363efbe6661ef084726be0025bc91e.svg",
+    "static/media/chevronLeft.svg": "/static/media/chevronLeft.03c295b5e8dc9460cc6bcf8fb8844c5f.svg",
+    "static/media/battery.svg": "/static/media/battery.a7b151c7d9b3553f41282ea86c6a56ae.svg",
+    "index.html": "/index.html",
+    "static/media/circleFill.svg": "/static/media/circleFill.96e7dc50dbac0d9b32bd0b71c41b4e9e.svg",
+    "static/media/capacity.svg": "/static/media/capacity.d1d74760d79d8dbd610bdcdf88a07c62.svg",
+    "main.68ed99a5.js.map": "/static/js/main.68ed99a5.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.68ed99a5.js"
+  ]
+}
